@@ -9,22 +9,27 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Height="971" Width="1827">
 
     <Grid>
+        <!-- WebBrowser -->
+        <WebView x:Name="WebView" Source="https://www.whatismybrowser.com" Margin="40,0,0,40"/>
+
+        <!-- Navigation bars -->
         <CommandBar x:Name="CommandBar"
                     VerticalAlignment="Bottom">
             <CommandBar.Content>
                 <Grid/>
             </CommandBar.Content>
+            <AppBarButton x:Name="BackButton" Visibility="Collapsed" Icon="Back" Label="Go Back"/>
+            <AppBarButton x:Name="ForwardButton" Visibility="Collapsed" Icon="Forward" Label="Go Forward"/>
+            <AppBarButton x:Name="RefreshButton" Visibility="Collapsed" Icon="Refresh" Label="Refresh"/>
             <AppBarButton Icon="Add" Label="Add a new Social Media"/>
             <AppBarButton Icon="Delete" Label="Remove the current Social Media"/>
         </CommandBar>
-        <NavigationView PaneDisplayMode="LeftMinimal"
-                        x:Name="NavigationViewControl">
+        <NavigationView PaneDisplayMode="LeftCompact"
+                        x:Name="NavigationViewControl"
+                        PaneTitle="WebSM">
             <NavigationView.MenuItems>
-                <NavigationViewItem Content="YouTube" x:Name="YouTube"/>
+                <NavigationViewItem Content="YouTube" x:Name="YouTube" Icon="Globe"/>
             </NavigationView.MenuItems>
-            <WebView/>
         </NavigationView>
-        <HyperlinkButton Content="HyperLinkButton" Height="0" Margin="96,1086,0,0" VerticalAlignment="Top"/>
-
     </Grid>
 </Page>
