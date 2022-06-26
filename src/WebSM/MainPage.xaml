@@ -1,0 +1,30 @@
+﻿<Page
+    x:Class="WebSM.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WebSM"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Height="971" Width="1827">
+
+    <Grid>
+        <CommandBar x:Name="CommandBar"
+                    VerticalAlignment="Bottom">
+            <CommandBar.Content>
+                <Grid/>
+            </CommandBar.Content>
+            <AppBarButton Icon="Add" Label="Add a new Social Media"/>
+            <AppBarButton Icon="Delete" Label="Remove the current Social Media"/>
+        </CommandBar>
+        <NavigationView PaneDisplayMode="LeftMinimal"
+                        x:Name="NavigationViewControl">
+            <NavigationView.MenuItems>
+                <NavigationViewItem Content="YouTube" x:Name="YouTube"/>
+            </NavigationView.MenuItems>
+            <WebView/>
+        </NavigationView>
+        <HyperlinkButton Content="HyperLinkButton" Height="0" Margin="96,1086,0,0" VerticalAlignment="Top"/>
+
+    </Grid>
+</Page>
