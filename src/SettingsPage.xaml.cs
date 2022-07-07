@@ -13,18 +13,43 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// Pour plus d'informations sur le modèle d'élément Page vierge, consultez la page https://go.microsoft.com/fwlink/?LinkId=234238
-
 namespace WebSM
 {
-    /// <summary>
-    /// Une page vide peut être utilisée seule ou constituer une page de destination au sein d'un frame.
-    /// </summary>
     public sealed partial class SettingsPage : Page
     {
+
         public SettingsPage()
         {
             this.InitializeComponent();
+        }
+
+        private void ToggleSwitch_Toggled(object sender, RoutedEventArgs e)
+        {
+            ToggleSwitch toggleSwitch = sender as ToggleSwitch;
+            if (toggleSwitch != null)
+            {
+                if (toggleSwitch.IsOn == true)
+                {
+                    
+                }
+                else
+                {
+                    
+                }
+            }
+        }
+
+        // Command Bar
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame rootFrame = Window.Current.Content as Frame;
+            rootFrame.Navigate(typeof(MainPage));
+        }
+
+        private async void AboutButton_Click(object sender, RoutedEventArgs e)
+        {
+            ContentDialog aboutDialog = new AboutDialog();
+            await aboutDialog.ShowAsync();
         }
     }
 }

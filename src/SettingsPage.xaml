@@ -6,9 +6,17 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Height="971" Width="1827">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Height="Auto" Width="Auto">
 
     <Grid>
-
+        <TextBlock HorizontalAlignment="Left" Margin="48,35,0,0" TextWrapping="Wrap" Text="Settings" VerticalAlignment="Top" FontWeight="Bold" FontSize="48"/>
+        <ToggleSwitch Header="Show advanced buttons for the Web Page" Margin="48,125,0,0" VerticalAlignment="Top" FontSize="24" Toggled="ToggleSwitch_Toggled"/>
+        <CommandBar VerticalAlignment="Bottom">
+            <CommandBar.Content>
+                <Grid/>
+            </CommandBar.Content>
+            <AppBarButton x:Name="BackButton" Icon="Back" Label="Back" Click="BackButton_Click"/>
+            <AppBarButton x:Name="AboutButton" Icon="ClosedCaption" Label="About" Click="AboutButton_Click"/>
+        </CommandBar>
     </Grid>
 </Page>
