@@ -14,6 +14,10 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
+
 
 namespace WebSM
 {
@@ -23,6 +27,8 @@ namespace WebSM
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            AppCenter.Start("fa9bcdc6-1205-4d95-afe2-77ec6985743a",
+                  typeof(Analytics), typeof(Crashes));
         }
 
         protected override void OnLaunched(LaunchActivatedEventArgs e)

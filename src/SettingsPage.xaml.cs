@@ -30,11 +30,17 @@ namespace WebSM
             {
                 if (toggleSwitch.IsOn == true)
                 {
-                    
+                    MainPage mainPage = new MainPage();
+                    mainPage.backButton.Visibility = Visibility.Visible;
+                    mainPage.forwardButton.Visibility = Visibility.Visible;
+                    mainPage.refreshButton.Visibility = Visibility.Visible;
                 }
                 else
                 {
-                    
+                    MainPage mainPage = new MainPage();
+                    mainPage.backButton.Visibility = Visibility.Collapsed;
+                    mainPage.forwardButton.Visibility = Visibility.Collapsed;
+                    mainPage.refreshButton.Visibility = Visibility.Collapsed;
                 }
             }
         }

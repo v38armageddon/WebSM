@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Microsoft.Web.WebView2;
 
 namespace WebSM
 {
@@ -36,28 +37,22 @@ namespace WebSM
                 switch (Item.Tag)
                 {
                     case "YouTube":
-                        webView.Navigate("https://www.youtube.com");
-                        webView.Refresh();
+                        webView2.CoreWebView2.Navigate("https://www.youtube.com");
                         break;
                     case "Twitch":
-                        webView.Navigate("https://www.twitch.tv");
-                        webView.Refresh();
+                        webView2.CoreWebView2.Navigate("https://www.twitch.tv");
                         break;
                     case "Discord":
-                        webView.Navigate("https://discord.com/channels/@me");
-                        webView.Refresh();
+                        webView2.CoreWebView2.Navigate("https://discord.com/channels/@me");
                         break;
                     case "Twitter":
-                        webView.Navigate("https://twitter.com/home");
-                        webView.Refresh();
+                        webView2.CoreWebView2.Navigate("https://twitter.com/home");
                         break;
                     case "Reddit":
-                        webView.Navigate("https://www.reddit.com");
-                        webView.Refresh();
+                        webView2.CoreWebView2.Navigate("https://www.reddit.com");
                         break;
                     case "Spotify":
-                        webView.Navigate("https://open.spotify.com");
-                        webView.Refresh();
+                        webView2.CoreWebView2.Navigate("https://open.spotify.com");
                         break;
                 }
             }
@@ -72,17 +67,17 @@ namespace WebSM
         */
         private void backButton_Click(object sender, RoutedEventArgs e)
         {
-            webView.GoBack();
+            webView2.GoBack();
         }
 
         private void forwardButton_Click(object sender, RoutedEventArgs e)
         {
-            webView.GoForward();
+            webView2.GoForward();
         }
 
         private void refreshButton_Click(object sender, RoutedEventArgs e)
         {
-            webView.Refresh();
+            webView2.Reload();
         }
     }
 }
