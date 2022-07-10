@@ -11,6 +11,9 @@ You can listen to music, watching videos, and even chatting with your friends.
 - Quick and easy to use.
 
 ## Installation
+Minimum Windows version required: Windows 10 1804
+Recommended Windows version: Windows 10 2004
+
 1. Download the .msix file.
 2. If needed, authorize all sources in settings.
 3. Install the software.
