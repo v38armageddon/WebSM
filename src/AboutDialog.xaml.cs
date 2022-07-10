@@ -25,12 +25,7 @@ namespace WebSM
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            System.Diagnostics.Process.Start("https://github.com/v38armageddon/WebSM");
-        }
-
-        private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
-        {
-
+            
         }
     }
 }

@@ -7,10 +7,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Title="About WebSM"
-    PrimaryButtonText="View on GitHub"
-    SecondaryButtonText="Close"
+    PrimaryButtonText="Close"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
-    SecondaryButtonClick="ContentDialog_SecondaryButtonClick"
     Height="Auto" Width="Auto">
 
     <Grid>

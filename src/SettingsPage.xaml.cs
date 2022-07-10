@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -23,7 +24,7 @@ namespace WebSM
             this.InitializeComponent();
         }
 
-        private void ToggleSwitch_Toggled(object sender, RoutedEventArgs e)
+        public void ToggleSwitch_Toggled(object sender, RoutedEventArgs e)
         {
             ToggleSwitch toggleSwitch = sender as ToggleSwitch;
             if (toggleSwitch != null)
@@ -46,16 +47,16 @@ namespace WebSM
         }
 
         // Command Bar
-        private void BackButton_Click(object sender, RoutedEventArgs e)
-        {
-            Frame rootFrame = Window.Current.Content as Frame;
-            rootFrame.Navigate(typeof(MainPage));
-        }
-
         private async void AboutButton_Click(object sender, RoutedEventArgs e)
         {
             ContentDialog aboutDialog = new AboutDialog();
             await aboutDialog.ShowAsync();
+        }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame rootFrame = Window.Current.Content as Frame;
+            rootFrame.Navigate(typeof(MainPage));
         }
     }
 }

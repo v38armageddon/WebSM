@@ -10,7 +10,7 @@
 
     <Grid>
         <TextBlock HorizontalAlignment="Left" Margin="48,35,0,0" TextWrapping="Wrap" Text="Settings" VerticalAlignment="Top" FontWeight="Bold" FontSize="48"/>
-        <ToggleSwitch Header="Show advanced buttons for the Web Page" Margin="48,125,0,0" VerticalAlignment="Top" FontSize="24" Toggled="ToggleSwitch_Toggled"/>
+        <ToggleSwitch x:Name="toggleSwitchAdvancedButtons" Header="Show advanced buttons for the Web Page" Margin="48,125,0,0" VerticalAlignment="Top" FontSize="24" Toggled="ToggleSwitch_Toggled"/>
         <CommandBar VerticalAlignment="Bottom">
             <CommandBar.Content>
                 <Grid/>

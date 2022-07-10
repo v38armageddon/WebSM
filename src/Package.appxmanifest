@@ -10,7 +10,7 @@
   <Identity
     Name="012d719a-e30a-4162-8b13-d818ba3c1a55"
     Publisher="CN=v38armageddon"
-    Version="0.1.1.0" />
+    Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="012d719a-e30a-4162-8b13-d818ba3c1a55" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
@@ -51,6 +51,12 @@
 
   <Capabilities>
     <Capability Name="internetClient" />
-    <uap3:Capability Name="userNotificationListener"/>
+    <uap3:Capability Name="backgroundMediaPlayback"/>
+    <uap:Capability Name="picturesLibrary"/>
+    <uap:Capability Name="musicLibrary"/>
+    <uap:Capability Name="videosLibrary"/>
+    <uap:Capability Name="removableStorage"/>
+    <DeviceCapability Name="microphone"/>
+    <DeviceCapability Name="webcam"/>
   </Capabilities>
 </Package>
