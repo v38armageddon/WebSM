@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -16,14 +15,22 @@ using Windows.UI.Xaml.Navigation;
 
 namespace WebSM
 {
-    public sealed partial class AboutDialog : ContentDialog
+    public sealed partial class RemoveSM : ContentDialog
     {
-        public AboutDialog()
+        public RemoveSM()
         {
             this.InitializeComponent();
+            MainPage mainPage = new MainPage();
+            //selectedShortcut.Text = mainPage.navView.MenuItems.Select(mainPage.navView.SelectedItem);
         }
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        {
+            MainPage mainPage = new MainPage();
+            mainPage.navView.MenuItems.Remove(mainPage.navView.SelectedItem);
+        }
+
+        private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             // Close Dialog
         }

@@ -25,7 +25,7 @@ Q: The installer tell me to use a certificate to install your application, how c
 
 A: The certificate is distributed every release of the application. You can follow the instructions in this website: https://wsldl-pg.github.io/ArchW-docs/Install-Certificate/
 
-Q: I can't connect to my Google Account...
+Q: I can't connect to my Google account...
 
 A: This issue is know due to Google Security, see https://github.com/MicrosoftEdge/WebView2Feedback/issues/1647
 

@@ -11,29 +11,32 @@
 
     <Grid>
         <!-- WebBrowser -->
-        <controls:WebView2 x:Name="webView2" x:FieldModifier="public" Source="https://www.youtube.com" Margin="40,0,0,40"/>
+        <controls:WebView2 x:Name="webView2" x:FieldModifier="public"
+                           Source="https://whatismybrowser.com"
+                           Margin="40,0,0,40"
+                           NavigationStarting="webView2_NavigationStarting"/>
 
         <!-- Navigation bars -->
         <CommandBar x:Name="commandBar"
-                    VerticalAlignment="Bottom">
+                    VerticalAlignment="Bottom"
+                    x:FieldModifier="public">
             <CommandBar.Content>
                 <Grid/>
             </CommandBar.Content>
             <AppBarButton x:Name="backButton" x:FieldModifier="public" Visibility="Collapsed" Icon="Back" Label="Go Back" Click="backButton_Click"/>
             <AppBarButton x:Name="forwardButton" x:FieldModifier="public" Visibility="Collapsed" Icon="Forward" Label="Go Forward" Click="forwardButton_Click"/>
             <AppBarButton x:Name="refreshButton" x:FieldModifier="public" Visibility="Collapsed" Icon="Refresh" Label="Refresh" Click="refreshButton_Click"/>
-            <!-- For a futur update
             <AppBarButton Icon="Add" Label="Add a new Social Media" Click="AppBarButton_Click"/>
-            <AppBarButton Icon="Delete" Label="Remove the current Social Media"/>
-            -->
+            <AppBarButton Icon="Delete" Label="Remove the current Social Media" Click="AppBarButton_Click_1"/>
         </CommandBar>
         <NavigationView PaneDisplayMode="LeftCompact"
                         x:Name="navView"
                         PaneTitle="WebSM"
                         SelectionChanged="NavigationView_SelectionChanged"
-                        IsPaneOpen="False">
+                        IsPaneOpen="False"
+                        x:FieldModifier="public">
             <NavigationView.MenuItems>
-                <NavigationViewItem Content="YouTube" x:Name="YouTube" Icon="Globe" Tag="YouTube" IsSelected="True"/>
+                <NavigationViewItem Content="YouTube" x:Name="YouTube" Icon="Globe" Tag="YouTube"/>
                 <NavigationViewItem Content="Twitch" x:Name="Twitch" Icon="Globe" Tag="Twitch"/>
                 <NavigationViewItem Content="Discord" x:Name="Discord" Icon="Globe" Tag="Discord"/>
                 <NavigationViewItem Content="Twitter" x:Name="Twitter" Icon="Globe" Tag="Twitter"/>
@@ -41,5 +44,26 @@
                 <NavigationViewItem Content="Spotify" x:Name="Spotify" Icon="Globe" Tag="Spotify"/>
             </NavigationView.MenuItems>
         </NavigationView>
+        
+        <!-- Settings -->
+        <SplitView
+            x:Name="settingsView"
+            DisplayMode="Overlay"
+            OpenPaneLength="296"
+            PanePlacement="Right">
+            <SplitView.Pane>
+                <StackPanel>
+                    <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Settings" VerticalAlignment="Top" FontWeight="Bold" FontSize="36"/>
+                    <ToggleSwitch x:Name="toggleSwitchAdvancedButtons" x:FieldModifier="public" Header="Show advanced buttons for the Web Page" Margin="10,10,0,0" FontSize="18" Toggled="ToggleSwitch_Toggled" Width="277"/>
+                    <TextBlock Text="Selected theme" FontSize="18" Margin="10,20,0,0"/>
+                    <ComboBox x:Name="comboBox" x:FieldModifier="public" Width="269" Margin="10,10,0,0" SelectedIndex="0" SelectionChanged="comboBox_SelectionChanged">
+                        <TextBlock x:Name="defaultTheme" Text="Default theme (System based)"/>
+                        <TextBlock x:Name="lightTheme" Text="Light Theme"/>
+                        <TextBlock x:Name="darkTheme" Text="Dark Theme"/>
+                    </ComboBox>
+                    <Button x:Name="AboutButton" Content="About" Click="AboutButton_Click" Margin="10,720,0,0"/>
+                </StackPanel>
+            </SplitView.Pane>
+        </SplitView>
     </Grid>
 </Page>

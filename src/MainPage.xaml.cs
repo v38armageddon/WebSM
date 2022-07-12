@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using WebSM_SQLite_Database;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -19,19 +21,32 @@ namespace WebSM
 {
     public sealed partial class MainPage : Page
     {
-
         public MainPage()
         {
             this.InitializeComponent();
-            SettingsPage settingsPage = new SettingsPage();
+            this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
         }
 
-        private void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+        private void webView2_NavigationStarting(Microsoft.UI.Xaml.Controls.WebView2 sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationStartingEventArgs args)
+        {
+            if (webView2.Source.ToString().Contains("https://accounts.google.com"))
+            {
+                var settings = webView2.CoreWebView2.Settings;
+                settings.UserAgent = GetMobileUserAgent();
+            }
+        }
+
+        private string GetMobileUserAgent()
+        {
+            return "Chrome";
+        }
+
+        public void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
             if (args.IsSettingsSelected)
             {
-                Frame rootFrame = Window.Current.Content as Frame;
-                rootFrame.Navigate(typeof(SettingsPage));
+                settingsView.IsPaneOpen = true;
+                navView.SelectedItem = null;
             }
             else
             {
@@ -61,13 +76,18 @@ namespace WebSM
             }
         }
 
-        /* For a futur update
-        private void AppBarButton_Click(object sender, RoutedEventArgs e)
+        private async void AppBarButton_Click(object sender, RoutedEventArgs e)
         {
-            Frame rootFrame = Window.Current.Content as Frame;
-            rootFrame.Navigate(typeof(NewSM));
+            ContentDialog newSM = new NewSM();
+            await newSM.ShowAsync();
         }
-        */
+
+        private async void AppBarButton_Click_1(object sender, RoutedEventArgs e)
+        {
+            ContentDialog removeSM = new RemoveSM();
+            await removeSM.ShowAsync();
+        }
+
         private void backButton_Click(object sender, RoutedEventArgs e)
         {
             webView2.GoBack();
@@ -81,6 +101,53 @@ namespace WebSM
         private void refreshButton_Click(object sender, RoutedEventArgs e)
         {
             webView2.Reload();
+        }
+
+        // Settings
+        public void ToggleSwitch_Toggled(object sender, RoutedEventArgs e)
+        {
+            var localSettings = ApplicationData.Current.LocalSettings;
+            ToggleSwitch toggleSwitch = sender as ToggleSwitch;
+            if (toggleSwitch != null)
+            {
+                if (toggleSwitch.IsOn == true)
+                {
+                    backButton.Visibility = Visibility.Visible;
+                    forwardButton.Visibility = Visibility.Visible;
+                    refreshButton.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    backButton.Visibility = Visibility.Collapsed;
+                    forwardButton.Visibility = Visibility.Collapsed;
+                    refreshButton.Visibility = Visibility.Collapsed;
+                }
+            }
+        }
+
+        public void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (comboBox.SelectedIndex == 0)
+            {
+                this.RequestedTheme = ElementTheme.Default;
+                string theme = App.Current.RequestedTheme.ToString();
+            }
+            else if (comboBox.SelectedIndex == 1)
+            {
+                this.RequestedTheme = ElementTheme.Light;
+                string theme = App.Current.RequestedTheme.ToString();
+            }
+            else if (comboBox.SelectedIndex == 2)
+            {
+                this.RequestedTheme = ElementTheme.Dark;
+                string theme = App.Current.RequestedTheme.ToString();
+            }
+        }
+
+        private async void AboutButton_Click(object sender, RoutedEventArgs e)
+        {
+            ContentDialog aboutDialog = new AboutDialog();
+            await aboutDialog.ShowAsync();
         }
     }
 }

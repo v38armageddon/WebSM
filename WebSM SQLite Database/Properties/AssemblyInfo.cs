@@ -3,11 +3,11 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("WebSM")]
-[assembly: AssemblyDescription("UWP App who you can link your Social Media.")]
+[assembly: AssemblyTitle("WebSM SQLite Database")]
+[assembly: AssemblyDescription("The Database of WebSM")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("v38armageddon Software")]
-[assembly: AssemblyProduct("WebSM")]
+[assembly: AssemblyProduct("WebSM SQLite Database")]
 [assembly: AssemblyCopyright("Copyright ©  2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
