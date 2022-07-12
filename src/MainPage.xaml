@@ -7,12 +7,14 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Height="Auto" Width="Auto">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    Height="Auto"
+    Width="Auto">
 
     <Grid>
         <!-- WebBrowser -->
         <controls:WebView2 x:Name="webView2" x:FieldModifier="public"
-                           Source="https://whatismybrowser.com"
+                           Source="https://www.youtube.com"
                            Margin="40,0,0,40"
                            NavigationStarting="webView2_NavigationStarting"/>
 
@@ -26,8 +28,10 @@
             <AppBarButton x:Name="backButton" x:FieldModifier="public" Visibility="Collapsed" Icon="Back" Label="Go Back" Click="backButton_Click"/>
             <AppBarButton x:Name="forwardButton" x:FieldModifier="public" Visibility="Collapsed" Icon="Forward" Label="Go Forward" Click="forwardButton_Click"/>
             <AppBarButton x:Name="refreshButton" x:FieldModifier="public" Visibility="Collapsed" Icon="Refresh" Label="Refresh" Click="refreshButton_Click"/>
+            <!-- For a futur update
             <AppBarButton Icon="Add" Label="Add a new Social Media" Click="AppBarButton_Click"/>
             <AppBarButton Icon="Delete" Label="Remove the current Social Media" Click="AppBarButton_Click_1"/>
+            -->
         </CommandBar>
         <NavigationView PaneDisplayMode="LeftCompact"
                         x:Name="navView"
@@ -61,7 +65,9 @@
                         <TextBlock x:Name="lightTheme" Text="Light Theme"/>
                         <TextBlock x:Name="darkTheme" Text="Dark Theme"/>
                     </ComboBox>
-                    <Button x:Name="AboutButton" Content="About" Click="AboutButton_Click" Margin="10,720,0,0"/>
+                    <TextBlock Text="Extras" Margin="10,20,0,0"  FontSize="18"/>
+                    <Button x:Name="webDevButton" Content="Open DevTools" Margin="10,10,0,0" Click="webDevButton_Click"/>
+                    <Button x:Name="AboutButton" Content="About" Click="AboutButton_Click" Margin="130,-32,0,0"/>
                 </StackPanel>
             </SplitView.Pane>
         </SplitView>

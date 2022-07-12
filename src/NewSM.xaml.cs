@@ -40,9 +40,7 @@ namespace WebSM
             else
             {
                 MainPage mainPage = new MainPage();
-                DataAccess.AddData(textBox1.Text);
-                DataAccess.AddData(textBox2.Text);
-                mainPage.navView.MenuItemsSource = DataAccess.GetData();
+                mainPage.navView.MenuItems.Add(new NavigationViewItem() { Content = textBox1.Text, Icon = new SymbolIcon(Symbol.Globe) });
             }
         }
 

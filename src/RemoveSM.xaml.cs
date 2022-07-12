@@ -20,14 +20,12 @@ namespace WebSM
         public RemoveSM()
         {
             this.InitializeComponent();
-            MainPage mainPage = new MainPage();
-            //selectedShortcut.Text = mainPage.navView.MenuItems.Select(mainPage.navView.SelectedItem);
         }
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             MainPage mainPage = new MainPage();
-            mainPage.navView.MenuItems.Remove(mainPage.navView.SelectedItem);
+            //mainPage.navView.MenuItems.RemoveAt(mainPage.navView.SelectedIndex);
         }
 
         private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)

@@ -21,6 +21,7 @@ namespace WebSM
 {
     public sealed partial class MainPage : Page
     {
+
         public MainPage()
         {
             this.InitializeComponent();
@@ -51,26 +52,68 @@ namespace WebSM
             else
             {
                 NavigationViewItem Item = args.SelectedItem as NavigationViewItem;
-
+                string sURL = webView2.Source.ToString();
                 switch (Item.Tag)
                 {
                     case "YouTube":
-                        webView2.CoreWebView2.Navigate("https://www.youtube.com");
+                        if (sURL.StartsWith("https://www.youtube.com"))
+                        {
+                            webView2.CoreWebView2.Resume();
+                        }
+                        else
+                        {
+                            webView2.CoreWebView2.Navigate("https://www.youtube.com");
+                        }
                         break;
                     case "Twitch":
-                        webView2.CoreWebView2.Navigate("https://www.twitch.tv");
+                        if (sURL.StartsWith("https://www.twitch.tv"))
+                        {
+                            webView2.CoreWebView2.Resume();
+                        }
+                        else
+                        {
+                            webView2.CoreWebView2.Navigate("https://www.twitch.tv");
+                        }
                         break;
                     case "Discord":
-                        webView2.CoreWebView2.Navigate("https://discord.com/channels/@me");
+                        if (sURL.StartsWith("https://discord.com/channels"))
+                        {
+                            webView2.CoreWebView2.Resume();
+                        }
+                        else
+                        {
+                            webView2.CoreWebView2.Navigate("https://discord.com/channels/@me");
+                        }
                         break;
                     case "Twitter":
-                        webView2.CoreWebView2.Navigate("https://twitter.com/home");
+                        if (sURL.StartsWith("https://twitter.com"))
+                        {
+                            webView2.CoreWebView2.Resume();
+                        }
+                        else
+                        {
+                            webView2.CoreWebView2.Navigate("https://twitter.com/home");
+                        }
                         break;
                     case "Reddit":
-                        webView2.CoreWebView2.Navigate("https://www.reddit.com");
+                        if (sURL.StartsWith("https://www.reddit.com"))
+                        {
+                            webView2.CoreWebView2.Resume();
+                        }
+                        else
+                        {
+                            webView2.CoreWebView2.Navigate("https://www.reddit.com");
+                        }
                         break;
                     case "Spotify":
-                        webView2.CoreWebView2.Navigate("https://open.spotify.com");
+                        if (sURL.StartsWith("https://open.spotify.com"))
+                        {
+                            webView2.CoreWebView2.Resume();
+                        }
+                        else
+                        {
+                            webView2.CoreWebView2.Navigate("https://open.spotify.com");
+                        }
                         break;
                 }
             }
@@ -104,6 +147,7 @@ namespace WebSM
         }
 
         // Settings
+        ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
         public void ToggleSwitch_Toggled(object sender, RoutedEventArgs e)
         {
             var localSettings = ApplicationData.Current.LocalSettings;
@@ -123,6 +167,7 @@ namespace WebSM
                     refreshButton.Visibility = Visibility.Collapsed;
                 }
             }
+            localSettings.Values["advancedButton"] = toggleSwitch.IsOn;
         }
 
         public void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -142,6 +187,12 @@ namespace WebSM
                 this.RequestedTheme = ElementTheme.Dark;
                 string theme = App.Current.RequestedTheme.ToString();
             }
+            localSettings.Values["theme"] = comboBox.SelectedIndex;
+        }
+
+        private void webDevButton_Click(object sender, RoutedEventArgs e)
+        {
+            webView2.CoreWebView2.OpenDevToolsWindow();
         }
 
         private async void AboutButton_Click(object sender, RoutedEventArgs e)

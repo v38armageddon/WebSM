@@ -29,6 +29,9 @@ namespace WebSM
             this.InitializeComponent();
             this.Suspending += OnSuspending;
             DataAccess.InitializeDatabase();
+            ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+            String localValue = localSettings.Values["advancedButton"] as string;
+            String localValue1 = localSettings.Values["theme"] as string;
             AppCenter.Start("fa9bcdc6-1205-4d95-afe2-77ec6985743a",
                   typeof(Analytics), typeof(Crashes));
         }

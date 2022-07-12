@@ -14,10 +14,6 @@
     Height="Auto" Width="Auto">
 
     <Grid>
-        <StackPanel>
-            <TextBlock Text="Are you sure you want to remove the selected shortcut?"/>
-            <TextBlock Text="The selected shortcut is:"/>
-            <TextBlock x:Name="selectedShortcut" Text=""/>
-        </StackPanel>
+        <TextBlock Text="Are you sure you want to remove the selected shortcut?"/>
     </Grid>
 </ContentDialog>
