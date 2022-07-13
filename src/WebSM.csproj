@@ -244,9 +244,6 @@
     <PackageReference Include="Microsoft.AppCenter.Crashes">
       <Version>4.5.1</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.Data.Sqlite">
-      <Version>6.0.6</Version>
-    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.14</Version>
     </PackageReference>
@@ -262,12 +259,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="WebSM_TemporaryKey.pfx" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\WebSM SQLite Database\WebSM SQLite Database.csproj">
-      <Project>{1637f323-fad0-49cf-a3a8-fe7f66199335}</Project>
-      <Name>WebSM SQLite Database</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

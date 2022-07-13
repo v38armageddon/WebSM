@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
-using WebSM_SQLite_Database;
+/* Uncomment when the issue is solved
+ * using WebSM_SQLite_Database;
+ */
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
@@ -147,7 +149,6 @@ namespace WebSM
         }
 
         // Settings
-        ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
         public void ToggleSwitch_Toggled(object sender, RoutedEventArgs e)
         {
             var localSettings = ApplicationData.Current.LocalSettings;
@@ -167,7 +168,6 @@ namespace WebSM
                     refreshButton.Visibility = Visibility.Collapsed;
                 }
             }
-            localSettings.Values["advancedButton"] = toggleSwitch.IsOn;
         }
 
         public void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -187,7 +187,6 @@ namespace WebSM
                 this.RequestedTheme = ElementTheme.Dark;
                 string theme = App.Current.RequestedTheme.ToString();
             }
-            localSettings.Values["theme"] = comboBox.SelectedIndex;
         }
 
         private void webDevButton_Click(object sender, RoutedEventArgs e)
