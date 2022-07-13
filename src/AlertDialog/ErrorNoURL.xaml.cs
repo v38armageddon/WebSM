@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -14,11 +13,12 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
+
 namespace WebSM
 {
-    public sealed partial class AboutDialog : ContentDialog
+    public sealed partial class ErrorNoURL : ContentDialog
     {
-        public AboutDialog()
+        public ErrorNoURL()
         {
             this.InitializeComponent();
         }

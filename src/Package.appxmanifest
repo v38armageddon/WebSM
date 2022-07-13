@@ -10,7 +10,7 @@
   <Identity
     Name="012d719a-e30a-4162-8b13-d818ba3c1a55"
     Publisher="CN=v38armageddon"
-    Version="1.0.0.0" />
+    Version="1.5.5.0" />
 
   <mp:PhoneIdentity PhoneProductId="012d719a-e30a-4162-8b13-d818ba3c1a55" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
@@ -46,6 +46,10 @@
           <uap:Rotation Preference="landscapeFlipped"/>
           <uap:Rotation Preference="portraitFlipped"/></uap:InitialRotationPreference>
       </uap:VisualElements>
+      <uap:ApplicationContentUriRules>
+        <uap:Rule Type="include" Match="https://*.*.*" WindowsRuntimeAccess="all"/>
+        <uap:Rule Type="include" Match="http://*.*.*" WindowsRuntimeAccess="all"/>
+      </uap:ApplicationContentUriRules>
     </Application>
   </Applications>
 
@@ -56,6 +60,7 @@
     <uap:Capability Name="musicLibrary"/>
     <uap:Capability Name="videosLibrary"/>
     <uap:Capability Name="removableStorage"/>
+    <uap3:Capability Name="userNotificationListener"/>
     <DeviceCapability Name="microphone"/>
     <DeviceCapability Name="webcam"/>
   </Capabilities>
