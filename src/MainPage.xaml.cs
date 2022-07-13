@@ -32,10 +32,18 @@ namespace WebSM
 
         private void webView2_NavigationStarting(Microsoft.UI.Xaml.Controls.WebView2 sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationStartingEventArgs args)
         {
+            // Fix Google connection blocked due to UserAgent, see https://github.com/MicrosoftEdge/WebView2Feedback/issues/1647
+            var settings = webView2.CoreWebView2.Settings;
             if (webView2.Source.ToString().Contains("https://accounts.google.com"))
             {
-                var settings = webView2.CoreWebView2.Settings;
-                settings.UserAgent = GetMobileUserAgent();
+                if (webView2.CoreWebView2.NewWindowRequested)
+                {
+                    settings.UserAgent = GetMobileUserAgent();
+                }
+                else
+                {
+                    settings.UserAgent = GetMobileUserAgent();
+                }
             }
         }
 

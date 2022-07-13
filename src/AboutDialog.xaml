@@ -13,7 +13,7 @@
 
     <Grid>
         <StackPanel>
-            <TextBlock Text="Version: 1.5 Beta"/>
+            <TextBlock Text="Version: 2"/>
             <TextBlock Text="License: GPL-3"/>
             <TextBlock Text="Creator: v38armageddon"/>
         </StackPanel>
