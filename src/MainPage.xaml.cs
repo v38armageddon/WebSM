@@ -147,7 +147,6 @@ namespace WebSM
         }
 
         // Settings
-        ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
         public void ToggleSwitch_Toggled(object sender, RoutedEventArgs e)
         {
             var localSettings = ApplicationData.Current.LocalSettings;
@@ -167,7 +166,6 @@ namespace WebSM
                     refreshButton.Visibility = Visibility.Collapsed;
                 }
             }
-            localSettings.Values["advancedButton"] = toggleSwitch.IsOn;
         }
 
         public void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -187,7 +185,6 @@ namespace WebSM
                 this.RequestedTheme = ElementTheme.Dark;
                 string theme = App.Current.RequestedTheme.ToString();
             }
-            localSettings.Values["theme"] = comboBox.SelectedIndex;
         }
 
         private void webDevButton_Click(object sender, RoutedEventArgs e)

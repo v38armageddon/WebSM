@@ -2,7 +2,7 @@
 A UWP App who you can link your Social Media.
 
 ## What does it do?
-WebSM allows you to create a quick access to your favorite social media.
+WebSM allows you to have a quick access to your favorite social media.
 
 You can listen to music, watching videos, and even chatting with your friends.
 
