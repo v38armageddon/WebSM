@@ -25,11 +25,14 @@
             <CommandBar.Content>
                 <Grid/>
             </CommandBar.Content>
+            <AppBarButton x:Name="openWindowButton" Icon="Add" Label="Open New Window" Click="openWindowButton_Click"/>
             <AppBarButton x:Name="backButton" x:FieldModifier="public" Visibility="Collapsed" Icon="Back" Label="Go Back" Click="backButton_Click"/>
             <AppBarButton x:Name="forwardButton" x:FieldModifier="public" Visibility="Collapsed" Icon="Forward" Label="Go Forward" Click="forwardButton_Click"/>
             <AppBarButton x:Name="refreshButton" x:FieldModifier="public" Visibility="Collapsed" Icon="Refresh" Label="Refresh" Click="refreshButton_Click"/>
+            <!-- For a futur update
             <AppBarButton Icon="Add" Label="Add a new shortcut" Click="AppBarButton_Click"/>
             <AppBarButton Icon="Delete" Label="Remove the current shortcut" Click="AppBarButton_Click_1"/>
+            -->
         </CommandBar>
         <NavigationView PaneDisplayMode="LeftCompact"
                         x:Name="navView"

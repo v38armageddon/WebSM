@@ -1,15 +1,17 @@
-﻿using System;
+﻿using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
-/* Uncomment when the issue is solved
- * using WebSM_SQLite_Database;
-*/
+using WebSM_SQLite_Database;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -17,10 +19,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using Microsoft.AppCenter;
-using Microsoft.AppCenter.Analytics;
-using Microsoft.AppCenter.Crashes;
-using Windows.Storage;
+
 
 namespace WebSM
 {
@@ -30,7 +29,7 @@ namespace WebSM
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
-            //DataAccess.InitializeDatabase();
+            DataAccess.InitializeDatabase();
             AppCenter.Start("fa9bcdc6-1205-4d95-afe2-77ec6985743a",
                   typeof(Analytics), typeof(Crashes));
         }

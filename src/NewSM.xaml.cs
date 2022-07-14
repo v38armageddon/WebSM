@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
-/* Uncomment when the issue is solved
- * using WebSM_SQLite_Database;
-*/
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;

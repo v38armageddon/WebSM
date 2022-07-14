@@ -1,15 +1,18 @@
-﻿using System;
+﻿using Microsoft.Web.WebView2;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
-/* Uncomment when the issue is solved
- * using WebSM_SQLite_Database;
- */
+using System.Threading.Tasks;
+using Windows.ApplicationModel.Core;
+using Windows.ApplicationModel.Resources.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
+using Windows.UI.Core;
 using Windows.UI.Popups;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -17,13 +20,13 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using Microsoft.Web.WebView2;
+
 
 namespace WebSM
 {
     public sealed partial class MainPage : Page
     {
-
+        
         public MainPage()
         {
             this.InitializeComponent();
@@ -36,14 +39,7 @@ namespace WebSM
             var settings = webView2.CoreWebView2.Settings;
             if (webView2.Source.ToString().Contains("https://accounts.google.com"))
             {
-                if (webView2.CoreWebView2.NewWindowRequested)
-                {
-                    settings.UserAgent = GetMobileUserAgent();
-                }
-                else
-                {
-                    settings.UserAgent = GetMobileUserAgent();
-                }
+                settings.UserAgent = GetMobileUserAgent();
             }
         }
 
@@ -57,7 +53,6 @@ namespace WebSM
             if (args.IsSettingsSelected)
             {
                 settingsView.IsPaneOpen = true;
-                navView.SelectedItem = null;
             }
             else
             {
@@ -129,16 +124,28 @@ namespace WebSM
             }
         }
 
-        private async void AppBarButton_Click(object sender, RoutedEventArgs e)
+        private async void openWindowButton_Click(object sender, RoutedEventArgs e)
         {
-            ContentDialog newSM = new NewSM();
-            await newSM.ShowAsync();
-        }
+            var currentAV = ApplicationView.GetForCurrentView();
+            var newAV = CoreApplication.CreateNewView();
+            await newAV.Dispatcher.RunAsync(
+                            CoreDispatcherPriority.Normal,
+                            async () =>
+                            {
+                                var newWindow = Window.Current;
+                                var newAppView = ApplicationView.GetForCurrentView();
 
-        private async void AppBarButton_Click_1(object sender, RoutedEventArgs e)
-        {
-            ContentDialog removeSM = new RemoveSM();
-            await removeSM.ShowAsync();
+                                var frame = new Frame();
+                                frame.Navigate(typeof(MainPage), null);
+                                newWindow.Content = frame;
+                                newWindow.Activate();
+
+                                await ApplicationViewSwitcher.TryShowAsStandaloneAsync(
+                                    newAppView.Id,
+                                    ViewSizePreference.UseMinimum,
+                                    currentAV.Id,
+                                    ViewSizePreference.UseMinimum);
+                            });
         }
 
         private void backButton_Click(object sender, RoutedEventArgs e)
@@ -156,10 +163,21 @@ namespace WebSM
             webView2.Reload();
         }
 
+        private async void AppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            ContentDialog newSM = new NewSM();
+            await newSM.ShowAsync();
+        }
+
+        private async void AppBarButton_Click_1(object sender, RoutedEventArgs e)
+        {
+            ContentDialog removeSM = new RemoveSM();
+            await removeSM.ShowAsync();
+        }
+
         // Settings
         public void ToggleSwitch_Toggled(object sender, RoutedEventArgs e)
         {
-            var localSettings = ApplicationData.Current.LocalSettings;
             ToggleSwitch toggleSwitch = sender as ToggleSwitch;
             if (toggleSwitch != null)
             {
@@ -177,7 +195,7 @@ namespace WebSM
                 }
             }
         }
-
+        
         public void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (comboBox.SelectedIndex == 0)
