@@ -1,0 +1,19 @@
+﻿<ContentDialog
+    x:Class="WebSM.RemoveSM"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WebSM"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="Remove a shortcut"
+    PrimaryButtonText="Remove"
+    SecondaryButtonText="Cancel"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
+    SecondaryButtonClick="ContentDialog_SecondaryButtonClick"
+    Height="Auto" Width="Auto">
+
+    <Grid>
+        <TextBlock Text="Are you sure you want to remove the selected shortcut?"/>
+    </Grid>
+</ContentDialog>

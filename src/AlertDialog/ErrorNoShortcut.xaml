@@ -1,0 +1,18 @@
+﻿<ContentDialog
+    x:Class="WebSM.ErrorNoShortcut"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WebSM"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="Error"
+    PrimaryButtonText="Close"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
+    Height="Auto"
+    Width="Auto">
+
+    <Grid>
+        <TextBlock Text="Please insert a name for your shortcut."/>
+    </Grid>
+</ContentDialog>

@@ -13,9 +13,15 @@
 
     <Grid>
         <StackPanel>
-            <TextBlock Text="Version: 1.0"/>
+            <TextBlock Text="Version: 2"/>
             <TextBlock Text="License: GPL-3"/>
             <TextBlock Text="Creator: v38armageddon"/>
+            <TextBlock>
+                <Hyperlink NavigateUri="https://github.com/v38armageddon/WebSM">View on GitHub</Hyperlink>
+            </TextBlock>
+            <TextBlock>
+                <Hyperlink NavigateUri="https://github.com/v38armageddon/WebSM/blob/master/Privacy.md">Privacy Statement</Hyperlink>
+            </TextBlock>
         </StackPanel>
     </Grid>
 </ContentDialog>
