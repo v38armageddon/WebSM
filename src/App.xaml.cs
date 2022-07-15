@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
-using WebSM_SQLite_Database;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
@@ -25,11 +24,13 @@ namespace WebSM
 {
     sealed partial class App : Application
     {
+        public bool advancedButton { get; set; }
+        public string Theme { get; set; }
+
         public App()
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
-            DataAccess.InitializeDatabase();
             AppCenter.Start("fa9bcdc6-1205-4d95-afe2-77ec6985743a",
                   typeof(Analytics), typeof(Crashes));
         }

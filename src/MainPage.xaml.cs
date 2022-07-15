@@ -1,5 +1,6 @@
 ﻿using Microsoft.Web.WebView2;
 using System;
+using System.Configuration;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -30,8 +31,13 @@ namespace WebSM
         public MainPage()
         {
             this.InitializeComponent();
-            this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
+            Current = this;
         }
+        
+        public bool advancedButton { get; set; }
+        public string Theme { get; set; }
+
+        public static MainPage Current;
 
         private void webView2_NavigationStarting(Microsoft.UI.Xaml.Controls.WebView2 sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationStartingEventArgs args)
         {
@@ -183,16 +189,22 @@ namespace WebSM
             {
                 if (toggleSwitch.IsOn == true)
                 {
+                    openWindowButton.Visibility = Visibility.Visible;
                     backButton.Visibility = Visibility.Visible;
                     forwardButton.Visibility = Visibility.Visible;
                     refreshButton.Visibility = Visibility.Visible;
+                    Properties.Settings.Default.advancedButton = true;
                 }
                 else
                 {
+                    openWindowButton.Visibility = Visibility.Collapsed;
                     backButton.Visibility = Visibility.Collapsed;
                     forwardButton.Visibility = Visibility.Collapsed;
                     refreshButton.Visibility = Visibility.Collapsed;
+                    Properties.Settings.Default.advancedButton = false;
+                    
                 }
+                Properties.Settings.Default.Save();
             }
         }
         
@@ -202,17 +214,21 @@ namespace WebSM
             {
                 this.RequestedTheme = ElementTheme.Default;
                 string theme = App.Current.RequestedTheme.ToString();
+                Properties.Settings.Default.Theme = theme;
             }
             else if (comboBox.SelectedIndex == 1)
             {
                 this.RequestedTheme = ElementTheme.Light;
                 string theme = App.Current.RequestedTheme.ToString();
+                Properties.Settings.Default.Theme = theme;
             }
             else if (comboBox.SelectedIndex == 2)
             {
                 this.RequestedTheme = ElementTheme.Dark;
                 string theme = App.Current.RequestedTheme.ToString();
+                Properties.Settings.Default.Theme = theme;
             }
+            Properties.Settings.Default.Save();
         }
 
         private void webDevButton_Click(object sender, RoutedEventArgs e)

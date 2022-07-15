@@ -40,6 +40,7 @@ namespace WebSM
             {
                 MainPage mainPage = new MainPage();
                 mainPage.navView.MenuItems.Add(new NavigationViewItem() { Content = textBox1.Text, Icon = new SymbolIcon(Symbol.Globe) });
+
             }
         }
 

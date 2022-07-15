@@ -25,7 +25,7 @@
             <CommandBar.Content>
                 <Grid/>
             </CommandBar.Content>
-            <AppBarButton x:Name="openWindowButton" Icon="Add" Label="Open New Window" Click="openWindowButton_Click"/>
+            <AppBarButton x:Name="openWindowButton" x:FieldModifier="public" Visibility="Collapsed" Icon="Add" Label="Open New Window" Click="openWindowButton_Click"/>
             <AppBarButton x:Name="backButton" x:FieldModifier="public" Visibility="Collapsed" Icon="Back" Label="Go Back" Click="backButton_Click"/>
             <AppBarButton x:Name="forwardButton" x:FieldModifier="public" Visibility="Collapsed" Icon="Forward" Label="Go Forward" Click="forwardButton_Click"/>
             <AppBarButton x:Name="refreshButton" x:FieldModifier="public" Visibility="Collapsed" Icon="Refresh" Label="Refresh" Click="refreshButton_Click"/>
