@@ -32,10 +32,13 @@ namespace WebSM
         {
             this.InitializeComponent();
             Current = this;
+            ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+            Windows.Storage.ApplicationDataCompositeValue composite = (ApplicationDataCompositeValue)localSettings.Values["Theme"];
+            if (composite != null)
+            {
+                String theme = composite["Theme"] as string;
+            }
         }
-        
-        public bool advancedButton { get; set; }
-        public string Theme { get; set; }
 
         public static MainPage Current;
 
@@ -184,6 +187,8 @@ namespace WebSM
         // Settings
         public void ToggleSwitch_Toggled(object sender, RoutedEventArgs e)
         {
+            ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+            Windows.Storage.ApplicationDataCompositeValue composite = new Windows.Storage.ApplicationDataCompositeValue();
             ToggleSwitch toggleSwitch = sender as ToggleSwitch;
             if (toggleSwitch != null)
             {
@@ -193,7 +198,6 @@ namespace WebSM
                     backButton.Visibility = Visibility.Visible;
                     forwardButton.Visibility = Visibility.Visible;
                     refreshButton.Visibility = Visibility.Visible;
-                    Properties.Settings.Default.advancedButton = true;
                 }
                 else
                 {
@@ -201,34 +205,35 @@ namespace WebSM
                     backButton.Visibility = Visibility.Collapsed;
                     forwardButton.Visibility = Visibility.Collapsed;
                     refreshButton.Visibility = Visibility.Collapsed;
-                    Properties.Settings.Default.advancedButton = false;
-                    
                 }
-                Properties.Settings.Default.Save();
             }
         }
         
         public void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+            Windows.Storage.ApplicationDataCompositeValue composite = new Windows.Storage.ApplicationDataCompositeValue();
             if (comboBox.SelectedIndex == 0)
             {
                 this.RequestedTheme = ElementTheme.Default;
                 string theme = App.Current.RequestedTheme.ToString();
-                Properties.Settings.Default.Theme = theme;
+                composite["Theme"] = theme;
+                localSettings.Values["Theme"] = composite;
             }
             else if (comboBox.SelectedIndex == 1)
             {
                 this.RequestedTheme = ElementTheme.Light;
                 string theme = App.Current.RequestedTheme.ToString();
-                Properties.Settings.Default.Theme = theme;
+                composite["Theme"] = theme;
+                localSettings.Values["Theme"] = composite;
             }
             else if (comboBox.SelectedIndex == 2)
             {
                 this.RequestedTheme = ElementTheme.Dark;
                 string theme = App.Current.RequestedTheme.ToString();
-                Properties.Settings.Default.Theme = theme;
+                composite["Theme"] = theme;
+                localSettings.Values["Theme"] = composite;
             }
-            Properties.Settings.Default.Save();
         }
 
         private void webDevButton_Click(object sender, RoutedEventArgs e)
