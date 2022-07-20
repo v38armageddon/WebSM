@@ -15,8 +15,15 @@ Minimum Windows version required: Windows 10 1804
 
 Recommended Windows version: Windows 10 2004
 
-1. Download the .msix file.
+### Recommended installation
+The best method to get WebSM is to install from the Microsoft Store: https://apps.microsoft.com/store/detail/websm/9NVMBH7W0HXF
+
+### Alternate installation
+If you want to install without the Microsoft Store, follow theses steps:
+
+1. Download the .msix file and the .cer file.
 2. If needed, authorize all sources in settings.
+3. Install the certificate, see Q&A for installation.
 3. Install the software.
 4. Launch the software via the start menu.
 
