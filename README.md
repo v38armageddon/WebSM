@@ -15,6 +15,8 @@ Minimum Windows version required: Windows 10 1804
 
 Recommended Windows version: Windows 10 2004
 
+![https://apps.microsoft.com/store/detail/websm/9NVMBH7W0HXF](https://github.com/v38armageddon/WebSM/blob/master/Assets/Microsoft-store.png)
+
 ### Recommended installation
 The best method to get WebSM is to install from the Microsoft Store: https://apps.microsoft.com/store/detail/websm/9NVMBH7W0HXF
 
