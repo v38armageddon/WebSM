@@ -2,7 +2,7 @@
 name: Bug report
 about: Found a bug? Report here!
 title: "[BUG] "
-labels: ''
+labels: need testing
 assignees: v38armageddon
 
 ---
