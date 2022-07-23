@@ -2,8 +2,8 @@
 name: Feature request
 about: Do you have a idea? Say here!
 title: "[IDEA] "
-labels: ''
-assignees: ''
+labels: enhancement
+assignees: v38armageddon
 
 ---
 

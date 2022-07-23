@@ -25,7 +25,7 @@ namespace WebSM
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             MainPage mainPage = new MainPage();
-            //mainPage.navView.MenuItems.RemoveAt(mainPage.navView.SelectedIndex);
+            //mainPage.navView.MenuItems.RemoveAt(MainPage.Current.navView.MenuItemsSource = );
         }
 
         private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)

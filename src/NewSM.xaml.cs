@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
-/* Uncomment when the issue is solved
- * using WebSM_SQLite_Database;
-*/
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -43,6 +40,7 @@ namespace WebSM
             {
                 MainPage mainPage = new MainPage();
                 mainPage.navView.MenuItems.Add(new NavigationViewItem() { Content = textBox1.Text, Icon = new SymbolIcon(Symbol.Globe) });
+
             }
         }
 
