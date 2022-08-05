@@ -31,7 +31,6 @@ namespace WebSM
         public MainPage()
         {
             this.InitializeComponent();
-            Current = this;
             ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
             Windows.Storage.ApplicationDataCompositeValue composite = (ApplicationDataCompositeValue)localSettings.Values["Theme"];
             if (composite != null)
@@ -39,8 +38,6 @@ namespace WebSM
                 String theme = composite["Theme"] as string;
             }
         }
-
-        public static MainPage Current;
 
         private void webView2_NavigationStarting(Microsoft.UI.Xaml.Controls.WebView2 sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationStartingEventArgs args)
         {
@@ -138,23 +135,23 @@ namespace WebSM
             var currentAV = ApplicationView.GetForCurrentView();
             var newAV = CoreApplication.CreateNewView();
             await newAV.Dispatcher.RunAsync(
-                            CoreDispatcherPriority.Normal,
-                            async () =>
-                            {
-                                var newWindow = Window.Current;
-                                var newAppView = ApplicationView.GetForCurrentView();
-
-                                var frame = new Frame();
-                                frame.Navigate(typeof(MainPage), null);
-                                newWindow.Content = frame;
-                                newWindow.Activate();
-
-                                await ApplicationViewSwitcher.TryShowAsStandaloneAsync(
-                                    newAppView.Id,
-                                    ViewSizePreference.UseMinimum,
-                                    currentAV.Id,
-                                    ViewSizePreference.UseMinimum);
-                            });
+                CoreDispatcherPriority.Normal,
+                async () =>
+                {
+                    var newWindow = Window.Current;
+                    var newAppView = ApplicationView.GetForCurrentView();
+                    var frame = new Frame();
+                    
+                    frame.Navigate(typeof(MainPage), null);
+                    newWindow.Content = frame;
+                    newWindow.Activate();
+                    
+                    await ApplicationViewSwitcher.TryShowAsStandaloneAsync(
+                        newAppView.Id,
+                        ViewSizePreference.UseMinimum,
+                        currentAV.Id,
+                        ViewSizePreference.UseMinimum);
+                });
         }
 
         private void backButton_Click(object sender, RoutedEventArgs e)
@@ -170,18 +167,6 @@ namespace WebSM
         private void refreshButton_Click(object sender, RoutedEventArgs e)
         {
             webView2.Reload();
-        }
-
-        private async void AppBarButton_Click(object sender, RoutedEventArgs e)
-        {
-            ContentDialog newSM = new NewSM();
-            await newSM.ShowAsync();
-        }
-
-        private async void AppBarButton_Click_1(object sender, RoutedEventArgs e)
-        {
-            ContentDialog removeSM = new RemoveSM();
-            await removeSM.ShowAsync();
         }
 
         // Settings
