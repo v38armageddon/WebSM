@@ -57,6 +57,12 @@ namespace WebSM
             return "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.134 Safari/537.36 Edge/103.0.1264.77";
         }
 
+
+        private void navView_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
+        {
+            webView2.GoBack();
+        }
+
         public void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
             if (args.IsSettingsSelected)
@@ -215,7 +221,7 @@ namespace WebSM
         {
             webView2.CoreWebView2.OpenDevToolsWindow();
         }
-
+        
         private async void AboutButton_Click(object sender, RoutedEventArgs e)
         {
             ContentDialog aboutDialog = new AboutDialog();

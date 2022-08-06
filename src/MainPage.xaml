@@ -30,12 +30,10 @@
             <AppBarButton x:Name="forwardButton" x:FieldModifier="public" Visibility="Collapsed" Icon="Forward" Label="Go Forward" Click="forwardButton_Click"/>
             <AppBarButton x:Name="refreshButton" x:FieldModifier="public" Visibility="Collapsed" Icon="Refresh" Label="Refresh" Click="refreshButton_Click"/>
         </CommandBar>
-        <NavigationView PaneDisplayMode="LeftCompact"
-                        x:Name="navView"
-                        PaneTitle="WebSM"
-                        SelectionChanged="NavigationView_SelectionChanged"
-                        IsPaneOpen="False"
-                        x:FieldModifier="public">
+        <NavigationView PaneDisplayMode="LeftCompact" x:Name="navView" PaneTitle="WebSM"
+                        SelectionChanged="NavigationView_SelectionChanged" IsPaneOpen="False"
+                        x:FieldModifier="public" IsBackEnabled="True"
+                        BackRequested="navView_BackRequested">
             <NavigationView.MenuItems>
                 <NavigationViewItem Content="YouTube" x:Name="YouTube" Icon="Globe" Tag="YouTube"/>
                 <NavigationViewItem Content="Twitch" x:Name="Twitch" Icon="Globe" Tag="Twitch"/>
