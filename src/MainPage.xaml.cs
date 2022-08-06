@@ -31,12 +31,6 @@ namespace WebSM
         public MainPage()
         {
             this.InitializeComponent();
-            ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
-            Windows.Storage.ApplicationDataCompositeValue composite = (ApplicationDataCompositeValue)localSettings.Values["Theme"];
-            if (composite != null)
-            {
-                String theme = composite["Theme"] as string;
-            }
         }
 
         private void webView2_NavigationStarting(Microsoft.UI.Xaml.Controls.WebView2 sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationStartingEventArgs args)
@@ -47,11 +41,20 @@ namespace WebSM
             {
                 settings.UserAgent = GetMobileUserAgent();
             }
+            else
+            {
+                settings.UserAgent = DefaultUserAgent();
+            }
         }
 
         private string GetMobileUserAgent()
         {
             return "Chrome";
+        }
+        
+        private string DefaultUserAgent()
+        {
+            return "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.134 Safari/537.36 Edge/103.0.1264.77";
         }
 
         public void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
@@ -172,8 +175,6 @@ namespace WebSM
         // Settings
         public void ToggleSwitch_Toggled(object sender, RoutedEventArgs e)
         {
-            ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
-            Windows.Storage.ApplicationDataCompositeValue composite = new Windows.Storage.ApplicationDataCompositeValue();
             ToggleSwitch toggleSwitch = sender as ToggleSwitch;
             if (toggleSwitch != null)
             {
@@ -196,28 +197,17 @@ namespace WebSM
         
         public void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
-            Windows.Storage.ApplicationDataCompositeValue composite = new Windows.Storage.ApplicationDataCompositeValue();
-            if (comboBox.SelectedIndex == 0)
+            if (comboBox.SelectedIndex == 0) // <- Default theme from the system
             {
                 this.RequestedTheme = ElementTheme.Default;
-                string theme = App.Current.RequestedTheme.ToString();
-                composite["Theme"] = theme;
-                localSettings.Values["Theme"] = composite;
             }
-            else if (comboBox.SelectedIndex == 1)
+            else if (comboBox.SelectedIndex == 1) // <- Light theme
             {
                 this.RequestedTheme = ElementTheme.Light;
-                string theme = App.Current.RequestedTheme.ToString();
-                composite["Theme"] = theme;
-                localSettings.Values["Theme"] = composite;
             }
-            else if (comboBox.SelectedIndex == 2)
+            else if (comboBox.SelectedIndex == 2) // <- Dark theme
             {
                 this.RequestedTheme = ElementTheme.Dark;
-                string theme = App.Current.RequestedTheme.ToString();
-                composite["Theme"] = theme;
-                localSettings.Values["Theme"] = composite;
             }
         }
 
