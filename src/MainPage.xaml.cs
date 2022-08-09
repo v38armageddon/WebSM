@@ -22,7 +22,6 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-
 namespace WebSM
 {
     public sealed partial class MainPage : Page

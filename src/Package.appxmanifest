@@ -51,8 +51,8 @@
           <uap:Rotation Preference="portraitFlipped"/></uap:InitialRotationPreference>
       </uap:VisualElements>
       <uap:ApplicationContentUriRules>
-        <uap:Rule Type="include" Match="https://*.*.*" WindowsRuntimeAccess="all"/>
-        <uap:Rule Type="include" Match="http://*.*.*" WindowsRuntimeAccess="all"/>
+        <uap:Rule Type="include" Match="https://*.*.*" WindowsRuntimeAccess="allowForWebOnly"/>
+        <uap:Rule Type="include" Match="http://*.*.*" WindowsRuntimeAccess="allowForWebOnly"/>
       </uap:ApplicationContentUriRules>
     </Application>
   </Applications>
