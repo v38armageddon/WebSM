@@ -8,11 +8,11 @@
   IgnorableNamespaces="uap mp uap3">
 
   <Identity
-    Name="012d719a-e30a-4162-8b13-d818ba3c1a55"
+    Name="34823v38armageddon.WebSM"
     Publisher="CN=v38armageddon"
     Version="2.5.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="012d719a-e30a-4162-8b13-d818ba3c1a55" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="35eaeac7-62c3-4e75-8a1a-c197d1793470" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>WebSM</DisplayName>
@@ -50,10 +50,6 @@
           <uap:Rotation Preference="landscapeFlipped"/>
           <uap:Rotation Preference="portraitFlipped"/></uap:InitialRotationPreference>
       </uap:VisualElements>
-      <uap:ApplicationContentUriRules>
-        <uap:Rule Type="include" Match="https://*.*.*" WindowsRuntimeAccess="allowForWebOnly"/>
-        <uap:Rule Type="include" Match="http://*.*.*" WindowsRuntimeAccess="allowForWebOnly"/>
-      </uap:ApplicationContentUriRules>
     </Application>
   </Applications>
 
