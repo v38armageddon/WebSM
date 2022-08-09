@@ -24,7 +24,7 @@
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <AppxBundle>Always</AppxBundle>
-    <AppxBundlePlatforms>neutral</AppxBundlePlatforms>
+    <AppxBundlePlatforms>x86</AppxBundlePlatforms>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     <AppxPackageDir>C:\Users\v38armageddon\Documents\AppX\</AppxPackageDir>
     <PackageCertificateKeyFile />
