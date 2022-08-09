@@ -1,5 +1,5 @@
 # ![Logo WebSM](Assets/WebSM.png) WebSM
-A UWP App who you can link your Social Media.
+A UWP App who you can have your Social Media in one application.
 
 ## What does it do?
 WebSM allows you to have a quick access to your favorite social media.

@@ -22,7 +22,6 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-
 namespace WebSM
 {
     public sealed partial class MainPage : Page
@@ -31,16 +30,7 @@ namespace WebSM
         public MainPage()
         {
             this.InitializeComponent();
-            Current = this;
-            ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
-            Windows.Storage.ApplicationDataCompositeValue composite = (ApplicationDataCompositeValue)localSettings.Values["Theme"];
-            if (composite != null)
-            {
-                String theme = composite["Theme"] as string;
-            }
         }
-
-        public static MainPage Current;
 
         private void webView2_NavigationStarting(Microsoft.UI.Xaml.Controls.WebView2 sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationStartingEventArgs args)
         {
@@ -50,11 +40,26 @@ namespace WebSM
             {
                 settings.UserAgent = GetMobileUserAgent();
             }
+            else
+            {
+                settings.UserAgent = DefaultUserAgent();
+            }
         }
 
         private string GetMobileUserAgent()
         {
             return "Chrome";
+        }
+        
+        private string DefaultUserAgent()
+        {
+            return "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.134 Safari/537.36 Edge/103.0.1264.77";
+        }
+
+
+        private void navView_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
+        {
+            webView2.GoBack();
         }
 
         public void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
@@ -138,23 +143,23 @@ namespace WebSM
             var currentAV = ApplicationView.GetForCurrentView();
             var newAV = CoreApplication.CreateNewView();
             await newAV.Dispatcher.RunAsync(
-                            CoreDispatcherPriority.Normal,
-                            async () =>
-                            {
-                                var newWindow = Window.Current;
-                                var newAppView = ApplicationView.GetForCurrentView();
-
-                                var frame = new Frame();
-                                frame.Navigate(typeof(MainPage), null);
-                                newWindow.Content = frame;
-                                newWindow.Activate();
-
-                                await ApplicationViewSwitcher.TryShowAsStandaloneAsync(
-                                    newAppView.Id,
-                                    ViewSizePreference.UseMinimum,
-                                    currentAV.Id,
-                                    ViewSizePreference.UseMinimum);
-                            });
+                CoreDispatcherPriority.Normal,
+                async () =>
+                {
+                    var newWindow = Window.Current;
+                    var newAppView = ApplicationView.GetForCurrentView();
+                    var frame = new Frame();
+                    
+                    frame.Navigate(typeof(MainPage), null);
+                    newWindow.Content = frame;
+                    newWindow.Activate();
+                    
+                    await ApplicationViewSwitcher.TryShowAsStandaloneAsync(
+                        newAppView.Id,
+                        ViewSizePreference.UseMinimum,
+                        currentAV.Id,
+                        ViewSizePreference.UseMinimum);
+                });
         }
 
         private void backButton_Click(object sender, RoutedEventArgs e)
@@ -172,23 +177,9 @@ namespace WebSM
             webView2.Reload();
         }
 
-        private async void AppBarButton_Click(object sender, RoutedEventArgs e)
-        {
-            ContentDialog newSM = new NewSM();
-            await newSM.ShowAsync();
-        }
-
-        private async void AppBarButton_Click_1(object sender, RoutedEventArgs e)
-        {
-            ContentDialog removeSM = new RemoveSM();
-            await removeSM.ShowAsync();
-        }
-
         // Settings
         public void ToggleSwitch_Toggled(object sender, RoutedEventArgs e)
         {
-            ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
-            Windows.Storage.ApplicationDataCompositeValue composite = new Windows.Storage.ApplicationDataCompositeValue();
             ToggleSwitch toggleSwitch = sender as ToggleSwitch;
             if (toggleSwitch != null)
             {
@@ -211,28 +202,17 @@ namespace WebSM
         
         public void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
-            Windows.Storage.ApplicationDataCompositeValue composite = new Windows.Storage.ApplicationDataCompositeValue();
-            if (comboBox.SelectedIndex == 0)
+            if (comboBox.SelectedIndex == 0) // <- Default theme from the system
             {
                 this.RequestedTheme = ElementTheme.Default;
-                string theme = App.Current.RequestedTheme.ToString();
-                composite["Theme"] = theme;
-                localSettings.Values["Theme"] = composite;
             }
-            else if (comboBox.SelectedIndex == 1)
+            else if (comboBox.SelectedIndex == 1) // <- Light theme
             {
                 this.RequestedTheme = ElementTheme.Light;
-                string theme = App.Current.RequestedTheme.ToString();
-                composite["Theme"] = theme;
-                localSettings.Values["Theme"] = composite;
             }
-            else if (comboBox.SelectedIndex == 2)
+            else if (comboBox.SelectedIndex == 2) // <- Dark theme
             {
                 this.RequestedTheme = ElementTheme.Dark;
-                string theme = App.Current.RequestedTheme.ToString();
-                composite["Theme"] = theme;
-                localSettings.Values["Theme"] = composite;
             }
         }
 
@@ -240,7 +220,7 @@ namespace WebSM
         {
             webView2.CoreWebView2.OpenDevToolsWindow();
         }
-
+        
         private async void AboutButton_Click(object sender, RoutedEventArgs e)
         {
             ContentDialog aboutDialog = new AboutDialog();
