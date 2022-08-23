@@ -31,6 +31,10 @@ namespace WebSM
         public MainPage()
         {
             this.InitializeComponent();
+            if (pivot.Items.Contains(0))
+            {
+                Application.Current.Exit();
+            }
         }
 
         private void webView2_NavigationStarting(Microsoft.UI.Xaml.Controls.WebView2 sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationStartingEventArgs args)
@@ -183,6 +187,16 @@ namespace WebSM
         private void refreshButton_Click(object sender, RoutedEventArgs e)
         {
             webView2.Reload();
+        }
+
+        private void addButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void removeButton_Click(object sender, RoutedEventArgs e)
+        {
+            
         }
 
         // Settings

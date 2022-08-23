@@ -33,8 +33,8 @@
             <AppBarButton x:Name="backButton" x:FieldModifier="public" Visibility="Collapsed" Icon="Back" Label="Go Back" Click="backButton_Click"/>
             <AppBarButton x:Name="forwardButton" x:FieldModifier="public" Visibility="Collapsed" Icon="Forward" Label="Go Forward" Click="forwardButton_Click"/>
             <AppBarButton x:Name="refreshButton" x:FieldModifier="public" Visibility="Collapsed" Icon="Refresh" Label="Refresh" Click="refreshButton_Click"/>
-            <AppBarButton x:Name="addButton" Icon="Add" Label="New Tab"/>
-            <AppBarButton x:Name="removeButton" Icon="Remove" Label="Remove Tab"/>
+            <AppBarButton x:Name="addButton" Icon="Add" Label="New Tab" Click="addButton_Click"/>
+            <AppBarButton x:Name="removeButton" Icon="Remove" Label="Remove Tab" Click="removeButton_Click"/>
         </CommandBar>
         <NavigationView PaneDisplayMode="LeftCompact" x:Name="navView" PaneTitle="WebSM"
                         SelectionChanged="NavigationView_SelectionChanged" IsPaneOpen="False"
