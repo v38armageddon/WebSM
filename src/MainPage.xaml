@@ -13,11 +13,22 @@
 
     <Grid>
         <!-- WebBrowser -->
-        <controls:WebView2 x:Name="webView2" x:FieldModifier="public"
+        <Pivot x:Name="pivot" Margin="40,0,0,40">
+            <PivotItem Header="PivotItem 0">
+                <Grid>
+                    <controls:WebView2 x:Name="webView2" x:FieldModifier="public"
                            Source="https://www.youtube.com"
-                           Margin="40,0,0,40"
-                           NavigationStarting="webView2_NavigationStarting"/>
-
+                           NavigationStarting="webView2_NavigationStarting" Margin="-12,0,-12,0"/>
+                </Grid>
+            </PivotItem>
+            <PivotItem Header="PivotItem 1">
+                <Grid>
+                    <controls:WebView2 x:Name="webView21" x:FieldModifier="public"
+                           Source="https://www.youtube.com"
+                           NavigationStarting="webView2_NavigationStarting" Margin="-12,0,-12,0"/>
+                </Grid>
+            </PivotItem>
+        </Pivot>
         <!-- Navigation bars -->
         <CommandBar x:Name="commandBar"
                     VerticalAlignment="Bottom"
@@ -29,6 +40,8 @@
             <AppBarButton x:Name="backButton" x:FieldModifier="public" Visibility="Collapsed" Icon="Back" Label="Go Back" Click="backButton_Click"/>
             <AppBarButton x:Name="forwardButton" x:FieldModifier="public" Visibility="Collapsed" Icon="Forward" Label="Go Forward" Click="forwardButton_Click"/>
             <AppBarButton x:Name="refreshButton" x:FieldModifier="public" Visibility="Collapsed" Icon="Refresh" Label="Refresh" Click="refreshButton_Click"/>
+            <AppBarButton Icon="Add" Label="New Tab"/>
+            <AppBarButton Icon="Remove" Label="Remove Tab"/>
         </CommandBar>
         <NavigationView PaneDisplayMode="LeftCompact" x:Name="navView" PaneTitle="WebSM"
                         SelectionChanged="NavigationView_SelectionChanged" IsPaneOpen="False"
@@ -66,5 +79,6 @@
                 </StackPanel>
             </SplitView.Pane>
         </SplitView>
+
     </Grid>
 </Page>

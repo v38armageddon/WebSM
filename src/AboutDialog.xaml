@@ -14,7 +14,7 @@
     <Grid>
         <StackPanel>
             <TextBlock Text="Version: 2.5"/>
-            <TextBlock Text="License: GPL-3"/>
+            <TextBlock Text="License: MS-PL"/>
             <TextBlock Text="Creator: v38armageddon"/>
             <TextBlock>
                 <Hyperlink NavigateUri="https://github.com/v38armageddon/WebSM">View on GitHub</Hyperlink>

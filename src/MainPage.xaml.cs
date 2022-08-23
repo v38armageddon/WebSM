@@ -30,6 +30,7 @@ namespace WebSM
         public MainPage()
         {
             this.InitializeComponent();
+            
         }
 
         private void webView2_NavigationStarting(Microsoft.UI.Xaml.Controls.WebView2 sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationStartingEventArgs args)
@@ -66,7 +67,14 @@ namespace WebSM
         {
             if (args.IsSettingsSelected)
             {
-                settingsView.IsPaneOpen = true;
+                if (settingsView.IsPaneOpen == false)
+                {
+                    settingsView.IsPaneOpen = true;
+                }
+                else if (settingsView.IsPaneOpen == true)
+                {
+                    settingsView.IsPaneOpen = false;
+                }
             }
             else
             {
