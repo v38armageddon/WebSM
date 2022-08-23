@@ -22,15 +22,15 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
+
 namespace WebSM
 {
     public sealed partial class MainPage : Page
     {
-        
+
         public MainPage()
         {
             this.InitializeComponent();
-            
         }
 
         private void webView2_NavigationStarting(Microsoft.UI.Xaml.Controls.WebView2 sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationStartingEventArgs args)
@@ -222,11 +222,6 @@ namespace WebSM
             {
                 this.RequestedTheme = ElementTheme.Dark;
             }
-        }
-
-        private void webDevButton_Click(object sender, RoutedEventArgs e)
-        {
-            webView2.CoreWebView2.OpenDevToolsWindow();
         }
         
         private async void AboutButton_Click(object sender, RoutedEventArgs e)
