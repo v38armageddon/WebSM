@@ -21,12 +21,19 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-
+using Microsoft.UI.Xaml.Controls;
+using NavigationView = Windows.UI.Xaml.Controls.NavigationView;
+using NavigationViewBackRequestedEventArgs = Windows.UI.Xaml.Controls.NavigationViewBackRequestedEventArgs;
+using NavigationViewSelectionChangedEventArgs = Windows.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs;
+using NavigationViewItem = Windows.UI.Xaml.Controls.NavigationViewItem;
 
 namespace WebSM
 {
     public sealed partial class MainPage : Page
     {
+        #region global
+        PivotItem pivotItem = new PivotItem();
+        #endregion
 
         public MainPage()
         {
@@ -49,6 +56,7 @@ namespace WebSM
             {
                 settings.UserAgent = DefaultUserAgent();
             }
+            //pivotItem.Header = webView2.CoreWebView2.DocumentTitle;
         }
 
         private string GetMobileUserAgent()
@@ -191,12 +199,20 @@ namespace WebSM
 
         private void addButton_Click(object sender, RoutedEventArgs e)
         {
-
+            NewTabs newTab = new NewTabs();
+            pivotItem.Header = "Tab " + 1;
+            pivotItem.Content = newTab.NewTab(); // temporary null before I got a solution
+            pivot.Items.Add(pivotItem);
+            pivotItem = null;
         }
 
         private void removeButton_Click(object sender, RoutedEventArgs e)
         {
-            
+            pivot.Items.Remove(pivot.SelectedItem);
+            if (pivot.Items.Count == 0)
+            {
+                Application.Current.Exit();
+            }
         }
 
         // Settings
@@ -224,20 +240,20 @@ namespace WebSM
         
         public void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (comboBox.SelectedIndex == 0) // <- Default theme from the system
+            if (comboBox1.SelectedIndex == 0) // <- Default theme from the system
             {
                 this.RequestedTheme = ElementTheme.Default;
             }
-            else if (comboBox.SelectedIndex == 1) // <- Light theme
+            else if (comboBox1.SelectedIndex == 1) // <- Light theme
             {
                 this.RequestedTheme = ElementTheme.Light;
             }
-            else if (comboBox.SelectedIndex == 2) // <- Dark theme
+            else if (comboBox1.SelectedIndex == 2) // <- Dark theme
             {
                 this.RequestedTheme = ElementTheme.Dark;
             }
         }
-        
+
         private async void AboutButton_Click(object sender, RoutedEventArgs e)
         {
             ContentDialog aboutDialog = new AboutDialog();

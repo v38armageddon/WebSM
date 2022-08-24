@@ -17,11 +17,12 @@
             <PivotItem Header="Tab 1">
                 <Grid>
                     <controls:WebView2 x:Name="webView2" x:FieldModifier="public"
-                           Source="https://www.youtube.com"
+                           Source="https://example.com"
                            NavigationStarting="webView2_NavigationStarting" Margin="-12,0,-12,0"/>
                 </Grid>
             </PivotItem>
         </Pivot>
+        
         <!-- Navigation bars -->
         <CommandBar x:Name="commandBar"
                     VerticalAlignment="Bottom"
@@ -61,7 +62,7 @@
                     <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Settings" VerticalAlignment="Top" FontWeight="Bold" FontSize="36"/>
                     <ToggleSwitch x:Name="toggleSwitchAdvancedButtons" x:FieldModifier="public" Header="Show advanced buttons for the Web Page" Margin="10,10,0,0" FontSize="18" Toggled="ToggleSwitch_Toggled" Width="277"/>
                     <TextBlock Text="Selected theme" FontSize="18" Margin="10,20,0,0"/>
-                    <ComboBox x:Name="comboBox" x:FieldModifier="public" Width="269" Margin="10,10,0,0" SelectedIndex="0" SelectionChanged="comboBox_SelectionChanged">
+                    <ComboBox x:Name="comboBox1" x:FieldModifier="public" Width="269" Margin="10,10,0,0" SelectedIndex="0" SelectionChanged="comboBox_SelectionChanged">
                         <TextBlock x:Name="defaultTheme" Text="Default theme (System based)"/>
                         <TextBlock x:Name="lightTheme" Text="Light Theme"/>
                         <TextBlock x:Name="darkTheme" Text="Dark Theme"/>
