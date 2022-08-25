@@ -7,8 +7,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Title="About WebSM"
-    PrimaryButtonText="Close"
+    PrimaryButtonText="Rate this app"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
+    SecondaryButtonText="Close"
+    SecondaryButtonClick="ContentDialog_SecondaryButtonClick"
     Height="Auto" Width="Auto">
 
     <Grid>

@@ -22,10 +22,12 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Microsoft.UI.Xaml.Controls;
+#region aliases
 using NavigationView = Windows.UI.Xaml.Controls.NavigationView;
 using NavigationViewBackRequestedEventArgs = Windows.UI.Xaml.Controls.NavigationViewBackRequestedEventArgs;
 using NavigationViewSelectionChangedEventArgs = Windows.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs;
 using NavigationViewItem = Windows.UI.Xaml.Controls.NavigationViewItem;
+#endregion
 
 namespace WebSM
 {
@@ -33,15 +35,12 @@ namespace WebSM
     {
         #region global
         PivotItem pivotItem = new PivotItem();
+        WebView2 webView = new WebView2();
         #endregion
 
         public MainPage()
         {
             this.InitializeComponent();
-            if (pivot.Items.Contains(0))
-            {
-                Application.Current.Exit();
-            }
         }
 
         private void webView2_NavigationStarting(Microsoft.UI.Xaml.Controls.WebView2 sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationStartingEventArgs args)
@@ -56,7 +55,11 @@ namespace WebSM
             {
                 settings.UserAgent = DefaultUserAgent();
             }
-            //pivotItem.Header = webView2.CoreWebView2.DocumentTitle;
+        }
+
+        private void webView2_NavigationCompleted(WebView2 sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs args)
+        {
+            pivotItem.Header = webView2.CoreWebView2.DocumentTitle;
         }
 
         private string GetMobileUserAgent()
@@ -199,9 +202,8 @@ namespace WebSM
 
         private void addButton_Click(object sender, RoutedEventArgs e)
         {
-            NewTabs newTab = new NewTabs();
-            pivotItem.Header = "Tab " + 1;
-            pivotItem.Content = newTab.NewTab(); // temporary null before I got a solution
+            pivotItem.Header = "New Tab" + null;
+            pivotItem.Content = null; // temporary null before I got a solution
             pivot.Items.Add(pivotItem);
             pivotItem = null;
         }
@@ -209,6 +211,7 @@ namespace WebSM
         private void removeButton_Click(object sender, RoutedEventArgs e)
         {
             pivot.Items.Remove(pivot.SelectedItem);
+            // Close the software if there is no PivotItems
             if (pivot.Items.Count == 0)
             {
                 Application.Current.Exit();

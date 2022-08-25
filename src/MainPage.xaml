@@ -18,7 +18,7 @@
                 <Grid>
                     <controls:WebView2 x:Name="webView2" x:FieldModifier="public"
                            Source="https://example.com"
-                           NavigationStarting="webView2_NavigationStarting" Margin="-12,0,-12,0"/>
+                           NavigationStarting="webView2_NavigationStarting" NavigationCompleted="webView2_NavigationCompleted" Margin="-12,0,-12,0"/>
                 </Grid>
             </PivotItem>
         </Pivot>
