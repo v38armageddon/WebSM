@@ -191,6 +191,12 @@
     <Content Include="Assets\Wide310x150Logo.scale-150.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
     <None Include="Package.StoreAssociation.xml" />
+    <Content Include="Icons\discord.png" />
+    <Content Include="Icons\reddit.png" />
+    <Content Include="Icons\spotify.png" />
+    <Content Include="Icons\twitch.png" />
+    <Content Include="Icons\twitter.png" />
+    <Content Include="Icons\youtube.png" />
     <Content Include="Pages\NewTab.html" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
