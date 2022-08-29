@@ -42,12 +42,36 @@
                         x:FieldModifier="public" IsBackEnabled="True"
                         BackRequested="navView_BackRequested">
             <NavigationView.MenuItems>
-                <NavigationViewItem Content="YouTube" x:Name="YouTube" Icon="Globe" Tag="YouTube"/>
-                <NavigationViewItem Content="Twitch" x:Name="Twitch" Icon="Globe" Tag="Twitch"/>
-                <NavigationViewItem Content="Discord" x:Name="Discord" Icon="Globe" Tag="Discord"/>
-                <NavigationViewItem Content="Twitter" x:Name="Twitter" Icon="Globe" Tag="Twitter"/>
-                <NavigationViewItem Content="Reddit" x:Name="Reddit" Icon="Globe" Tag="Reddit"/>
-                <NavigationViewItem Content="Spotify" x:Name="Spotify" Icon="Globe" Tag="Spotify"/>
+                <NavigationViewItem Content="YouTube" x:Name="YouTube" Tag="YouTube">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="Icons/youtube.png" ShowAsMonochrome="False"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Twitch" x:Name="Twitch" Tag="Twitch">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="Icons/twitch.png" ShowAsMonochrome="False"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Discord" x:Name="Discord" Tag="Discord">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="Icons/discord.png" ShowAsMonochrome="False"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Twitter" x:Name="Twitter" Tag="Twitter">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="Icons/twitter.png" ShowAsMonochrome="False"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Reddit" x:Name="Reddit" Tag="Reddit">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="Icons/reddit.png" ShowAsMonochrome="False"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Spotify" x:Name="Spotify" Tag="Spotify">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="Icons/spotify.png" ShowAsMonochrome="False"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
             </NavigationView.MenuItems>
         </NavigationView>
         
