@@ -202,7 +202,7 @@ namespace WebSM
 
         private void addButton_Click(object sender, RoutedEventArgs e)
         {
-            pivotItem.Header = "New Tab" + null;
+            pivotItem.Header = "New Tab";
             pivotItem.Content = null; // temporary null before I got a solution
             pivot.Items.Add(pivotItem);
             pivotItem = null;
