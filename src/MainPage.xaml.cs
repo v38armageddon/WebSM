@@ -27,6 +27,7 @@ using NavigationView = Windows.UI.Xaml.Controls.NavigationView;
 using NavigationViewBackRequestedEventArgs = Windows.UI.Xaml.Controls.NavigationViewBackRequestedEventArgs;
 using NavigationViewSelectionChangedEventArgs = Windows.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs;
 using NavigationViewItem = Windows.UI.Xaml.Controls.NavigationViewItem;
+using System.Runtime.CompilerServices;
 #endregion
 
 namespace WebSM
@@ -34,7 +35,6 @@ namespace WebSM
     public sealed partial class MainPage : Page
     {
         #region global
-        PivotItem pivotItem = new PivotItem();
         WebView2 webView = new WebView2();
         #endregion
 
@@ -59,7 +59,7 @@ namespace WebSM
 
         private void webView2_NavigationCompleted(WebView2 sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs args)
         {
-            pivotItem.Header = webView2.CoreWebView2.DocumentTitle;
+            tabViewItem.Header = webView2.CoreWebView2.DocumentTitle;
         }
 
         private string GetMobileUserAgent()
@@ -200,22 +200,57 @@ namespace WebSM
             webView2.Reload();
         }
 
-        private void addButton_Click(object sender, RoutedEventArgs e)
+        private void TabView_AddButtonClick(TabView sender, object args)
         {
-            pivotItem.Header = "New Tab";
-            pivotItem.Content = null; // temporary null before I got a solution
-            pivot.Items.Add(pivotItem);
-            pivotItem = null;
+            sender.TabItems.Add(CreateNewTab(sender.TabItems.Count));
         }
 
-        private void removeButton_Click(object sender, RoutedEventArgs e)
+        private void TabView_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
         {
-            pivot.Items.Remove(pivot.SelectedItem);
-            // Close the software if there is no PivotItems
-            if (pivot.Items.Count == 0)
+            sender.TabItems.Remove(args.Tab);
+            if (sender.TabItems.Count == 0)
             {
                 Application.Current.Exit();
             }
+        }
+
+        private TabViewItem CreateNewTab(int index)
+        {
+            TabViewItem newItem = new TabViewItem();
+
+            newItem.Header = webView2.CoreWebView2.DocumentTitle;
+            newItem.IconSource = new Microsoft.UI.Xaml.Controls.SymbolIconSource() { Symbol = Symbol.Document };
+
+            // The content of the tab is often a frame that contains a page, though it could be any UIElement.
+            Frame frame = new Frame();
+            WebView2 webView = new WebView2();
+            var i = 0;
+
+            switch (index % 3)
+            {
+                case 0:
+                    i += 1;
+                    webView.Name = "webView2" + i;
+                    webView.Margin = new Thickness(0, 0, 0, -915);
+                    webView.EnsureCoreWebView2Async();
+                    break;
+                case 1:
+                    i += 1;
+                    webView.Name = "webView2" + i;
+                    webView.Margin = new Thickness(0, 0, 0, -915);
+                    webView.EnsureCoreWebView2Async();
+                    break;
+                case 2:
+                    i += 1;
+                    webView.Name = "webView2" + i;
+                    webView.Margin = new Thickness(0, 0, 0, -915);
+                    webView.EnsureCoreWebView2Async();
+                    break;
+            }
+
+            newItem.Content = frame;
+
+            return newItem;
         }
 
         // Settings
