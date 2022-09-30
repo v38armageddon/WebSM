@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.ApplicationModel;
+using Windows.ApplicationModel.Store;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.System;
@@ -27,12 +27,8 @@ namespace WebSM
 
         private async void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            await Launcher.LaunchUriAsync(new Uri("ms-windows-store://review/?PFN=9NVMBH7W0HXF"));
-        }
-
-        private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
-        {
-            // Close dialog
+            bool result = await Launcher.LaunchUriAsync(new Uri("ms-windows-store://review/?ProductId=9NVMBH7W0HXF"));
+            result = true;
         }
     }
 }

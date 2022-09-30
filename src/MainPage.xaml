@@ -17,7 +17,7 @@
             <CornerRadius x:Key="ControlCornerRadius">0</CornerRadius>
         </Grid.Resources>
         <!-- WebBrowser -->
-        <controls:WebView2 x:Name="webView2" x:FieldModifier="public" Source="https://example.com" NavigationStarting="webView2_NavigationStarting" Margin="40,0,0,40"/>
+        <controls:WebView2 x:Name="webView2" x:FieldModifier="public" Source="https://youtube.com" NavigationStarting="webView2_NavigationStarting" Margin="40,0,0,40"/>
 
         <!-- Navigation bars -->
         <CommandBar x:Name="commandBar"
