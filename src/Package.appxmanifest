@@ -8,7 +8,7 @@
   IgnorableNamespaces="uap mp uap3">
 
   <Identity
-    Name="34823v38armageddon.WebSM"
+    Name="v38armageddon.WebSM"
     Publisher="CN=v38armageddon"
     Version="3.0.0.0" />
 
