@@ -2,8 +2,11 @@
 using System;
 using System.Configuration;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
@@ -21,12 +24,19 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Microsoft.UI.Xaml.Controls;
+#region aliases
+using NavigationView = Windows.UI.Xaml.Controls.NavigationView;
+using NavigationViewBackRequestedEventArgs = Windows.UI.Xaml.Controls.NavigationViewBackRequestedEventArgs;
+using NavigationViewSelectionChangedEventArgs = Windows.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs;
+using NavigationViewItem = Windows.UI.Xaml.Controls.NavigationViewItem;
+#endregion
 
 namespace WebSM
 {
     public sealed partial class MainPage : Page
     {
-        
+
         public MainPage()
         {
             this.InitializeComponent();
@@ -44,6 +54,46 @@ namespace WebSM
             {
                 settings.UserAgent = DefaultUserAgent();
             }
+        }
+
+        private void TabView_Loaded(object sender, RoutedEventArgs e)
+        {
+            for (int i = 0; i < 1; i++)
+            {
+                (sender as TabView).TabItems.Add(CreateNewTab(i));
+            }
+        }
+
+        private void TabView_AddTabButtonClick(TabView sender, object args)
+        {
+            sender.TabItems.Add(CreateNewTab(sender.TabItems.Count));
+        }
+
+        private void TabView_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
+        {
+            sender.TabItems.Remove(args.Tab);
+        }
+
+        private TabViewItem CreateNewTab(int index)
+        {
+            TabViewItem newItem = new TabViewItem();
+
+            newItem.Header = $"Tab {index}";
+            newItem.IconSource = new Microsoft.UI.Xaml.Controls.SymbolIconSource() { Symbol = Symbol.Globe };
+
+            // The content of the tab is often a frame that contains a page, though it could be any UIElement.
+            Frame frame = new Frame();
+
+            switch (index % 1)
+            {
+                case 0:
+                    //frame.Navigate(typeof(WebPage));
+                    break;
+            }
+
+            newItem.Content = frame;
+
+            return newItem;
         }
 
         private string GetMobileUserAgent()
@@ -66,7 +116,14 @@ namespace WebSM
         {
             if (args.IsSettingsSelected)
             {
-                settingsView.IsPaneOpen = true;
+                if (settingsView.IsPaneOpen == false)
+                {
+                    settingsView.IsPaneOpen = true;
+                }
+                else if (settingsView.IsPaneOpen == true)
+                {
+                    settingsView.IsPaneOpen = false;
+                }
             }
             else
             {
@@ -202,25 +259,20 @@ namespace WebSM
         
         public void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (comboBox.SelectedIndex == 0) // <- Default theme from the system
+            if (comboBox1.SelectedIndex == 0) // <- Default theme from the system
             {
                 this.RequestedTheme = ElementTheme.Default;
             }
-            else if (comboBox.SelectedIndex == 1) // <- Light theme
+            else if (comboBox1.SelectedIndex == 1) // <- Light theme
             {
                 this.RequestedTheme = ElementTheme.Light;
             }
-            else if (comboBox.SelectedIndex == 2) // <- Dark theme
+            else if (comboBox1.SelectedIndex == 2) // <- Dark theme
             {
                 this.RequestedTheme = ElementTheme.Dark;
             }
         }
 
-        private void webDevButton_Click(object sender, RoutedEventArgs e)
-        {
-            webView2.CoreWebView2.OpenDevToolsWindow();
-        }
-        
         private async void AboutButton_Click(object sender, RoutedEventArgs e)
         {
             ContentDialog aboutDialog = new AboutDialog();

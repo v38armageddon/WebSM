@@ -7,20 +7,21 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Title="About WebSM"
-    PrimaryButtonText="Close"
+    PrimaryButtonText="Rate this app"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
+    SecondaryButtonText="Close"
     Height="Auto" Width="Auto">
 
     <Grid>
         <StackPanel>
-            <TextBlock Text="Version: 2.5"/>
-            <TextBlock Text="License: GPL-3"/>
+            <TextBlock Text="Version: 3"/>
+            <TextBlock Text="License: MS-PL"/>
             <TextBlock Text="Creator: v38armageddon"/>
             <TextBlock>
                 <Hyperlink NavigateUri="https://github.com/v38armageddon/WebSM">View on GitHub</Hyperlink>
             </TextBlock>
             <TextBlock>
-                <Hyperlink NavigateUri="https://github.com/v38armageddon/WebSM/blob/master/Privacy.md">Privacy Statement</Hyperlink>
+                <Hyperlink NavigateUri="https://gist.github.com/v38armageddon/d4b6a4a207d19a85c82ce102bd9f2864">Privacy Statement</Hyperlink>
             </TextBlock>
         </StackPanel>
     </Grid>
