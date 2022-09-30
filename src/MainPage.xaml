@@ -12,20 +12,22 @@
     Width="Auto">
 
     <Grid>
+        <Grid.Resources>
+            <CornerRadius x:Key="OverlayCornerRadius">0</CornerRadius>
+            <CornerRadius x:Key="ControlCornerRadius">0</CornerRadius>
+        </Grid.Resources>
         <!-- WebBrowser -->
-        <controls:WebView2 x:Name="webView2" x:FieldModifier="public"
-                           Source="https://www.youtube.com"
-                           Margin="40,0,0,40"
-                           NavigationStarting="webView2_NavigationStarting"/>
+        <controls:WebView2 x:Name="webView2" x:FieldModifier="public" Source="https://youtube.com" NavigationStarting="webView2_NavigationStarting" Margin="40,0,0,40"/>
 
         <!-- Navigation bars -->
         <CommandBar x:Name="commandBar"
                     VerticalAlignment="Bottom"
-                    x:FieldModifier="public">
+                    x:FieldModifier="public"
+                    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
             <CommandBar.Content>
                 <Grid/>
             </CommandBar.Content>
-            <AppBarButton x:Name="openWindowButton" x:FieldModifier="public" Visibility="Collapsed" Icon="Add" Label="Open New Window" Click="openWindowButton_Click"/>
+            <AppBarButton x:Name="openWindowButton" x:FieldModifier="public" Visibility="Collapsed" Icon="NewWindow" Label="New Window" Click="openWindowButton_Click"/>
             <AppBarButton x:Name="backButton" x:FieldModifier="public" Visibility="Collapsed" Icon="Back" Label="Go Back" Click="backButton_Click"/>
             <AppBarButton x:Name="forwardButton" x:FieldModifier="public" Visibility="Collapsed" Icon="Forward" Label="Go Forward" Click="forwardButton_Click"/>
             <AppBarButton x:Name="refreshButton" x:FieldModifier="public" Visibility="Collapsed" Icon="Refresh" Label="Refresh" Click="refreshButton_Click"/>
@@ -35,12 +37,36 @@
                         x:FieldModifier="public" IsBackEnabled="True"
                         BackRequested="navView_BackRequested">
             <NavigationView.MenuItems>
-                <NavigationViewItem Content="YouTube" x:Name="YouTube" Icon="Globe" Tag="YouTube"/>
-                <NavigationViewItem Content="Twitch" x:Name="Twitch" Icon="Globe" Tag="Twitch"/>
-                <NavigationViewItem Content="Discord" x:Name="Discord" Icon="Globe" Tag="Discord"/>
-                <NavigationViewItem Content="Twitter" x:Name="Twitter" Icon="Globe" Tag="Twitter"/>
-                <NavigationViewItem Content="Reddit" x:Name="Reddit" Icon="Globe" Tag="Reddit"/>
-                <NavigationViewItem Content="Spotify" x:Name="Spotify" Icon="Globe" Tag="Spotify"/>
+                <NavigationViewItem Content="YouTube" x:Name="YouTube" Tag="YouTube">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="Icons/youtube.png" ShowAsMonochrome="False"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Twitch" x:Name="Twitch" Tag="Twitch">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="Icons/twitch.png" ShowAsMonochrome="False"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Discord" x:Name="Discord" Tag="Discord">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="Icons/discord.png" ShowAsMonochrome="False"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Twitter" x:Name="Twitter" Tag="Twitter">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="Icons/twitter.png" ShowAsMonochrome="False"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Reddit" x:Name="Reddit" Tag="Reddit">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="Icons/reddit.png" ShowAsMonochrome="False"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Spotify" x:Name="Spotify" Tag="Spotify">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="Icons/spotify.png" ShowAsMonochrome="False"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
             </NavigationView.MenuItems>
         </NavigationView>
         
@@ -55,14 +81,13 @@
                     <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Settings" VerticalAlignment="Top" FontWeight="Bold" FontSize="36"/>
                     <ToggleSwitch x:Name="toggleSwitchAdvancedButtons" x:FieldModifier="public" Header="Show advanced buttons for the Web Page" Margin="10,10,0,0" FontSize="18" Toggled="ToggleSwitch_Toggled" Width="277"/>
                     <TextBlock Text="Selected theme" FontSize="18" Margin="10,20,0,0"/>
-                    <ComboBox x:Name="comboBox" x:FieldModifier="public" Width="269" Margin="10,10,0,0" SelectedIndex="0" SelectionChanged="comboBox_SelectionChanged">
+                    <ComboBox x:Name="comboBox1" x:FieldModifier="public" Width="269" Margin="10,10,0,0" SelectedIndex="0" SelectionChanged="comboBox_SelectionChanged">
                         <TextBlock x:Name="defaultTheme" Text="Default theme (System based)"/>
                         <TextBlock x:Name="lightTheme" Text="Light Theme"/>
                         <TextBlock x:Name="darkTheme" Text="Dark Theme"/>
                     </ComboBox>
                     <TextBlock Text="Extras" Margin="10,20,0,0"  FontSize="18"/>
-                    <Button x:Name="webDevButton" Content="Open DevTools" Margin="10,10,0,0" Click="webDevButton_Click"/>
-                    <Button x:Name="AboutButton" Content="About" Click="AboutButton_Click" Margin="130,-32,0,0"/>
+                    <Button x:Name="AboutButton" Content="About" Click="AboutButton_Click" Margin="10,10,0,0"/>
                 </StackPanel>
             </SplitView.Pane>
         </SplitView>
