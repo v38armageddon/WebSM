@@ -12,16 +12,12 @@
     Width="Auto">
 
     <Grid>
+        <Grid.Resources>
+            <CornerRadius x:Key="OverlayCornerRadius">0</CornerRadius>
+            <CornerRadius x:Key="ControlCornerRadius">0</CornerRadius>
+        </Grid.Resources>
         <!-- WebBrowser -->
-        <controls:TabView x:Name="tabView" AddTabButtonClick="TabView_AddButtonClick" TabCloseRequested="TabView_TabCloseRequested" Margin="48,0,0,0"
-                          CloseButtonOverlayMode="OnPointerOver" CanDrag="True" CanDragTabs="True">
-            <controls:TabViewItem x:Name="tabViewItem">
-                <Grid>
-                    <controls:WebView2 x:Name="webView2" x:FieldModifier="public" Source="https://example.com" NavigationStarting="webView2_NavigationStarting"
-                                       NavigationCompleted="webView2_NavigationCompleted" Margin="0,0,0,-912"/>
-                </Grid>
-            </controls:TabViewItem>
-        </controls:TabView>
+        <controls:WebView2 x:Name="webView2" x:FieldModifier="public" Source="https://example.com" NavigationStarting="webView2_NavigationStarting" Margin="40,0,0,40"/>
 
         <!-- Navigation bars -->
         <CommandBar x:Name="commandBar"

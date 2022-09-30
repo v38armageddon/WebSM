@@ -2,8 +2,11 @@
 using System;
 using System.Configuration;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
@@ -27,16 +30,12 @@ using NavigationView = Windows.UI.Xaml.Controls.NavigationView;
 using NavigationViewBackRequestedEventArgs = Windows.UI.Xaml.Controls.NavigationViewBackRequestedEventArgs;
 using NavigationViewSelectionChangedEventArgs = Windows.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs;
 using NavigationViewItem = Windows.UI.Xaml.Controls.NavigationViewItem;
-using System.Runtime.CompilerServices;
 #endregion
 
 namespace WebSM
 {
     public sealed partial class MainPage : Page
     {
-        #region global
-        WebView2 webView = new WebView2();
-        #endregion
 
         public MainPage()
         {
@@ -57,9 +56,44 @@ namespace WebSM
             }
         }
 
-        private void webView2_NavigationCompleted(WebView2 sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs args)
+        private void TabView_Loaded(object sender, RoutedEventArgs e)
         {
-            tabViewItem.Header = webView2.CoreWebView2.DocumentTitle;
+            for (int i = 0; i < 1; i++)
+            {
+                (sender as TabView).TabItems.Add(CreateNewTab(i));
+            }
+        }
+
+        private void TabView_AddTabButtonClick(TabView sender, object args)
+        {
+            sender.TabItems.Add(CreateNewTab(sender.TabItems.Count));
+        }
+
+        private void TabView_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
+        {
+            sender.TabItems.Remove(args.Tab);
+        }
+
+        private TabViewItem CreateNewTab(int index)
+        {
+            TabViewItem newItem = new TabViewItem();
+
+            newItem.Header = $"Tab {index}";
+            newItem.IconSource = new Microsoft.UI.Xaml.Controls.SymbolIconSource() { Symbol = Symbol.Globe };
+
+            // The content of the tab is often a frame that contains a page, though it could be any UIElement.
+            Frame frame = new Frame();
+
+            switch (index % 1)
+            {
+                case 0:
+                    //frame.Navigate(typeof(WebPage));
+                    break;
+            }
+
+            newItem.Content = frame;
+
+            return newItem;
         }
 
         private string GetMobileUserAgent()
@@ -198,59 +232,6 @@ namespace WebSM
         private void refreshButton_Click(object sender, RoutedEventArgs e)
         {
             webView2.Reload();
-        }
-
-        private void TabView_AddButtonClick(TabView sender, object args)
-        {
-            sender.TabItems.Add(CreateNewTab(sender.TabItems.Count));
-        }
-
-        private void TabView_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
-        {
-            sender.TabItems.Remove(args.Tab);
-            if (sender.TabItems.Count == 0)
-            {
-                Application.Current.Exit();
-            }
-        }
-
-        private TabViewItem CreateNewTab(int index)
-        {
-            TabViewItem newItem = new TabViewItem();
-
-            newItem.Header = webView2.CoreWebView2.DocumentTitle;
-            newItem.IconSource = new Microsoft.UI.Xaml.Controls.SymbolIconSource() { Symbol = Symbol.Document };
-
-            // The content of the tab is often a frame that contains a page, though it could be any UIElement.
-            Frame frame = new Frame();
-            WebView2 webView = new WebView2();
-            var i = 0;
-
-            switch (index % 3)
-            {
-                case 0:
-                    i += 1;
-                    webView.Name = "webView2" + i;
-                    webView.Margin = new Thickness(0, 0, 0, -915);
-                    webView.EnsureCoreWebView2Async();
-                    break;
-                case 1:
-                    i += 1;
-                    webView.Name = "webView2" + i;
-                    webView.Margin = new Thickness(0, 0, 0, -915);
-                    webView.EnsureCoreWebView2Async();
-                    break;
-                case 2:
-                    i += 1;
-                    webView.Name = "webView2" + i;
-                    webView.Margin = new Thickness(0, 0, 0, -915);
-                    webView.EnsureCoreWebView2Async();
-                    break;
-            }
-
-            newItem.Content = frame;
-
-            return newItem;
         }
 
         // Settings
