@@ -56,44 +56,10 @@ namespace WebSM
             }
         }
 
-        private void TabView_Loaded(object sender, RoutedEventArgs e)
+        private void webView2_NavigationCompleted(WebView2 sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs args)
         {
-            for (int i = 0; i < 1; i++)
-            {
-                (sender as TabView).TabItems.Add(CreateNewTab(i));
-            }
-        }
-
-        private void TabView_AddTabButtonClick(TabView sender, object args)
-        {
-            sender.TabItems.Add(CreateNewTab(sender.TabItems.Count));
-        }
-
-        private void TabView_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
-        {
-            sender.TabItems.Remove(args.Tab);
-        }
-
-        private TabViewItem CreateNewTab(int index)
-        {
-            TabViewItem newItem = new TabViewItem();
-
-            newItem.Header = $"Tab {index}";
-            newItem.IconSource = new Microsoft.UI.Xaml.Controls.SymbolIconSource() { Symbol = Symbol.Globe };
-
-            // The content of the tab is often a frame that contains a page, though it could be any UIElement.
-            Frame frame = new Frame();
-
-            switch (index % 1)
-            {
-                case 0:
-                    //frame.Navigate(typeof(WebPage));
-                    break;
-            }
-
-            newItem.Content = frame;
-
-            return newItem;
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
         }
 
         private string GetMobileUserAgent()

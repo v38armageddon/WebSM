@@ -17,16 +17,14 @@
             <CornerRadius x:Key="ControlCornerRadius">0</CornerRadius>
         </Grid.Resources>
         <!-- WebBrowser -->
-        <controls:WebView2 x:Name="webView2" x:FieldModifier="public" Source="https://youtube.com" NavigationStarting="webView2_NavigationStarting" Margin="40,0,0,40"/>
+        <controls:WebView2 x:Name="webView2" x:FieldModifier="public" Source="https://youtube.com" NavigationStarting="webView2_NavigationStarting" NavigationCompleted="webView2_NavigationCompleted" Margin="47,0,0,40"/>
 
         <!-- Navigation bars -->
         <CommandBar x:Name="commandBar"
                     VerticalAlignment="Bottom"
                     x:FieldModifier="public"
-                    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-            <CommandBar.Content>
-                <Grid/>
-            </CommandBar.Content>
+                    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                    OverflowButtonVisibility="Collapsed">
             <AppBarButton x:Name="openWindowButton" x:FieldModifier="public" Visibility="Collapsed" Icon="NewWindow" Label="New Window" Click="openWindowButton_Click"/>
             <AppBarButton x:Name="backButton" x:FieldModifier="public" Visibility="Collapsed" Icon="Back" Label="Go Back" Click="backButton_Click"/>
             <AppBarButton x:Name="forwardButton" x:FieldModifier="public" Visibility="Collapsed" Icon="Forward" Label="Go Forward" Click="forwardButton_Click"/>
