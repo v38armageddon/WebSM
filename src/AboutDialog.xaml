@@ -14,7 +14,7 @@
 
     <Grid>
         <StackPanel>
-            <TextBlock Text="Version: 3"/>
+            <TextBlock Text="Version: 3.1"/>
             <TextBlock Text="License: MS-PL"/>
             <TextBlock Text="Creator: v38armageddon"/>
             <TextBlock>
