@@ -12,12 +12,10 @@
     Width="Auto">
 
     <Grid>
-        <Grid.Resources>
-            <CornerRadius x:Key="OverlayCornerRadius">0</CornerRadius>
-            <CornerRadius x:Key="ControlCornerRadius">0</CornerRadius>
-        </Grid.Resources>
         <!-- WebBrowser -->
-        <controls:WebView2 x:Name="webView2" x:FieldModifier="public" Source="https://youtube.com" NavigationStarting="webView2_NavigationStarting" NavigationCompleted="webView2_NavigationCompleted" Margin="47,0,0,40"/>
+        <controls:WebView2 x:Name="webView2" x:FieldModifier="public" Source="https://youtube.com"
+                           NavigationStarting="webView2_NavigationStarting" NavigationCompleted="webView2_NavigationCompleted" Margin="47,0,0,40"/>
+        <controls:ProgressRing x:Name="progressRing" IsActive="False" Margin="47,0,0,40"/>
 
         <!-- Navigation bars -->
         <CommandBar x:Name="commandBar"

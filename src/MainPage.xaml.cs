@@ -44,6 +44,7 @@ namespace WebSM
 
         private void webView2_NavigationStarting(Microsoft.UI.Xaml.Controls.WebView2 sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationStartingEventArgs args)
         {
+            progressRing.IsActive = true;
             // Fix Google connection blocked due to UserAgent, see https://github.com/MicrosoftEdge/WebView2Feedback/issues/1647
             var settings = webView2.CoreWebView2.Settings;
             if (webView2.Source.ToString().Contains("https://accounts.google.com"))
@@ -58,6 +59,7 @@ namespace WebSM
 
         private void webView2_NavigationCompleted(WebView2 sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs args)
         {
+            progressRing.IsActive = false;
             GC.Collect();
             GC.WaitForPendingFinalizers();
         }
@@ -71,7 +73,6 @@ namespace WebSM
         {
             return "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.134 Safari/537.36 Edge/103.0.1264.77";
         }
-
 
         private void navView_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
         {
