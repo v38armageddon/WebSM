@@ -33,7 +33,7 @@
                         x:FieldModifier="public" IsBackEnabled="True"
                         BackRequested="navView_BackRequested">
             <NavigationView.MenuItems>
-                <NavigationViewItem Content="YouTube" x:Name="YouTube" Tag="YouTube">
+                <NavigationViewItem Content="YouTube" x:Name="YouTube" Tag="YouTube" IsSelected="True">
                     <NavigationViewItem.Icon>
                         <BitmapIcon UriSource="Icons/youtube.png" ShowAsMonochrome="False"/>
                     </NavigationViewItem.Icon>

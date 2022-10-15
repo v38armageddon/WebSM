@@ -31,7 +31,7 @@ namespace WebSM
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
-            AppCenter.Start("fa9bcdc6-1205-4d95-afe2-77ec6985743a",
+            AppCenter.Start("TOKEN",
                   typeof(Analytics), typeof(Crashes));
         }
 
