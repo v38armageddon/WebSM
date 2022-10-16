@@ -11,9 +11,9 @@ You can listen to music, watching videos, and even chatting with your friends.
 - Quick and easy to use.
 
 ## Installation
-Minimum Windows version required: Windows 10 1804
+Minimum Windows version required: Windows 10 2004
 
-Recommended Windows version: Windows 10 2004
+Recommended Windows version: Windows 10 21H2 / Windows 11 22H2
 
 ![https://apps.microsoft.com/store/detail/websm/9NVMBH7W0HXF](https://github.com/v38armageddon/WebSM/blob/master/Assets/Microsoft-store.png)
 
