@@ -44,6 +44,7 @@ namespace WebSM
 
         private void webView2_NavigationStarting(Microsoft.UI.Xaml.Controls.WebView2 sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationStartingEventArgs args)
         {
+            progressRing.IsActive = true;
             // Fix Google connection blocked due to UserAgent, see https://github.com/MicrosoftEdge/WebView2Feedback/issues/1647
             var settings = webView2.CoreWebView2.Settings;
             if (webView2.Source.ToString().Contains("https://accounts.google.com"))
@@ -56,44 +57,11 @@ namespace WebSM
             }
         }
 
-        private void TabView_Loaded(object sender, RoutedEventArgs e)
+        private void webView2_NavigationCompleted(WebView2 sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs args)
         {
-            for (int i = 0; i < 1; i++)
-            {
-                (sender as TabView).TabItems.Add(CreateNewTab(i));
-            }
-        }
-
-        private void TabView_AddTabButtonClick(TabView sender, object args)
-        {
-            sender.TabItems.Add(CreateNewTab(sender.TabItems.Count));
-        }
-
-        private void TabView_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
-        {
-            sender.TabItems.Remove(args.Tab);
-        }
-
-        private TabViewItem CreateNewTab(int index)
-        {
-            TabViewItem newItem = new TabViewItem();
-
-            newItem.Header = $"Tab {index}";
-            newItem.IconSource = new Microsoft.UI.Xaml.Controls.SymbolIconSource() { Symbol = Symbol.Globe };
-
-            // The content of the tab is often a frame that contains a page, though it could be any UIElement.
-            Frame frame = new Frame();
-
-            switch (index % 1)
-            {
-                case 0:
-                    //frame.Navigate(typeof(WebPage));
-                    break;
-            }
-
-            newItem.Content = frame;
-
-            return newItem;
+            progressRing.IsActive = false;
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
         }
 
         private string GetMobileUserAgent()
@@ -105,7 +73,6 @@ namespace WebSM
         {
             return "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.134 Safari/537.36 Edge/103.0.1264.77";
         }
-
 
         private void navView_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
         {
