@@ -235,9 +235,6 @@
     <PackageReference Include="Microsoft.UI.Xaml.Core.Direct">
       <Version>2.0.190315001-prerelease</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.Web.WebView2">
-      <Version>1.0.1370.28</Version>
-    </PackageReference>
     <PackageReference Include="System.Configuration.ConfigurationManager">
       <Version>6.0.1</Version>
     </PackageReference>
