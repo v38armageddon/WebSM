@@ -1,51 +1,40 @@
-﻿using Microsoft.Web.WebView2;
-using System;
-using System.Configuration;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
-using Windows.ApplicationModel.Core;
-using Windows.ApplicationModel.Resources.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
-using Windows.Storage;
-using Windows.UI.Core;
-using Windows.UI.Popups;
-using Windows.UI.ViewManagement;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-#region aliases
-using NavigationView = Windows.UI.Xaml.Controls.NavigationView;
-using NavigationViewBackRequestedEventArgs = Windows.UI.Xaml.Controls.NavigationViewBackRequestedEventArgs;
-using NavigationViewSelectionChangedEventArgs = Windows.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs;
-using NavigationViewItem = Windows.UI.Xaml.Controls.NavigationViewItem;
-#endregion
+using Microsoft.UI.Xaml.Controls.Primitives;
+using Microsoft.UI.Xaml.Data;
+using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Navigation;
 
-namespace WebSM
+
+namespace WebSM.WinSDK
 {
     public sealed partial class MainPage : Page
     {
-
         public MainPage()
         {
             this.InitializeComponent();
         }
-
         private void webView2_NavigationStarting(Microsoft.UI.Xaml.Controls.WebView2 sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationStartingEventArgs args)
         {
             progressRing.IsActive = true;
-            GetMobileUserAgent();
+            // Fix Google connection blocked due to UserAgent, see https://github.com/MicrosoftEdge/WebView2Feedback/issues/1647
+            var settings = webView2.CoreWebView2.Settings;
+            if (webView2.Source.ToString().Contains("https://accounts.google.com"))
+            {
+                settings.UserAgent = GetMobileUserAgent();
+            }
+            else
+            {
+                settings.UserAgent = DefaultUserAgent();
+            }
         }
 
         private void webView2_NavigationCompleted(WebView2 sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs args)
@@ -57,7 +46,12 @@ namespace WebSM
 
         private string GetMobileUserAgent()
         {
-            return "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5026.0 Safari/537.36 Edg/103.0.1254.0";
+            return "Chrome";
+        }
+
+        private string DefaultUserAgent()
+        {
+            return "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.134 Safari/537.36 Edge/103.0.1264.77";
         }
 
         private void navView_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
@@ -150,26 +144,26 @@ namespace WebSM
 
         private async void openWindowButton_Click(object sender, RoutedEventArgs e)
         {
-            var currentAV = ApplicationView.GetForCurrentView();
-            var newAV = CoreApplication.CreateNewView();
-            await newAV.Dispatcher.RunAsync(
-                CoreDispatcherPriority.Normal,
-                async () =>
-                {
-                    var newWindow = Window.Current;
-                    var newAppView = ApplicationView.GetForCurrentView();
-                    var frame = new Frame();
-                    
-                    frame.Navigate(typeof(MainPage), null);
-                    newWindow.Content = frame;
-                    newWindow.Activate();
-                    
-                    await ApplicationViewSwitcher.TryShowAsStandaloneAsync(
-                        newAppView.Id,
-                        ViewSizePreference.UseMinimum,
-                        currentAV.Id,
-                        ViewSizePreference.UseMinimum);
-                });
+            //var currentAV = ApplicationView.GetForCurrentView();
+            //var newAV = CoreApplication.CreateNewView();
+            //await newAV.Dispatcher.RunAsync(
+            //    CoreDispatcherPriority.Normal,
+            //    async () =>
+            //    {
+            //        var newWindow = Window.Current;
+            //        var newAppView = ApplicationView.GetForCurrentView();
+            //        var frame = new Frame();
+
+            //        frame.Navigate(typeof(MainPage), null);
+            //        newWindow.Content = frame;
+            //        newWindow.Activate();
+
+            //        await ApplicationViewSwitcher.TryShowAsStandaloneAsync(
+            //            newAppView.Id,
+            //            ViewSizePreference.UseMinimum,
+            //            currentAV.Id,
+            //            ViewSizePreference.UseMinimum);
+            //    });
         }
 
         private void backButton_Click(object sender, RoutedEventArgs e)
@@ -209,7 +203,7 @@ namespace WebSM
                 }
             }
         }
-        
+
         public void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (comboBox1.SelectedIndex == 0) // <- Default theme from the system
@@ -228,8 +222,8 @@ namespace WebSM
 
         private async void AboutButton_Click(object sender, RoutedEventArgs e)
         {
-            ContentDialog aboutDialog = new AboutDialog();
-            await aboutDialog.ShowAsync();
+            //ContentDialog aboutDialog = new AboutDialog();
+            //await aboutDialog.ShowAsync();
         }
     }
 }
