@@ -197,6 +197,7 @@
     <Content Include="Icons\twitch.png" />
     <Content Include="Icons\twitter.png" />
     <Content Include="Icons\youtube.png" />
+    <Content Include="Images\trademark.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -221,10 +222,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AppCenter.Analytics">
-      <Version>4.5.3</Version>
+      <Version>5.0.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.AppCenter.Crashes">
-      <Version>4.5.3</Version>
+      <Version>5.0.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.14</Version>
