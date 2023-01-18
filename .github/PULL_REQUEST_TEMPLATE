@@ -1,0 +1,21 @@
+## Description
+
+Please, describe why this change need to be pulled on WebSM.
+
+## Utility
+
+How this change gonna be useful?
+
+## Tests
+
+Please check the tests that you have made.
+<!--Mark a X in the brackets to check-->
+- [ ] Software running on Windows with UWP
+- [ ] Browser compatibility Test
+
+## Checklist:
+<!--Mark a X in the brackets to check-->
+- [ ] My code follows the style guidelines of this project
+- [ ] My code respect the code of conduct
+- [ ] I have performed a self-review of my own code
+- [ ] My changes generate no new warnings or errors
