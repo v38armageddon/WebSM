@@ -14,7 +14,6 @@
 
     <Grid>
         <StackPanel>
-            <Image Source="Images/trademark.png" HorizontalAlignment="Stretch" Height="45" RenderTransformOrigin="0.5,0.5"/>
             <TextBlock Text="Version: 3.2"/>
             <TextBlock Text="License: MS-PL"/>
             <TextBlock>

@@ -197,7 +197,6 @@
     <Content Include="Icons\twitch.png" />
     <Content Include="Icons\twitter.png" />
     <Content Include="Icons\youtube.png" />
-    <Content Include="Images\trademark.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
