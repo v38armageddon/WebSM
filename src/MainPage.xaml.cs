@@ -36,16 +36,54 @@ namespace WebSM
 {
     public sealed partial class MainPage : Page
     {
+        WebView2 webView2 = new WebView2();
 
         public MainPage()
         {
             this.InitializeComponent();
         }
 
-        private void webView2_NavigationStarting(Microsoft.UI.Xaml.Controls.WebView2 sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationStartingEventArgs args)
+        private void TabView_Loaded(object sender, RoutedEventArgs e)
+        {
+            for (int i = 0; i < 1; i++)
+            {
+                (sender as TabView).TabItems.Add(CreateNewTab(i));
+            }
+        }
+
+        private void TabView_AddButtonClick(TabView sender, object args)
+        {
+            sender.TabItems.Add(CreateNewTab(sender.TabItems.Count));
+        }
+
+        private void TabView_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
+        {
+            sender.TabItems.Remove(args.Tab);
+        }
+
+        private TabViewItem CreateNewTab(int index)
+        {
+            TabViewItem newItem = new TabViewItem();
+
+            newItem.Header = $"Document {index}";
+            newItem.IconSource = new Microsoft.UI.Xaml.Controls.SymbolIconSource() { Symbol = Symbol.Document };
+
+            WebView2 webView = new WebView2();
+
+            // Init WebView2
+            webView.Source = new Uri("https://www.example.com");
+            webView.NavigationStarting += webView2_NavigationStarting;
+
+            newItem.Content = webView;
+
+            return newItem;
+        }
+
+        private async void webView2_NavigationStarting(WebView2 sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationStartingEventArgs args)
         {
             progressRing.IsActive = true;
             GetMobileUserAgent();
+            await Task.Delay(0);
         }
 
         private void webView2_NavigationCompleted(WebView2 sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs args)

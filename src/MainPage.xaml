@@ -13,9 +13,8 @@
 
     <Grid>
         <!-- WebBrowser -->
-        <controls:WebView2 x:Name="webView2" x:FieldModifier="public" Source="https://youtube.com"
-                           NavigationStarting="webView2_NavigationStarting" NavigationCompleted="webView2_NavigationCompleted" Margin="47,0,0,40"/>
-        <controls:ProgressRing x:Name="progressRing" IsActive="False" Margin="47,0,0,40"/>
+        <controls:TabView x:Name="tabView" AddTabButtonClick="TabView_AddButtonClick" TabCloseRequested="TabView_TabCloseRequested" Loaded="TabView_Loaded" Margin="40,0,0,40" />
+        <controls:ProgressRing x:Name="progressRing" IsActive="False" Margin="40,0,0,40"/>
 
         <!-- Navigation bars -->
         <CommandBar x:Name="commandBar"
@@ -86,6 +85,11 @@
                     <Button x:Name="AboutButton" Content="About" Click="AboutButton_Click" Margin="10,10,0,0"/>
                 </StackPanel>
             </SplitView.Pane>
+        </SplitView>
+        
+        <!--Embed favorits-->
+        <SplitView x:Name="embedBrowser" IsPaneOpen="True" Margin="47,0,0,40">
+            
         </SplitView>
     </Grid>
 </Page>

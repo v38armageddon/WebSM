@@ -1,4 +1,4 @@
-# ![Logo WebSM](Assets/WebSM.png) WebSM
+# ![WebSM logo](Assets/WebSM.png) WebSM
 A UWP App who you can have your Social Media in one application.
 
 ## What does it do?
