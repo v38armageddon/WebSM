@@ -1,38 +1,8 @@
-﻿using Microsoft.Web.WebView2;
-using System;
-using System.Configuration;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
-using Windows.ApplicationModel.Resources.Core;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.Storage;
 using Windows.UI.Core;
-using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-using Microsoft.UI.Xaml.Controls;
-#region aliases
-using NavigationView = Windows.UI.Xaml.Controls.NavigationView;
-using NavigationViewBackRequestedEventArgs = Windows.UI.Xaml.Controls.NavigationViewBackRequestedEventArgs;
-using NavigationViewSelectionChangedEventArgs = Windows.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs;
-using NavigationViewItem = Windows.UI.Xaml.Controls.NavigationViewItem;
-#endregion
 
-namespace WebSM
+namespace WebSM_Linux
 {
     public sealed partial class MainPage : Page
     {
@@ -132,11 +102,11 @@ namespace WebSM
                     var newWindow = Window.Current;
                     var newAppView = ApplicationView.GetForCurrentView();
                     var frame = new Frame();
-                    
+
                     frame.Navigate(typeof(MainPage), null);
                     newWindow.Content = frame;
                     newWindow.Activate();
-                    
+
                     await ApplicationViewSwitcher.TryShowAsStandaloneAsync(
                         newAppView.Id,
                         ViewSizePreference.UseMinimum,
