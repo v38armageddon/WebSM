@@ -1,4 +1,5 @@
-﻿using Microsoft.Web.WebView2;
+﻿using HtmlAgilityPack;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Configuration;
 using System.Collections.Generic;
@@ -24,12 +25,12 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using Microsoft.UI.Xaml.Controls;
 #region aliases
 using NavigationView = Windows.UI.Xaml.Controls.NavigationView;
 using NavigationViewBackRequestedEventArgs = Windows.UI.Xaml.Controls.NavigationViewBackRequestedEventArgs;
 using NavigationViewSelectionChangedEventArgs = Windows.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs;
 using NavigationViewItem = Windows.UI.Xaml.Controls.NavigationViewItem;
+using Windows.UI.Xaml.Media.Imaging;
 #endregion
 
 namespace WebSM
@@ -43,44 +44,60 @@ namespace WebSM
             this.InitializeComponent();
         }
 
-        private void TabView_Loaded(object sender, RoutedEventArgs e)
+        private async void TabView_Loaded(object sender, RoutedEventArgs e)
         {
             for (int i = 0; i < 1; i++)
             {
-                (sender as TabView).TabItems.Add(CreateNewTab(i));
+                await CreateNewTabAsync(i);
             }
         }
 
-        private void TabView_AddButtonClick(TabView sender, object args)
+        private async void TabView_AddButtonClick(TabView sender, object args)
         {
-            sender.TabItems.Add(CreateNewTab(sender.TabItems.Count));
+            await CreateNewTabAsync(sender.TabItems.Count);
         }
 
         private void TabView_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
         {
             sender.TabItems.Remove(args.Tab);
-            if (tabView.TabItems.Count == 0)
-            {
-                Application.Current.Exit();
-            }
         }
 
-        private TabViewItem CreateNewTab(int index)
+        private async Task CreateNewTabAsync(int index)
         {
+            progressRing.IsActive = true;
             TabViewItem newItem = new TabViewItem();
 
-            newItem.Header = $"Document {index}";
-            newItem.IconSource = new Microsoft.UI.Xaml.Controls.SymbolIconSource() { Symbol = Symbol.Document };
-
-            WebView2 webView = new WebView2();
-
             // Init WebView2
-            webView.Source = new Uri("https://www.example.com");
-            webView.NavigationStarting += webView2_NavigationStarting;
+            await webView2.EnsureCoreWebView2Async();
+            webView2.Source = new Uri("https://www.bing.com");
+            webView2.NavigationStarting += webView2_NavigationStarting;
+            webView2.NavigationCompleted += webView2_NavigationCompleted;
 
-            newItem.Content = webView;
+            var search_dialog = new SearchDialog();
 
-            return newItem;
+            newItem.Content = webView2;
+            string pageTitle = await webView2.CoreWebView2.ExecuteScriptAsync("document.title");
+            if (pageTitle != null)
+            {
+                newItem.Header = pageTitle;
+            }
+
+            string faviconUrl = await webView2.CoreWebView2.ExecuteScriptAsync("document.querySelector('link[rel~=\"icon\"]')?.href || document.querySelector('link[rel~=\"shortcut icon\"]')?.href");
+            Uri iconUri;
+            if (!string.IsNullOrEmpty(faviconUrl) && Uri.TryCreate(faviconUrl, UriKind.Absolute, out iconUri))
+            {
+                newItem.IconSource = new Microsoft.UI.Xaml.Controls.BitmapIconSource() { UriSource = iconUri };
+            }
+            else
+            {
+                newItem.IconSource = new Microsoft.UI.Xaml.Controls.SymbolIconSource() { Symbol = Symbol.Globe };
+            }
+
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                tabView.TabItems.Add(newItem);
+            });
+            progressRing.IsActive = false;
         }
 
         private async void webView2_NavigationStarting(WebView2 sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationStartingEventArgs args)
@@ -113,9 +130,13 @@ namespace WebSM
 
                 switch (item.Tag)
                 {
-                    case "Open sidebar":
+                    case "home":
+                        webView2.Source = new Uri("https://www.bing.com");
                         break;
-                    case "Favorites":
+                    case "openEmbedBrowser":
+                        embedBrowser.IsPaneOpen = true;
+                        break;
+                    case "Favourite":
                         break;
                 }
             }
@@ -187,6 +208,22 @@ namespace WebSM
         {
             ContentDialog aboutDialog = new AboutDialog();
             await aboutDialog.ShowAsync();
+        }
+
+        // Embed browser
+        private void closeEmbedBrowser_Click(object sender, RoutedEventArgs e)
+        {
+            embedBrowser.IsPaneOpen = false;
+        }
+
+        private void accessLink_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void pinEmbedBrowser_Click(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }

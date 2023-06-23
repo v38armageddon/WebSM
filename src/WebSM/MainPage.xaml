@@ -15,8 +15,7 @@
         <!-- WebBrowser -->
         <controls:TabView x:Name="tabView" AddTabButtonClick="TabView_AddButtonClick" 
                           TabCloseRequested="TabView_TabCloseRequested" 
-                          Loaded="TabView_Loaded" Margin="47,0,0,0">
-            
+                          Loaded="TabView_Loaded" Margin="48,0,0,48" VerticalAlignment="Stretch">
         </controls:TabView>
         <controls:ProgressRing x:Name="progressRing" IsActive="False" Margin="40,0,0,40"/>
 
@@ -33,12 +32,13 @@
             <AppBarButton x:Name="refreshButton" Icon="Refresh" Label="Refresh" Click="refreshButton_Click"/>
         </CommandBar>
         <NavigationView PaneDisplayMode="LeftCompact" x:Name="navView" PaneTitle="WebSM"
-                                 IsPaneOpen="False" x:FieldModifier="public" IsBackEnabled="True"
-                                 BackRequested="navView_BackRequested"
-                                 SelectionChanged="navView_SelectionChanged">
+                        IsPaneOpen="False" x:FieldModifier="public" IsBackEnabled="True"
+                        BackRequested="navView_BackRequested" 
+                        SelectionChanged="navView_SelectionChanged">
             <NavigationView.MenuItems>
+                <NavigationViewItem x:Name="defaultWebsite" Icon="Home" Content="Home"/>
                 <NavigationViewItem x:Name="openEmbedBrowser" Icon="OpenPane" Content="Open sidebar"/>
-                <NavigationViewItem x:Name="addFavourite" Icon="Favorite" Content="Favorite"/>
+                <NavigationViewItem x:Name="Favourite" Icon="Favorite" Content="Favorite"/>
                 <NavigationViewItemSeparator/>
             </NavigationView.MenuItems>
         </NavigationView>
@@ -65,19 +65,18 @@
         </SplitView>
 
         <!--Embed favorits-->
-        <SplitView x:Name="embedBrowser" Margin="47,0,0,40"
+        <SplitView x:Name="embedBrowser" Margin="48,0,0,48"
                    OpenPaneLength="296" DisplayMode="Overlay"
                    PanePlacement="Left">
             <SplitView.Pane>
-                <StackPanel>
-                    <CommandBar x:Name="commandBarEmbedBrowser" DefaultLabelPosition="Right"
-                                Visibility="Collapsed" VerticalAlignment="Top">
-                        <AppBarButton x:Name="closeEmbedBrowser" Icon="ClosePane" Label="Close"/>
-                        <AppBarButton x:Name="accessLink" Icon="Find" Label="Go To"/>
-                        <AppBarToggleButton x:Name="pinEmbedBrowser" Icon="Pin" Label="Pin"/>
+                <Grid>
+                    <CommandBar x:Name="commandBarEmbedBrowser" DefaultLabelPosition="Right">
+                        <AppBarButton x:Name="closeEmbedBrowser" Icon="ClosePane" Label="Close" Click="closeEmbedBrowser_Click"/>
+                        <AppBarButton x:Name="accessLink" Icon="Find" Label="Go To" Click="accessLink_Click"/>
+                        <AppBarToggleButton x:Name="pinEmbedBrowser" Icon="Pin" Label="Pin" Click="pinEmbedBrowser_Click"/>
                     </CommandBar>
-                    <controls:WebView2 x:Name="embedWebView2"/>
-                </StackPanel>
+                    <controls:WebView2 x:Name="embedWebView2" Margin="0,53,0,0"/>
+                </Grid>
             </SplitView.Pane>
         </SplitView>
     </Grid>
