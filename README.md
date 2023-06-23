@@ -1,19 +1,17 @@
 # ![WebSM logo](Assets/WebSM.png) WebSM
-A UWP App who you can have your Social Media in one application.
+A simple minimalist web browser on UWP.
 
 ## What does it do?
-WebSM allows you to have a quick access to your favorite social media.
-
-You can listen to music, watching videos, and even chatting with your friends.
+WebSM allows you to have a simple web browser with a minimalist design.
 
 ## Features
-- All your favorite social media in one place.
-- Quick and easy to use.
+- Simple web browser.
+- Easy to use.
 
 ## Installation
 Minimum Windows version required: Windows 10 2004
 
-Recommended Windows version: Windows 10 21H2 / Windows 11 22H2
+Recommended Windows version: Windows 11 22H2
 
 ![https://apps.microsoft.com/store/detail/websm/9NVMBH7W0HXF](https://github.com/v38armageddon/WebSM/blob/master/Assets/Microsoft-store.png)
 
@@ -25,15 +23,11 @@ If you want to install without the Microsoft Store, follow theses steps:
 
 1. Download the .msix file and the .cer file.
 2. If needed, authorize all sources in settings.
-3. Install the certificate, see Q&A for installation.
+3. Install the certificate.
 3. Install the software.
 4. Launch the software via the start menu.
 
 ## Q&A
-Q: The installer tell me to use a certificate to install your application, how can I install it?
-
-A: The certificate is distributed every release of the application. You can follow the instructions in this website: https://wsldl-pg.github.io/ArchW-docs/Install-Certificate/
-
 Q: I can't connect to my Google account...
 
 A: This issue is know due to Google Security, see https://github.com/MicrosoftEdge/WebView2Feedback/issues/1647

@@ -49,6 +49,7 @@ namespace WebSM
             for (int i = 0; i < 1; i++)
             {
                 await CreateNewTabAsync(i);
+                tabView.SelectedIndex = i;
             }
         }
 
@@ -60,6 +61,10 @@ namespace WebSM
         private void TabView_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
         {
             sender.TabItems.Remove(args.Tab);
+            if (sender.TabItems.Count == 0)
+            {
+                Application.Current.Exit();
+            }
         }
 
         private async Task CreateNewTabAsync(int index)
