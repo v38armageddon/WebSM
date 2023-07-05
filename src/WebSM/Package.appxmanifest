@@ -68,12 +68,6 @@
           </uap:FileOpenPicker>
         </uap:Extension>
       </Extensions>
-      <uap:ApplicationContentUriRules>
-        <uap:Rule Type="include" Match="https://*.*.*" WindowsRuntimeAccess="all"/>
-        <uap:Rule Type="include" Match="https://*.*" WindowsRuntimeAccess="all"/>
-        <uap:Rule Type="include" Match="http://*.*.*" WindowsRuntimeAccess="all"/>
-        <uap:Rule Type="include" Match="http://*.*" WindowsRuntimeAccess="all"/>
-      </uap:ApplicationContentUriRules>
     </Application>
   </Applications>
 
