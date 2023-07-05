@@ -175,6 +175,14 @@ namespace WebSM
         {
             SearchDialog searchDialog = new SearchDialog();
             await searchDialog.ShowAsync();
+            if (searchDialog.searchTextBox.Text.StartsWith("https://") || searchDialog.searchTextBox.Text.StartsWith("http://"))
+            {
+                webView2.Source = new Uri(searchDialog.searchTextBox.Text);
+            }
+            else
+            {
+                webView2.Source = new Uri("https://www.bing.com/search?q=" + searchDialog.searchTextBox.Text);
+            }
         }
 
         private void backButton_Click(object sender, RoutedEventArgs e)
@@ -209,10 +217,32 @@ namespace WebSM
             }
         }
 
+        private void userAgentSwitch_Toggled(object sender, RoutedEventArgs e)
+        {
+            if (userAgentSwitch.IsOn == true)
+            {
+                //ChangeUserAgent();
+            }
+            else
+            {
+                //ResetUserAgent();
+            }
+        }
+
+        private void uBlockSwitch_Toggled(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         private async void AboutButton_Click(object sender, RoutedEventArgs e)
         {
             ContentDialog aboutDialog = new AboutDialog();
             await aboutDialog.ShowAsync();
+        }
+
+        private async void clearHistoryButton_Click(object sender, RoutedEventArgs e)
+        {
+            await webView2.CoreWebView2.Profile.ClearBrowsingDataAsync(Microsoft.Web.WebView2.Core.CoreWebView2BrowsingDataKinds.BrowsingHistory);
         }
 
         // Embed browser
