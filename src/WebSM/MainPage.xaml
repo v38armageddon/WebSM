@@ -25,7 +25,9 @@
                     DefaultLabelPosition="Bottom"
                     OverflowButtonVisibility="Collapsed"
                     IsEnabled="True">
+            <AppBarButton x:Name="openEmbedBrowserButton" Icon="OpenPane" Label="Open sidebar" Click="openEmbedBrowserButton_Click"/>
             <AppBarButton x:Name="openWindowButton" Icon="NewWindow" Label="New Window" Click="openWindowButton_Click"/>
+            <AppBarButton x:Name="homeButton" Icon="Home" Label="Home" Click="homeButton_Click"/>
             <AppBarButton x:Name="searchButton" Icon="Find" Label="Search" Click="searchButton_Click"/>
             <AppBarButton x:Name="backButton" Icon="Back" Label="Go Back" Click="backButton_Click"/>
             <AppBarButton x:Name="forwardButton" Icon="Forward" Label="Go Forward" Click="forwardButton_Click"/>
@@ -36,10 +38,7 @@
                         BackRequested="navView_BackRequested" 
                         SelectionChanged="navView_SelectionChanged">
             <NavigationView.MenuItems>
-                <NavigationViewItem x:Name="defaultWebsite" Icon="Home" Content="Home"/>
-                <NavigationViewItem x:Name="openEmbedBrowser" Icon="OpenPane" Content="Open sidebar"/>
-                <NavigationViewItem x:Name="Favourite" Icon="Favorite" Content="Favorite"/>
-                <NavigationViewItemSeparator/>
+                <!--When adding favorites, work on this-->
             </NavigationView.MenuItems>
         </NavigationView>
         
@@ -69,7 +68,8 @@
 
         <!--Embed favorits-->
         <SplitView x:Name="embedBrowser" Margin="48,0,0,48"
-                   OpenPaneLength="296" DisplayMode="Overlay"
+                   OpenPaneLength="420"
+                   DisplayMode="Overlay"
                    PanePlacement="Left">
             <SplitView.Pane>
                 <Grid>

@@ -37,6 +37,7 @@ namespace WebSM
 {
     public sealed partial class MainPage : Page
     {
+        private Dictionary<int, WebView2> tabViewTabItems = new Dictionary<int, WebView2>();
         WebView2 webView2 = new WebView2();
 
         public MainPage()
@@ -72,11 +73,22 @@ namespace WebSM
             progressRing.IsActive = true;
             TabViewItem newItem = new TabViewItem();
 
-            // Init WebView2
-            await webView2.EnsureCoreWebView2Async();
-            webView2.Source = new Uri("https://www.bing.com");
-            webView2.NavigationStarting += webView2_NavigationStarting;
-            webView2.NavigationCompleted += webView2_NavigationCompleted;
+            if (tabViewTabItems.ContainsKey(index))
+            {
+                webView2 = tabViewTabItems[index];
+            }
+            else
+            {
+                webView2 = new WebView2();
+
+                // Init WebView2
+                await webView2.EnsureCoreWebView2Async();
+                webView2.Source = new Uri("https://www.bing.com");
+                webView2.NavigationStarting += webView2_NavigationStarting;
+                webView2.NavigationCompleted += webView2_NavigationCompleted;
+
+                tabViewTabItems.Add(index, webView2);
+            }
 
             var search_dialog = new SearchDialog();
 
@@ -101,6 +113,7 @@ namespace WebSM
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
                 tabView.TabItems.Add(newItem);
+                tabView.SelectedIndex = index;
             });
             progressRing.IsActive = false;
         }
@@ -135,16 +148,21 @@ namespace WebSM
 
                 switch (item.Tag)
                 {
-                    case "home":
+                    case "Home":
                         webView2.Source = new Uri("https://www.bing.com");
                         break;
-                    case "openEmbedBrowser":
+                    case "Open sidebar":
                         embedBrowser.IsPaneOpen = true;
                         break;
-                    case "Favourite":
+                    case "Favorite":
                         break;
                 }
             }
+        }
+
+        private void openEmbedBrowserButton_Click(object sender, RoutedEventArgs e)
+        {
+            embedBrowser.IsPaneOpen = true;
         }
 
         private async void openWindowButton_Click(object sender, RoutedEventArgs e)
@@ -169,6 +187,11 @@ namespace WebSM
                         currentAV.Id,
                         ViewSizePreference.UseMinimum);
                 });
+        }
+
+        private void homeButton_Click(object sender, RoutedEventArgs e)
+        {
+            webView2.Source = new Uri("https://www.bing.com");
         }
 
         private async void searchButton_Click(object sender, RoutedEventArgs e)
@@ -251,14 +274,30 @@ namespace WebSM
             embedBrowser.IsPaneOpen = false;
         }
 
-        private void accessLink_Click(object sender, RoutedEventArgs e)
+        private async void accessLink_Click(object sender, RoutedEventArgs e)
         {
-            
+            SearchDialog searchDialog = new SearchDialog();
+            await searchDialog.ShowAsync();
+            if (searchDialog.searchTextBox.Text.StartsWith("https://") || searchDialog.searchTextBox.Text.StartsWith("http://"))
+            {
+                embedWebView2.Source = new Uri(searchDialog.searchTextBox.Text);
+            }
+            else
+            {
+                embedWebView2.Source = new Uri("https://www.bing.com/search?q=" + searchDialog.searchTextBox.Text);
+            }
         }
 
         private void pinEmbedBrowser_Click(object sender, RoutedEventArgs e)
         {
-            
+            if (pinEmbedBrowser.IsChecked == true)
+            {
+                embedBrowser.DisplayMode = SplitViewDisplayMode.Inline;
+            }
+            else
+            {
+                embedBrowser.DisplayMode = SplitViewDisplayMode.Overlay;
+            }
         }
     }
 }
