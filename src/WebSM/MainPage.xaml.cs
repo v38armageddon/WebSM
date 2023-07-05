@@ -31,6 +31,8 @@ using NavigationViewBackRequestedEventArgs = Windows.UI.Xaml.Controls.Navigation
 using NavigationViewSelectionChangedEventArgs = Windows.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs;
 using NavigationViewItem = Windows.UI.Xaml.Controls.NavigationViewItem;
 using Windows.UI.Xaml.Media.Imaging;
+using Microsoft.Web.WebView2.Core;
+using System.Net.Http;
 #endregion
 
 namespace WebSM
@@ -43,7 +45,29 @@ namespace WebSM
         public MainPage()
         {
             this.InitializeComponent();
+            LoadSettings();
         }
+
+        private void SaveSettings()
+        {
+            ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+
+            localSettings.Values["ComboBoxValue"] = comboBox1.SelectedIndex;
+        }
+
+
+        private void LoadSettings()
+        {
+            ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+
+            // Load theme
+            if (localSettings.Values.ContainsKey("ComboBoxValue"))
+            {
+                int selectedIndex = (int)localSettings.Values["ComboBoxValue"];
+                comboBox1.SelectedIndex = selectedIndex;
+            }
+        }
+
 
         private async void TabView_Loaded(object sender, RoutedEventArgs e)
         {
@@ -124,9 +148,26 @@ namespace WebSM
             await Task.Delay(0);
         }
 
-        private void webView2_NavigationCompleted(WebView2 sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs args)
+        private async void webView2_NavigationCompleted(WebView2 sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs args)
         {
             progressRing.IsActive = false;
+            TabViewItem tabItem = tabView.SelectedItem as TabViewItem;
+            string pageTitle = await webView2.CoreWebView2.ExecuteScriptAsync("document.title");
+            if (pageTitle != null)
+            {
+                tabItem.Header = pageTitle;
+            }
+
+            string faviconUrl = await webView2.CoreWebView2.ExecuteScriptAsync("document.querySelector('link[rel~=\"icon\"]')?.href || document.querySelector('link[rel~=\"shortcut icon\"]')?.href");
+            Uri iconUri;
+            if (!string.IsNullOrEmpty(faviconUrl) && Uri.TryCreate(faviconUrl, UriKind.Absolute, out iconUri))
+            {
+                tabItem.IconSource = new Microsoft.UI.Xaml.Controls.BitmapIconSource() { UriSource = iconUri };
+            }
+            else
+            {
+                tabItem.IconSource = new Microsoft.UI.Xaml.Controls.SymbolIconSource() { Symbol = Symbol.Globe };
+            }
             GC.Collect();
             GC.WaitForPendingFinalizers();
         }
@@ -141,6 +182,7 @@ namespace WebSM
             if (args.IsSettingsSelected)
             {
                 settingsView.IsPaneOpen = true;
+                navView.SelectedItem = null;
             }
             else
             {
@@ -148,14 +190,7 @@ namespace WebSM
 
                 switch (item.Tag)
                 {
-                    case "Home":
-                        webView2.Source = new Uri("https://www.bing.com");
-                        break;
-                    case "Open sidebar":
-                        embedBrowser.IsPaneOpen = true;
-                        break;
-                    case "Favorite":
-                        break;
+                    // Add here all the favorites links
                 }
             }
         }
@@ -238,34 +273,38 @@ namespace WebSM
             {
                 this.RequestedTheme = ElementTheme.Dark;
             }
+            SaveSettings();
         }
 
         private void userAgentSwitch_Toggled(object sender, RoutedEventArgs e)
         {
             if (userAgentSwitch.IsOn == true)
             {
-                //ChangeUserAgent();
+                ChangeUserAgent();
             }
             else
             {
-                //ResetUserAgent();
+                ResetUserAgent();
             }
         }
 
-        private void uBlockSwitch_Toggled(object sender, RoutedEventArgs e)
+        private void ChangeUserAgent()
         {
+            webView2.CoreWebView2.Settings.UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.5666.197 Safari/537.36";
+        }
 
+        private async void ResetUserAgent()
+        {
+            WebView2 defaultWebView2 = new WebView2();
+            await defaultWebView2.EnsureCoreWebView2Async(); // We need to create a new WebView2 to get the default UserAgent
+            webView2.CoreWebView2.Settings.UserAgent = defaultWebView2.CoreWebView2.Settings.UserAgent;
+            webView2.Reload();
         }
 
         private async void AboutButton_Click(object sender, RoutedEventArgs e)
         {
             ContentDialog aboutDialog = new AboutDialog();
             await aboutDialog.ShowAsync();
-        }
-
-        private async void clearHistoryButton_Click(object sender, RoutedEventArgs e)
-        {
-            await webView2.CoreWebView2.Profile.ClearBrowsingDataAsync(Microsoft.Web.WebView2.Core.CoreWebView2BrowsingDataKinds.BrowsingHistory);
         }
 
         // Embed browser
