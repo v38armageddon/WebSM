@@ -24,9 +24,9 @@
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <AppxBundle>Always</AppxBundle>
-    <AppxBundlePlatforms>x86|x64</AppxBundlePlatforms>
+    <AppxBundlePlatforms>x64</AppxBundlePlatforms>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
-    <AppxPackageDir>C:\Users\v38armageddon\Documents\AppX\</AppxPackageDir>
+    <AppxPackageDir>D:\Users\v38armageddon\Documents\AppX\</AppxPackageDir>
     <PackageCertificateKeyFile />
     <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
   </PropertyGroup>
@@ -36,7 +36,7 @@
     <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
     <NoWarn>;2008;8305</NoWarn>
     <DebugType>full</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
@@ -138,6 +138,9 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SearchDialog.xaml.cs">
+      <DependentUpon>SearchDialog.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -191,12 +194,6 @@
     <Content Include="Assets\Wide310x150Logo.scale-150.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
     <None Include="Package.StoreAssociation.xml" />
-    <Content Include="Icons\discord.png" />
-    <Content Include="Icons\reddit.png" />
-    <Content Include="Icons\spotify.png" />
-    <Content Include="Icons\twitch.png" />
-    <Content Include="Icons\twitter.png" />
-    <Content Include="Icons\youtube.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -218,25 +215,32 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="SearchDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="HtmlAgilityPack">
+      <Version>1.11.48</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.AppCenter.Analytics">
-      <Version>5.0.1</Version>
+      <Version>5.0.2</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.AppCenter.Crashes">
-      <Version>5.0.1</Version>
+      <Version>5.0.2</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.14</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.UI.Xaml">
-      <Version>2.8.1</Version>
+      <Version>2.8.4</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.UI.Xaml.Core.Direct">
       <Version>2.0.190315001-prerelease</Version>
     </PackageReference>
     <PackageReference Include="System.Configuration.ConfigurationManager">
-      <Version>6.0.1</Version>
+      <Version>7.0.0</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
