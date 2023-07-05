@@ -10,7 +10,7 @@
   <Identity
     Name="34823v38armageddon.WebSM"
     Publisher="CN=v38armageddon"
-    Version="3.2.1.0" />
+    Version="4.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="35eaeac7-62c3-4e75-8a1a-c197d1793470" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
@@ -68,6 +68,12 @@
           </uap:FileOpenPicker>
         </uap:Extension>
       </Extensions>
+      <uap:ApplicationContentUriRules>
+        <uap:Rule Type="include" Match="https://*.*.*" WindowsRuntimeAccess="all"/>
+        <uap:Rule Type="include" Match="https://*.*" WindowsRuntimeAccess="all"/>
+        <uap:Rule Type="include" Match="http://*.*.*" WindowsRuntimeAccess="all"/>
+        <uap:Rule Type="include" Match="http://*.*" WindowsRuntimeAccess="all"/>
+      </uap:ApplicationContentUriRules>
     </Application>
   </Applications>
 

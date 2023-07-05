@@ -58,10 +58,8 @@
                         <TextBlock x:Name="darkTheme" Text="Dark Theme"/>
                     </ComboBox>
                     <ToggleSwitch x:Name="userAgentSwitch" Header="Toggle fake User Agent" Toggled="userAgentSwitch_Toggled" Margin="10,10,0,0"/>
-                    <ToggleSwitch x:Name="uBlockSwitch" Header="Toggle adblocker (uBlock Origin)" Toggled="uBlockSwitch_Toggled" Margin="10,10,0,0"/>
                     <TextBlock Text="Extras" Margin="10,10,0,0"  FontSize="18"/>
                     <Button x:Name="AboutButton" Content="About" Click="AboutButton_Click" Margin="10,10,0,0"/>
-                    <Button x:Name="clearHistoryButton" Content="Clear History" Click="clearHistoryButton_Click" Margin="80,-33,0,0"/>
                 </StackPanel>
             </SplitView.Pane>
         </SplitView>
