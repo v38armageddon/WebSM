@@ -24,7 +24,7 @@
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <AppxBundle>Always</AppxBundle>
-    <AppxBundlePlatforms>x64</AppxBundlePlatforms>
+    <AppxBundlePlatforms>x86|x64</AppxBundlePlatforms>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     <AppxPackageDir>D:\Users\v38armageddon\Documents\AppX\</AppxPackageDir>
     <PackageCertificateKeyFile />
@@ -221,9 +221,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="HtmlAgilityPack">
-      <Version>1.11.48</Version>
-    </PackageReference>
     <PackageReference Include="Microsoft.AppCenter.Analytics">
       <Version>5.0.2</Version>
     </PackageReference>
@@ -234,7 +231,7 @@
       <Version>6.2.14</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.UI.Xaml">
-      <Version>2.8.4</Version>
+      <Version>2.8.5</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.UI.Xaml.Core.Direct">
       <Version>2.0.190315001-prerelease</Version>
