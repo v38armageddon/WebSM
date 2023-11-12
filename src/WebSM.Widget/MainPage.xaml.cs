@@ -1,21 +1,15 @@
 ﻿using Microsoft.UI.Xaml.Controls;
 using System;
-using System.Configuration;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
-using Windows.ApplicationModel.Resources.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.UI.Core;
-using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -24,17 +18,8 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-#region aliases
-using NavigationView = Windows.UI.Xaml.Controls.NavigationView;
-using NavigationViewBackRequestedEventArgs = Windows.UI.Xaml.Controls.NavigationViewBackRequestedEventArgs;
-using NavigationViewSelectionChangedEventArgs = Windows.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs;
-using NavigationViewItem = Windows.UI.Xaml.Controls.NavigationViewItem;
-using Windows.UI.Xaml.Media.Imaging;
-using Microsoft.Web.WebView2.Core;
-using System.Net.Http;
-#endregion
 
-namespace WebSM
+namespace WebSM.Widget
 {
     public sealed partial class MainPage : Page
     {
@@ -171,29 +156,6 @@ namespace WebSM
             GC.WaitForPendingFinalizers();
         }
 
-        private void navView_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
-        {
-            webView2.GoBack();
-        }
-
-        private void navView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
-        {
-            if (args.IsSettingsSelected)
-            {
-                settingsView.IsPaneOpen = true;
-                navView.SelectedItem = null;
-            }
-            else
-            {
-                NavigationViewItem item = args.SelectedItem as NavigationViewItem;
-
-                switch (item.Tag)
-                {
-                    // Add here all the favorites links
-                }
-            }
-        }
-
         private void openEmbedBrowserButton_Click(object sender, RoutedEventArgs e)
         {
             embedBrowser.IsPaneOpen = true;
@@ -210,11 +172,11 @@ namespace WebSM
                     var newWindow = Window.Current;
                     var newAppView = ApplicationView.GetForCurrentView();
                     var frame = new Frame();
-                    
+
                     frame.Navigate(typeof(MainPage), null);
                     newWindow.Content = frame;
                     newWindow.Activate();
-                    
+
                     await ApplicationViewSwitcher.TryShowAsStandaloneAsync(
                         newAppView.Id,
                         ViewSizePreference.UseMinimum,
@@ -232,17 +194,9 @@ namespace WebSM
         {
             SearchDialog searchDialog = new SearchDialog();
             await searchDialog.ShowAsync();
-            if (String.IsNullOrEmpty(searchDialog.searchTextBox.Text))
-            {
-                return;
-            }
             if (searchDialog.searchTextBox.Text.StartsWith("https://") || searchDialog.searchTextBox.Text.StartsWith("http://"))
             {
                 webView2.Source = new Uri(searchDialog.searchTextBox.Text);
-            }
-            else if (searchDialog.searchTextBox.Text.Contains("."))
-            {
-                webView2.Source = new Uri("https://" + searchDialog.searchTextBox.Text);
             }
             else
             {
