@@ -9,10 +9,10 @@
 
   <Identity
     Name="34823v38armageddon.WebSM"
-    Publisher="CN=v38armageddon"
+    Publisher="CN=EF25BC35-CB3A-4D06-953A-49E6117D3FA3"
     Version="4.0.1.0" />
 
-  <mp:PhoneIdentity PhoneProductId="35eaeac7-62c3-4e75-8a1a-c197d1793470" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="3dbdd0fa-bc87-491f-9107-ec4211ba90f0" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>WebSM</DisplayName>
