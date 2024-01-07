@@ -3,4 +3,4 @@
 	url = https://github.com/GNOME/epiphany
 [submodule "src/WebSM.Linux"]
 	path = src/WebSM.Linux
-	url = https://github.com/GNOME/epiphany
+	url = https://github.com/v38armageddon/WebSM.Linux
