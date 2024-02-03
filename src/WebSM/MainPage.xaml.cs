@@ -1,4 +1,21 @@
-﻿using Microsoft.UI.Xaml.Controls;
+﻿/*
+ * WebSM - A simply minimalist web browser.
+ * Copyright (C) 2022 - 2024 - v38armageddon
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Configuration;
 using System.Collections.Generic;
@@ -32,6 +49,7 @@ using NavigationViewItem = Windows.UI.Xaml.Controls.NavigationViewItem;
 using Windows.UI.Xaml.Media.Imaging;
 using Microsoft.Web.WebView2.Core;
 using System.Net.Http;
+using System.Threading;
 #endregion
 
 namespace WebSM
@@ -40,33 +58,12 @@ namespace WebSM
     {
         private Dictionary<int, WebView2> tabViewTabItems = new Dictionary<int, WebView2>();
         WebView2 webView2 = new WebView2();
+        ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 
         public MainPage()
         {
             this.InitializeComponent();
-            LoadSettings();
         }
-
-        private void SaveSettings()
-        {
-            ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
-
-            localSettings.Values["ComboBoxValue"] = comboBox1.SelectedIndex;
-        }
-
-
-        private void LoadSettings()
-        {
-            ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
-
-            // Load theme
-            if (localSettings.Values.ContainsKey("ComboBoxValue"))
-            {
-                int selectedIndex = (int)localSettings.Values["ComboBoxValue"];
-                comboBox1.SelectedIndex = selectedIndex;
-            }
-        }
-
 
         private async void TabView_Loaded(object sender, RoutedEventArgs e)
         {
@@ -116,17 +113,19 @@ namespace WebSM
             var search_dialog = new SearchDialog();
 
             newItem.Content = webView2;
+            
+            // Init Name of website and favicon
             string pageTitle = await webView2.CoreWebView2.ExecuteScriptAsync("document.title");
             if (pageTitle != null)
             {
-                newItem.Header = pageTitle;
+                newItem.Header = pageTitle; // TODO: Remove the "" in titles
             }
 
             string faviconUrl = await webView2.CoreWebView2.ExecuteScriptAsync("document.querySelector('link[rel~=\"icon\"]')?.href || document.querySelector('link[rel~=\"shortcut icon\"]')?.href");
             Uri iconUri;
-            if (!string.IsNullOrEmpty(faviconUrl) && Uri.TryCreate(faviconUrl, UriKind.Absolute, out iconUri))
+            if (!string.IsNullOrEmpty(faviconUrl) && Uri.TryCreate(faviconUrl, UriKind.Absolute, out iconUri)) 
             {
-                newItem.IconSource = new Microsoft.UI.Xaml.Controls.BitmapIconSource() { UriSource = iconUri };
+                newItem.IconSource = new Microsoft.UI.Xaml.Controls.BitmapIconSource() { UriSource = iconUri }; // TODO: Change the method of how to set the favicon
             }
             else
             {
@@ -144,7 +143,7 @@ namespace WebSM
         private async void webView2_NavigationStarting(WebView2 sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationStartingEventArgs args)
         {
             progressRing.IsActive = true;
-            await Task.Delay(0);
+            await Task.Delay(0); // Why do I need a delay here?
         }
 
         private async void webView2_NavigationCompleted(WebView2 sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs args)
@@ -203,24 +202,23 @@ namespace WebSM
         {
             var currentAV = ApplicationView.GetForCurrentView();
             var newAV = CoreApplication.CreateNewView();
-            await newAV.Dispatcher.RunAsync(
-                CoreDispatcherPriority.Normal,
-                async () =>
-                {
-                    var newWindow = Window.Current;
-                    var newAppView = ApplicationView.GetForCurrentView();
-                    var frame = new Frame();
-                    
-                    frame.Navigate(typeof(MainPage), null);
-                    newWindow.Content = frame;
-                    newWindow.Activate();
-                    
-                    await ApplicationViewSwitcher.TryShowAsStandaloneAsync(
-                        newAppView.Id,
-                        ViewSizePreference.UseMinimum,
-                        currentAV.Id,
-                        ViewSizePreference.UseMinimum);
-                });
+
+            await newAV.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            {
+                var newWindow = Window.Current;
+                var newAppView = ApplicationView.GetForCurrentView();
+                var frame = new Frame();
+
+                frame.Navigate(typeof(MainPage), null);
+                newWindow.Content = frame;
+                newWindow.Activate();
+
+                await ApplicationViewSwitcher.TryShowAsStandaloneAsync(
+                    newAppView.Id,
+                    ViewSizePreference.UseMinimum,
+                    currentAV.Id,
+                    ViewSizePreference.UseMinimum);
+            });
         }
 
         private void homeButton_Click(object sender, RoutedEventArgs e)
@@ -232,6 +230,7 @@ namespace WebSM
         {
             SearchDialog searchDialog = new SearchDialog();
             await searchDialog.ShowAsync();
+            // Maybe move this part of code to the SearchDialog class?
             if (String.IsNullOrEmpty(searchDialog.searchTextBox.Text))
             {
                 return;
@@ -280,7 +279,6 @@ namespace WebSM
             {
                 this.RequestedTheme = ElementTheme.Dark;
             }
-            SaveSettings();
         }
 
         private void userAgentSwitch_Toggled(object sender, RoutedEventArgs e)
@@ -306,6 +304,8 @@ namespace WebSM
             await defaultWebView2.EnsureCoreWebView2Async(); // We need to create a new WebView2 to get the default UserAgent
             webView2.CoreWebView2.Settings.UserAgent = defaultWebView2.CoreWebView2.Settings.UserAgent;
             webView2.Reload();
+            // Destroy the generated webView2
+            defaultWebView2.Close();
         }
 
         private async void AboutButton_Click(object sender, RoutedEventArgs e)
