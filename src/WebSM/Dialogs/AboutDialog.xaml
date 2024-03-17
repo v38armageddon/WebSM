@@ -23,7 +23,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Title="About WebSM"
+    Title="WebSM"
     PrimaryButtonText="Rate this app"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
     SecondaryButtonText="Close"
@@ -31,7 +31,7 @@
 
     <Grid>
         <StackPanel>
-            <TextBlock Text="Version: 4"/>
+            <TextBlock Text="Version: 4.1"/>
             <TextBlock Text="License: GPL-3"/>
             <TextBlock>
                 <Hyperlink NavigateUri="https://github.com/v38armageddon/WebSM">View on GitHub</Hyperlink>

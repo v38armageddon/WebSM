@@ -54,10 +54,7 @@
                         IsPaneOpen="False" x:FieldModifier="public" IsBackEnabled="True"
                         BackRequested="navView_BackRequested" 
                         SelectionChanged="navView_SelectionChanged">
-            <NavigationView.MenuItems>
-                <NavigationViewItem x:Name="favoritesMenu" Content="Favorites" Icon="Favorite"/>
-                <NavigationViewItemSeparator/>
-            </NavigationView.MenuItems>
+            <!--TODO: Include some features that can be useful-->
         </NavigationView>
         
         <!-- Settings -->
@@ -82,7 +79,7 @@
             </SplitView.Pane>
         </SplitView>
 
-        <!--Embed favorits-->
+        <!--Embed browser-->
         <SplitView x:Name="embedBrowser" Margin="48,0,0,48"
                    OpenPaneLength="420"
                    DisplayMode="Overlay"

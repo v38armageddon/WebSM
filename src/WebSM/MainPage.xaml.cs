@@ -50,6 +50,7 @@ using Windows.UI.Xaml.Media.Imaging;
 using Microsoft.Web.WebView2.Core;
 using System.Net.Http;
 using System.Threading;
+using Windows.UI.Xaml.Media.Animation;
 #endregion
 
 namespace WebSM
@@ -62,7 +63,7 @@ namespace WebSM
 
         public MainPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
 
         private async void TabView_Loaded(object sender, RoutedEventArgs e)
@@ -92,6 +93,7 @@ namespace WebSM
         {
             progressRing.IsActive = true;
             TabViewItem newItem = new TabViewItem();
+            System.Diagnostics.Debug.WriteLine("ID of the tab: " + index + " created.");
 
             if (tabViewTabItems.ContainsKey(index))
             {
@@ -116,9 +118,10 @@ namespace WebSM
             
             // Init Name of website and favicon
             string pageTitle = await webView2.CoreWebView2.ExecuteScriptAsync("document.title");
+            pageTitle = pageTitle.Trim('"');
             if (pageTitle != null)
             {
-                newItem.Header = pageTitle; // TODO: Remove the "" in titles
+                newItem.Header = pageTitle;
             }
 
             string faviconUrl = await webView2.CoreWebView2.ExecuteScriptAsync("document.querySelector('link[rel~=\"icon\"]')?.href || document.querySelector('link[rel~=\"shortcut icon\"]')?.href");
@@ -140,19 +143,19 @@ namespace WebSM
             progressRing.IsActive = false;
         }
 
-        private async void webView2_NavigationStarting(WebView2 sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationStartingEventArgs args)
+        private void webView2_NavigationStarting(WebView2 sender, CoreWebView2NavigationStartingEventArgs args)
         {
             progressRing.IsActive = true;
-            await Task.Delay(0); // Why do I need a delay here?
         }
 
-        private async void webView2_NavigationCompleted(WebView2 sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs args)
+        private async void webView2_NavigationCompleted(WebView2 sender, CoreWebView2NavigationCompletedEventArgs args)
         {
             progressRing.IsActive = false;
             TabViewItem tabItem = tabView.SelectedItem as TabViewItem;
             string pageTitle = await webView2.CoreWebView2.ExecuteScriptAsync("document.title");
             if (pageTitle != null)
             {
+                pageTitle = pageTitle.Trim('"'); // Remove the quotes from the title
                 tabItem.Header = pageTitle;
             }
 
@@ -182,15 +185,7 @@ namespace WebSM
                 settingsView.IsPaneOpen = true;
                 navView.SelectedItem = null;
             }
-            else
-            {
-                NavigationViewItem item = args.SelectedItem as NavigationViewItem;
-
-                switch (item.Tag)
-                {
-                    // Add here all the favorites links
-                }
-            }
+            else return;
         }
 
         private void openEmbedBrowserButton_Click(object sender, RoutedEventArgs e)
@@ -269,15 +264,18 @@ namespace WebSM
         {
             if (comboBox1.SelectedIndex == 0) // <- Default theme from the system
             {
-                this.RequestedTheme = ElementTheme.Default;
+                RequestedTheme = ElementTheme.Default;
+                localSettings.Values["Theme"] = RequestedTheme.ToString();
             }
             else if (comboBox1.SelectedIndex == 1) // <- Light theme
             {
-                this.RequestedTheme = ElementTheme.Light;
+                RequestedTheme = ElementTheme.Light;
+                localSettings.Values["Theme"] = RequestedTheme.ToString();
             }
             else if (comboBox1.SelectedIndex == 2) // <- Dark theme
             {
-                this.RequestedTheme = ElementTheme.Dark;
+                RequestedTheme = ElementTheme.Dark;
+                localSettings.Values["Theme"] = RequestedTheme.ToString();
             }
         }
 
@@ -295,7 +293,7 @@ namespace WebSM
 
         private void ChangeUserAgent()
         {
-            webView2.CoreWebView2.Settings.UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.5666.197 Safari/537.36";
+            webView2.CoreWebView2.Settings.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1788.0";
         }
 
         private async void ResetUserAgent()

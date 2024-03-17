@@ -40,6 +40,7 @@ namespace WebSM
     {
         public bool advancedButton { get; set; }
         public string Theme { get; set; }
+        ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 
         public App()
         {
@@ -59,7 +60,7 @@ namespace WebSM
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
-                    
+                    Current.RequestedTheme = (ApplicationTheme)localSettings.Values["Theme"];
                 }
 
                 Window.Current.Content = rootFrame;
