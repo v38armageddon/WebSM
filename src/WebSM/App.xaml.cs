@@ -15,9 +15,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-using Microsoft.AppCenter;
-using Microsoft.AppCenter.Analytics;
-using Microsoft.AppCenter.Crashes;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -46,10 +43,8 @@ namespace WebSM
 
         public App()
         {
-            this.InitializeComponent();
-            this.Suspending += OnSuspending;
-            AppCenter.Start("TOKEN",
-                  typeof(Analytics), typeof(Crashes));
+            InitializeComponent();
+            Suspending += OnSuspending;
         }
 
         protected override void OnLaunched(LaunchActivatedEventArgs e)
