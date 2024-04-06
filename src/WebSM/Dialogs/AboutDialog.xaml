@@ -37,7 +37,7 @@
                 <Hyperlink NavigateUri="https://github.com/v38armageddon/WebSM">View on GitHub</Hyperlink>
             </TextBlock>
             <TextBlock>
-                <Hyperlink NavigateUri="https://gist.github.com/v38armageddon/d4b6a4a207d19a85c82ce102bd9f2864">Privacy Statement</Hyperlink>
+                <Hyperlink NavigateUri="https://gist.github.com/v38armageddon/0461036c1f76590bbf32efe9a660968b">Privacy Statement</Hyperlink>
             </TextBlock>
         </StackPanel>
     </Grid>

@@ -202,7 +202,13 @@ namespace WebSM
                 settingsView.IsPaneOpen = true;
                 navView.SelectedItem = null;
             }
-            else return;
+            NavigationViewItem item = args.SelectedItem as NavigationViewItem;
+            switch (item.Tag)
+            {
+                case "Downloads":
+                    webView2.CoreWebView2.OpenDefaultDownloadDialog();
+                    break;
+            }
         }
 
         private void openEmbedBrowserButton_Click(object sender, RoutedEventArgs e)

@@ -54,7 +54,9 @@
                         IsPaneOpen="False" x:FieldModifier="public" IsBackEnabled="True"
                         BackRequested="navView_BackRequested" 
                         SelectionChanged="navView_SelectionChanged">
-            <!--TODO: Include some features that can be useful-->
+            <NavigationView.MenuItems>
+                <NavigationViewItem x:Name="downloadButton" Icon="Download" Content="Downloads" Tag="Downloads"/>
+            </NavigationView.MenuItems>
         </NavigationView>
         
         <!-- Settings -->
