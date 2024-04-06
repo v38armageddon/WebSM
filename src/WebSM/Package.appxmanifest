@@ -9,10 +9,10 @@
 
   <Identity
     Name="34823v38armageddon.WebSM"
-    Publisher="CN=v38armageddon"
-    Version="4.0.0.0" />
+    Publisher="CN=EF25BC35-CB3A-4D06-953A-49E6117D3FA3"
+    Version="4.1.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="35eaeac7-62c3-4e75-8a1a-c197d1793470" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="3dbdd0fa-bc87-491f-9107-ec4211ba90f0" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>WebSM</DisplayName>
@@ -21,7 +21,7 @@
   </Properties>
 
   <Dependencies>
-    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.19043.0" MaxVersionTested="10.0.22621.0" />
   </Dependencies>
 
   <Resources>
@@ -36,7 +36,7 @@
         DisplayName="WebSM"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
-        Description="A simply minimalist web browser made with UWP."
+        Description="A simply minimalist web browser."
         BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" Square71x71Logo="Assets\SmallTile.png" Square310x310Logo="Assets\LargeTile.png" ShortName="WebSM">
           <uap:ShowNameOnTiles>
