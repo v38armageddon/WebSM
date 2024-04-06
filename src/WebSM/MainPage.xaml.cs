@@ -93,11 +93,12 @@ namespace WebSM
         {
             progressRing.IsActive = true;
             TabViewItem newItem = new TabViewItem();
-            System.Diagnostics.Debug.WriteLine("ID of the tab: " + index + " created.");
 
-            if (tabViewTabItems.ContainsKey(index))
+            int newIndex = GenerateUniqueID(); // Generate a unique ID for the new tab
+
+            if (tabViewTabItems.ContainsKey(newIndex))
             {
-                webView2 = tabViewTabItems[index];
+                webView2 = tabViewTabItems[newIndex];
             }
             else
             {
@@ -109,13 +110,12 @@ namespace WebSM
                 webView2.NavigationStarting += webView2_NavigationStarting;
                 webView2.NavigationCompleted += webView2_NavigationCompleted;
 
-                tabViewTabItems.Add(index, webView2);
+                tabViewTabItems.Add(newIndex, webView2);
             }
 
             var search_dialog = new SearchDialog();
-
             newItem.Content = webView2;
-            
+
             // Init Name of website and favicon
             string pageTitle = await webView2.CoreWebView2.ExecuteScriptAsync("document.title");
             pageTitle = pageTitle.Trim('"');
@@ -126,9 +126,9 @@ namespace WebSM
 
             string faviconUrl = await webView2.CoreWebView2.ExecuteScriptAsync("document.querySelector('link[rel~=\"icon\"]')?.href || document.querySelector('link[rel~=\"shortcut icon\"]')?.href");
             Uri iconUri;
-            if (!string.IsNullOrEmpty(faviconUrl) && Uri.TryCreate(faviconUrl, UriKind.Absolute, out iconUri)) 
+            if (!string.IsNullOrEmpty(faviconUrl) && Uri.TryCreate(faviconUrl, UriKind.Absolute, out iconUri))
             {
-                newItem.IconSource = new Microsoft.UI.Xaml.Controls.BitmapIconSource() { UriSource = iconUri }; // TODO: Change the method of how to set the favicon
+                newItem.IconSource = new Microsoft.UI.Xaml.Controls.BitmapIconSource() { UriSource = iconUri };
             }
             else
             {
@@ -143,6 +143,19 @@ namespace WebSM
             progressRing.IsActive = false;
         }
 
+        // DO NOT MOVE THIS FUNCTION OR IT WILL CRASH THE APP
+        // Yes, this is dumb, but it's the only way to make it work
+        private int GenerateUniqueID()
+        {
+            Random random = new Random();
+            int newIndex = random.Next(1000000, 9999999); // Generate a random number between 1000000 and 9999999
+            while (tabViewTabItems.ContainsKey(newIndex))
+            {
+                newIndex = random.Next(1000000, 9999999); // Generate a new random number if the generated number already exists
+            }
+            return newIndex;
+        }
+
         private void webView2_NavigationStarting(WebView2 sender, CoreWebView2NavigationStartingEventArgs args)
         {
             progressRing.IsActive = true;
@@ -152,18 +165,22 @@ namespace WebSM
         {
             progressRing.IsActive = false;
             TabViewItem tabItem = tabView.SelectedItem as TabViewItem;
+
+            // Set the title to the tab
             string pageTitle = await webView2.CoreWebView2.ExecuteScriptAsync("document.title");
-            if (pageTitle != null)
+            if (!string.IsNullOrEmpty(pageTitle))
             {
                 pageTitle = pageTitle.Trim('"'); // Remove the quotes from the title
                 tabItem.Header = pageTitle;
             }
 
+            // Set the favicon to the tab
             string faviconUrl = await webView2.CoreWebView2.ExecuteScriptAsync("document.querySelector('link[rel~=\"icon\"]')?.href || document.querySelector('link[rel~=\"shortcut icon\"]')?.href");
+            faviconUrl = faviconUrl.Trim('"');
             Uri iconUri;
             if (!string.IsNullOrEmpty(faviconUrl) && Uri.TryCreate(faviconUrl, UriKind.Absolute, out iconUri))
             {
-                tabItem.IconSource = new Microsoft.UI.Xaml.Controls.BitmapIconSource() { UriSource = iconUri };
+                tabItem.IconSource = new Microsoft.UI.Xaml.Controls.BitmapIconSource() { UriSource = iconUri, ShowAsMonochrome = false };
             }
             else
             {
