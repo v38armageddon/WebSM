@@ -1,5 +1,4 @@
 # Contribute to WebSM
-
 WebSM is open to all contributions! You just need to respect the code of conduct.
 
 ## How to contribute?
@@ -12,8 +11,8 @@ You can contribute to WebSM several ways:
 ### Software
 
 What you need to contribute to WebSM:
-1. Visual Studio 2022 with UWP .NET Desktop.
-2. .NET SDK 6 / 7
+1. Visual Studio 2022.
+2. The UWP .NET module.
 
 To contribute:
 1. Fork this repository
@@ -30,8 +29,8 @@ You can fork this repository to make change on the documentation.
 ### Translation
 
 What you need to contribute to WebSM:
-1. Visual Studio 2022 with UWP .NET Desktop.
-2. Multilingual App Toolkit
+1. Visual Studio 2022.
+2. The UWP .NET module.
 
 To contribute:
 1. Fork this repository
