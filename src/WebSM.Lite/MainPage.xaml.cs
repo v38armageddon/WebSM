@@ -61,7 +61,7 @@ namespace WebSM.Lite
             progressRing.IsActive = true;
         }
 
-        private async void webView2_NavigationCompleted(WebView2 sender, CoreWebView2NavigationCompletedEventArgs args)
+        private void webView2_NavigationCompleted(WebView2 sender, CoreWebView2NavigationCompletedEventArgs args)
         {
             progressRing.IsActive = false;
             GC.Collect();

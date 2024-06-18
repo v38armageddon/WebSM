@@ -55,7 +55,7 @@
         </controls:NavigationView>
 
         <!-- Settings -->
-        <SplitView x:Name="settingsView" DisplayMode="Overlay" OpenPaneLength="296" PanePlacement="Right">
+        <SplitView x:Name="settingsView" DisplayMode="Overlay" IsPaneOpen="False" OpenPaneLength="296" PanePlacement="Right">
             <SplitView.Pane>
                 <StackPanel>
                     <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Settings" VerticalAlignment="Top" FontWeight="Bold" FontSize="36"/>
