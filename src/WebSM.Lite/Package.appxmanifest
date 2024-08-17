@@ -53,11 +53,11 @@
           <uap:Rotation Preference="portraitFlipped"/></uap:InitialRotationPreference>
       </uap:VisualElements>
       <Extensions>
-        <uap:Extension Category="windows.fileTypeAssociation">
-          <uap:FileTypeAssociation>
-            <uap:SupportedFileTypes>
-            </uap:SupportedFileTypes>
-          </uap:FileTypeAssociation>
+        <uap:Extension Category="windows.protocol">
+          <uap:Protocol Name="http"/>
+        </uap:Extension>
+        <uap:Extension Category="windows.protocol">
+          <uap:Protocol Name="https"/>
         </uap:Extension>
       </Extensions>
     </Application>

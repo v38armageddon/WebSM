@@ -30,7 +30,7 @@
 
     <Grid>
         <!-- WebBrowser -->
-        <controls:WebView2 x:Name="webView2" Margin="48,0,0,48" VerticalAlignment="Stretch" Source="https://bing.com"/>
+        <controls:WebView2 x:Name="webView2" x:FieldModifier="public" Margin="48,0,0,48"/>
         <controls:ProgressRing x:Name="progressRing" IsActive="False" Margin="48,0,0,48"/>
 
         <!-- Navigation bars -->
@@ -45,17 +45,17 @@
             <AppBarButton x:Name="forwardButton" Icon="Forward" Label="Go Forward" Click="forwardButton_Click"/>
             <AppBarButton x:Name="refreshButton" Icon="Refresh" Label="Refresh" Click="refreshButton_Click"/>
         </CommandBar>
-        <controls:NavigationView x:Name="navView" PaneDisplayMode="LeftCompact" PaneTitle="WebSM"
+        <NavigationView x:Name="navView" PaneDisplayMode="LeftCompact" PaneTitle="WebSM"
                     IsPaneOpen="False" x:FieldModifier="public" IsBackEnabled="True"
                     BackRequested="navView_BackRequested" 
                     SelectionChanged="navView_SelectionChanged">
-            <controls:NavigationView.MenuItems>
-                <controls:NavigationViewItem x:Name="downloadButton" Icon="Download" Content="Downloads" Tag="Downloads"/>
-            </controls:NavigationView.MenuItems>
-        </controls:NavigationView>
+            <NavigationView.MenuItems>
+                <NavigationViewItem x:Name="downloadButton" Icon="Download" Content="Downloads" Tag="Downloads"/>
+            </NavigationView.MenuItems>
+        </NavigationView>
 
         <!-- Settings -->
-        <SplitView x:Name="settingsView" DisplayMode="Overlay" IsPaneOpen="False" OpenPaneLength="296" PanePlacement="Right">
+        <SplitView x:Name="settingsView" DisplayMode="Overlay" OpenPaneLength="296" PanePlacement="Right">
             <SplitView.Pane>
                 <StackPanel>
                     <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Settings" VerticalAlignment="Top" FontWeight="Bold" FontSize="36"/>

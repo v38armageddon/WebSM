@@ -54,6 +54,7 @@ namespace WebSM.Lite
         public MainPage()
         {
             InitializeComponent();
+            webView2.CoreWebView2.Settings.UserAgent = "WebSM/4.1 Lite Edition (Based on Microsoft WebView2)";
         }
 
         private void webView2_NavigationStarting(WebView2 sender, CoreWebView2NavigationStartingEventArgs args)
@@ -68,24 +69,28 @@ namespace WebSM.Lite
             GC.WaitForPendingFinalizers();
         }
 
-        private void navView_BackRequested(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewBackRequestedEventArgs args)
+        private void navView_BackRequested(Windows.UI.Xaml.Controls.NavigationView sender, Windows.UI.Xaml.Controls.NavigationViewBackRequestedEventArgs args)
         {
             webView2.GoBack();
         }
 
-        private void navView_SelectionChanged(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs args)
+        // WARNING: Complicated code here! Not present on normal version!
+        private void navView_SelectionChanged(Windows.UI.Xaml.Controls.NavigationView sender, Windows.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs args)
         {
             if (args.IsSettingsSelected)
             {
                 settingsView.IsPaneOpen = true;
                 navView.SelectedItem = null;
             }
-            Microsoft.UI.Xaml.Controls.NavigationViewItem item = args.SelectedItem as Microsoft.UI.Xaml.Controls.NavigationViewItem;
-            switch (item.Tag)
+            Windows.UI.Xaml.Controls.NavigationViewItem item = args.SelectedItem as Windows.UI.Xaml.Controls.NavigationViewItem;
+            if (item != null && item.Tag != null)
             {
-                case "Downloads":
-                    webView2.CoreWebView2.OpenDefaultDownloadDialog();
-                    break;
+                switch (item.Tag.ToString())
+                {
+                    case "Downloads":
+                        webView2.CoreWebView2.OpenDefaultDownloadDialog();
+                        break;
+                }
             }
         }
 

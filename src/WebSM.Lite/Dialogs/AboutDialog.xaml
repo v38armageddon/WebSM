@@ -29,7 +29,7 @@
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick">
 
     <StackPanel>
-        <TextBlock Text="Version: 4.1"/>
+        <TextBlock Text="Version: 4.1-lite"/>
         <TextBlock Text="License: GPL-3"/>
         <TextBlock>
         <Hyperlink NavigateUri="https://github.com/v38armageddon/WebSM">View on GitHub</Hyperlink>

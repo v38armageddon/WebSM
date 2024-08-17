@@ -42,7 +42,7 @@ namespace WebSM.Lite.Dialogs
 
         private async void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            bool result = await Launcher.LaunchUriAsync(new Uri("ms-windows-store://review/?ProductId=9NVMBH7W0HXF"));
+            bool result = await Launcher.LaunchUriAsync(new Uri("ms-windows-store://review/?ProductId=9P5RZDH9SL6F"));
             result = true;
         }
     }
