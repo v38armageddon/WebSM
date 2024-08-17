@@ -56,10 +56,6 @@ namespace WebSM.Lite
                 {
                     URL = protocolArgs.Uri.AbsoluteUri;
                 }
-                else
-                {
-                    URL = "https://www.bing.com";
-                }
             }
 
             base.OnActivated(args);
@@ -84,44 +80,56 @@ namespace WebSM.Lite
                 }
 
                 MainPage mainPage = new MainPage();
-                mainPage.webView2.Source = new Uri(URL);
-
-                if (File.Exists(Path.Combine(ApplicationData.Current.RoamingFolder.Path, "settings.json")))
+                if (!string.IsNullOrEmpty(URL))
                 {
-                    // Load the settings.json file
-                    string filePath = Path.Combine(ApplicationData.Current.RoamingFolder.Path, "settings.json");
-                    string json = File.ReadAllText(filePath);
-
-                    Dictionary<string, object> settings = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
-
-                    Debug.WriteLine(json);
-                    Debug.WriteLine(settings);
-                    Debug.WriteLine(settings["Theme"]);
-                    Debug.WriteLine(settings["FakeUserAgent"]);
-
-                    // Apply the settings to the app
-                    RequestedTheme = (ApplicationTheme)settings["Theme"];
-                    if ((bool)settings["FakeUserAgent"] == true)
-                    {
-                        mainPage.webView2.CoreWebView2.Settings.UserAgent = default; // Is this gonna even work?
-                    }
-                    else if ((bool)settings["FakeUserAgent"] == false)
-                    {
-                        mainPage.webView2.CoreWebView2.Settings.UserAgent = "WebSM/4.1 Lite Edition (Based on Microsoft WebView2)";
-                    }
+                    mainPage.webView2.Source = new Uri(URL);
                 }
                 else
                 {
+                    mainPage.webView2.Source = new Uri("https://www.bing.com");
+                }
+
+                string filePath = Path.Combine(ApplicationData.Current.RoamingFolder.Path, "settings.json");
+
+                // Verify if the file exist
+                if (File.Exists(filePath))
+                {
+                    string json = File.ReadAllText(filePath);
+                    Dictionary<string, object> settings  = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
+
+                    // Apply the settings to the app
+                    switch (settings["Theme"])
+                    {
+                        case 0:
+                            RequestedTheme = (ApplicationTheme)ElementTheme.Default;
+                            mainPage.comboBox1.SelectedIndex = 0;
+                            break;
+                        case 1:
+                            RequestedTheme = (ApplicationTheme)ElementTheme.Light;
+                            mainPage.comboBox1.SelectedIndex = 1;
+                            break;
+                        case 2:
+                            RequestedTheme = (ApplicationTheme)ElementTheme.Dark;
+                            mainPage.comboBox1.SelectedIndex = 2;
+                            break;
+                    }
+                    if ((bool)settings["FakeUserAgent"] == true)
+                    {
+                        mainPage.webView2.CoreWebView2.Settings.UserAgent = default; // Is this gonna work?
+                    }
+                }
+                // TODO: Read the goddamn file! Do not recreate it everytime!
+                else
+                {
                     // Create the settings.json file which contains settings for the app
-                    Dictionary<string, object> settings = new Dictionary<string, object>
-                        {
-                            { "Theme", RequestedTheme = (ApplicationTheme)ElementTheme.Default },
+                    var settings = new Dictionary<string, object>
+                    {
+                            { "Theme", (int)ElementTheme.Default }, // 0 = Default, 1 = Light, 2 = Dark
                             { "FakeUserAgent", false }
-                        };
+                    };
 
                     // Format and combine all the settings into a JSON file
                     string json = JsonConvert.SerializeObject(settings, Formatting.Indented);
-                    string filePath = Path.Combine(ApplicationData.Current.RoamingFolder.Path, "settings.json");
 
                     Debug.Write(filePath);
 

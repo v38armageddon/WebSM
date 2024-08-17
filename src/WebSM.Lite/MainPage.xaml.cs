@@ -45,6 +45,7 @@ using Windows.UI.Xaml.Media.Imaging;
 using System.Net.Http;
 using System.Threading;
 using Windows.UI.Xaml.Media.Animation;
+using Newtonsoft.Json;
 #endregion
 
 namespace WebSM.Lite
@@ -143,17 +144,41 @@ namespace WebSM.Lite
             if (comboBox1.SelectedIndex == 0) // <- Default theme from the system
             {
                 RequestedTheme = ElementTheme.Default;
-                //localSettings.Values["Theme"] = RequestedTheme.ToString();
+                string filePath = Path.Combine(ApplicationData.Current.RoamingFolder.Path, "settings.json");
+                if (File.Exists(filePath)) // This should never fail, but if it fails, it's user's fault
+                {
+                    string json = File.ReadAllText(filePath);
+                    Dictionary<string, object> settings = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
+                    settings["Theme"] = 0;
+                    string newJson = JsonConvert.SerializeObject(settings, Formatting.Indented);
+                    File.WriteAllText(filePath, newJson);
+                }
             }
             else if (comboBox1.SelectedIndex == 1) // <- Light theme
             {
                 RequestedTheme = ElementTheme.Light;
-                //localSettings.Values["Theme"] = RequestedTheme.ToString();
+                string filePath = Path.Combine(ApplicationData.Current.RoamingFolder.Path, "settings.json");
+                if (File.Exists(filePath))
+                {
+                    string json = File.ReadAllText(filePath);
+                    Dictionary<string, object> settings = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
+                    settings["Theme"] = 1;
+                    string newJson = JsonConvert.SerializeObject(settings, Formatting.Indented);
+                    File.WriteAllText(filePath, newJson);
+                }
             }
             else if (comboBox1.SelectedIndex == 2) // <- Dark theme
             {
                 RequestedTheme = ElementTheme.Dark;
-                //localSettings.Values["Theme"] = RequestedTheme.ToString();
+                string filePath = Path.Combine(ApplicationData.Current.RoamingFolder.Path, "settings.json");
+                if (File.Exists(filePath))
+                {
+                    string json = File.ReadAllText(filePath);
+                    Dictionary<string, object> settings = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
+                    settings["Theme"] = 2;
+                    string newJson = JsonConvert.SerializeObject(settings, Formatting.Indented);
+                    File.WriteAllText(filePath, newJson);
+                }
             }
         }
 
