@@ -54,12 +54,12 @@ namespace WebSM.Lite
         public MainPage()
         {
             InitializeComponent();
-            webView2.CoreWebView2.Settings.UserAgent = "WebSM/4.1 Lite Edition (Based on Microsoft WebView2)";
         }
 
         private void webView2_NavigationStarting(WebView2 sender, CoreWebView2NavigationStartingEventArgs args)
         {
             progressRing.IsActive = true;
+            webView2.CoreWebView2.Settings.UserAgent = "WebSM/4.1 Lite Edition (Based on Microsoft WebView2)";
         }
 
         private void webView2_NavigationCompleted(WebView2 sender, CoreWebView2NavigationCompletedEventArgs args)
@@ -169,12 +169,7 @@ namespace WebSM.Lite
             }
         }
 
-        private void ChangeUserAgent()
-        {
-            webView2.CoreWebView2.Settings.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1788.0";
-        }
-
-        private async void ResetUserAgent()
+        private async void ChangeUserAgent()
         {
             WebView2 defaultWebView2 = new WebView2();
             await defaultWebView2.EnsureCoreWebView2Async(); // We need to create a new WebView2 to get the default UserAgent
@@ -182,6 +177,12 @@ namespace WebSM.Lite
             webView2.Reload();
             // Destroy the generated webView2
             defaultWebView2.Close();
+            
+        }
+
+        private void ResetUserAgent()
+        {
+            webView2.CoreWebView2.Settings.UserAgent = "WebSM/4.1 Lite Edition (Based on Microsoft WebView2)";
         }
 
         private async void AboutButton_Click(object sender, RoutedEventArgs e)

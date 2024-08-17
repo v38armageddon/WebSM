@@ -18,6 +18,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -76,28 +77,55 @@ namespace WebSM.Lite
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
-                    MainPage mainPage = new MainPage();
-                    mainPage.webView2.Source = new Uri(URL);
+                    // Okay this is last time I'm gonna use this
+                    // FFS for your Terminated is saying launching the app or closing the app?
+                    // I will need to review all the projects if it resolve everything
+                    // And oh god it will take a lot of time!
+                }
 
-                    if (File.Exists(Path.Combine(ApplicationData.Current.RoamingFolder.Path, "settings.json")))
+                MainPage mainPage = new MainPage();
+                mainPage.webView2.Source = new Uri(URL);
+
+                if (File.Exists(Path.Combine(ApplicationData.Current.RoamingFolder.Path, "settings.json")))
+                {
+                    // Load the settings.json file
+                    string filePath = Path.Combine(ApplicationData.Current.RoamingFolder.Path, "settings.json");
+                    string json = File.ReadAllText(filePath);
+
+                    Dictionary<string, object> settings = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
+
+                    Debug.WriteLine(json);
+                    Debug.WriteLine(settings);
+                    Debug.WriteLine(settings["Theme"]);
+                    Debug.WriteLine(settings["FakeUserAgent"]);
+
+                    // Apply the settings to the app
+                    RequestedTheme = (ApplicationTheme)settings["Theme"];
+                    if ((bool)settings["FakeUserAgent"] == true)
                     {
-                        // TODO: Load the settings.json file
+                        mainPage.webView2.CoreWebView2.Settings.UserAgent = default; // Is this gonna even work?
                     }
-                    else
+                    else if ((bool)settings["FakeUserAgent"] == false)
                     {
-                        // Create the settings.json file which contains settings for the app
-                        Dictionary<string, object> settings = new Dictionary<string, object>
+                        mainPage.webView2.CoreWebView2.Settings.UserAgent = "WebSM/4.1 Lite Edition (Based on Microsoft WebView2)";
+                    }
+                }
+                else
+                {
+                    // Create the settings.json file which contains settings for the app
+                    Dictionary<string, object> settings = new Dictionary<string, object>
                         {
                             { "Theme", RequestedTheme = (ApplicationTheme)ElementTheme.Default },
                             { "FakeUserAgent", false }
                         };
 
-                        // Format and combine all the settings into a JSON file
-                        string json = JsonConvert.SerializeObject(settings, Formatting.Indented);
-                        string filePath = Path.Combine(ApplicationData.Current.RoamingFolder.Path, "settings.json");
+                    // Format and combine all the settings into a JSON file
+                    string json = JsonConvert.SerializeObject(settings, Formatting.Indented);
+                    string filePath = Path.Combine(ApplicationData.Current.RoamingFolder.Path, "settings.json");
 
-                        File.WriteAllText(filePath, json);
-                    }
+                    Debug.Write(filePath);
+
+                    File.WriteAllText(filePath, json);
                 }
 
                 Window.Current.Content = rootFrame;
