@@ -30,7 +30,7 @@
 
     <StackPanel>
         <TextBlock Text="Version: 4.1-lite"/>
-        <TextBlock Text="License: GPL-3"/>
+        <TextBlock Text="License: EUPL-1.2 / GPL-3"/>
         <TextBlock>
         <Hyperlink NavigateUri="https://github.com/v38armageddon/WebSM">View on GitHub</Hyperlink>
         </TextBlock>

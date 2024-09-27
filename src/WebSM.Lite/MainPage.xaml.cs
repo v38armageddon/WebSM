@@ -66,7 +66,6 @@ namespace WebSM.Lite
             {
                 webView2.Source = new Uri("https://www.bing.com");
             }
-            webView2.CoreWebView2.Settings.UserAgent = "WebSM/4.1 Lite Edition (Based on Microsoft WebView2)";
 
             string filePath = Path.Combine(ApplicationData.Current.RoamingFolder.Path, "settings.json");
 
@@ -76,19 +75,18 @@ namespace WebSM.Lite
                 // Create the settings.json file which contains settings for the app
                 var settingsCreation = new Dictionary<string, object>
                 {
-                        { "Theme", (int)ElementTheme.Default }, // 0 = Default, 1 = Light, 2 = Dark
-                        { "FakeUserAgent", false }
+                    { "Theme", (int)ElementTheme.Default } // 0 = Default, 1 = Light, 2 = Dark
                 };
 
                 // Format and combine all the settings into a JSON file
                 string jsonCreation = JsonConvert.SerializeObject(settingsCreation, Formatting.Indented);
-
                 File.WriteAllText(filePath, jsonCreation);
             }
 
             // Reload settings after creation
             string json = File.ReadAllText(filePath);
             Dictionary<string, object> settings = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
+            Debug.WriteLine(settings);
             ApplySettings(settings);
         }
 
@@ -173,6 +171,42 @@ namespace WebSM.Lite
         }
 
         // Settings
+        private void ApplySettings(Dictionary<string, object> settings)
+        {
+            Debug.WriteLine(settings);
+            if (settings.ContainsKey("Theme"))
+            {
+                // Try to convert the value to an int
+                if (settings["Theme"] is long themeValueLong)  // Deserialization from JSON
+                {
+                    int themeValue = (int)themeValueLong; // int conversion
+
+                    switch (themeValue)
+                    {
+                        case 0:
+                            RequestedTheme = ElementTheme.Default;
+                            comboBox1.SelectedIndex = 0;
+                            break;
+                        case 1:
+                            RequestedTheme = ElementTheme.Light;
+                            comboBox1.SelectedIndex = 1;
+                            break;
+                        case 2:
+                            RequestedTheme = ElementTheme.Dark;
+                            comboBox1.SelectedIndex = 2;
+                            break;
+                        default:
+                            Debug.WriteLine("Invalid theme value.");
+                            break;
+                    }
+                }
+                else
+                {
+                    Debug.WriteLine("Failed to convert Theme value.");
+                }
+            }
+        }
+
         public void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (comboBox1.SelectedIndex == 0) // <- Default theme from the system
@@ -192,70 +226,10 @@ namespace WebSM.Lite
             }
         }
 
-        private void userAgentSwitch_Toggled(object sender, RoutedEventArgs e)
-        {
-            if (userAgentSwitch.IsOn == true)
-            {
-                ChangeUserAgent();
-            }
-            else
-            {
-                ResetUserAgent();
-            }
-        }
-
-        private async void ChangeUserAgent()
-        {
-            WebView2 defaultWebView2 = new WebView2();
-            await defaultWebView2.EnsureCoreWebView2Async(); // We need to create a new WebView2 to get the default UserAgent
-            webView2.CoreWebView2.Settings.UserAgent = defaultWebView2.CoreWebView2.Settings.UserAgent;
-            webView2.Reload();
-            // Destroy the generated webView2
-            defaultWebView2.Close();
-            
-        }
-
-        private void ResetUserAgent()
-        {
-            webView2.CoreWebView2.Settings.UserAgent = "WebSM/4.1 Lite Edition (Based on Microsoft WebView2)";
-        }
-
         private async void AboutButton_Click(object sender, RoutedEventArgs e)
         {
             Dialogs.AboutDialog aboutDialog = new Dialogs.AboutDialog();
             await aboutDialog.ShowAsync();
-        }
-
-        private void ApplySettings(Dictionary<string, object> settings)
-        {
-            if (settings.ContainsKey("Theme"))
-            {
-                int themeValue = Convert.ToInt32(settings["Theme"]);
-                switch (themeValue)
-                {
-                    case 0:
-                        RequestedTheme = ElementTheme.Default;
-                        comboBox1.SelectedIndex = 0;
-                        break;
-                    case 1:
-                        RequestedTheme = ElementTheme.Light;
-                        comboBox1.SelectedIndex = 1;
-                        break;
-                    case 2:
-                        RequestedTheme = ElementTheme.Dark;
-                        comboBox1.SelectedIndex = 2;
-                        break;
-                    default:
-                        Debug.WriteLine("Invalid theme value.");
-                        break;
-                }
-            }
-
-            if (settings.ContainsKey("FakeUserAgent") && (bool)settings["FakeUserAgent"])
-            {
-                userAgentSwitch.IsOn = true;
-                ChangeUserAgent();
-            }
         }
     }
 }

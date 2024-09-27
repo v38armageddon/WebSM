@@ -65,7 +65,6 @@
                         <TextBlock x:Name="lightTheme" Text="Light Theme"/>
                         <TextBlock x:Name="darkTheme" Text="Dark Theme"/>
                     </ComboBox>
-                    <ToggleSwitch x:Name="userAgentSwitch" Header="Toggle fake User Agent" Toggled="userAgentSwitch_Toggled" Margin="10,10,0,0"/>
                     <TextBlock Text="Extras" Margin="10,10,0,0"  FontSize="18"/>
                     <Button x:Name="AboutButton" Content="About" Click="AboutButton_Click" Margin="10,10,0,0"/>
                 </StackPanel>
