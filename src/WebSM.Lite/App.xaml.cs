@@ -73,67 +73,25 @@ namespace WebSM.Lite
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
-                    // Okay this is last time I'm gonna use this
-                    // FFS for your Terminated is saying launching the app or closing the app?
-                    // I will need to review all the projects if it resolve everything
-                    // And oh god it will take a lot of time!
-                }
-
-                MainPage mainPage = new MainPage();
-                if (!string.IsNullOrEmpty(URL))
-                {
-                    mainPage.webView2.Source = new Uri(URL);
-                }
-                else
-                {
-                    mainPage.webView2.Source = new Uri("https://www.bing.com");
+                    // TODO: Nothing.
                 }
 
                 string filePath = Path.Combine(ApplicationData.Current.RoamingFolder.Path, "settings.json");
 
                 // Verify if the file exist
-                if (File.Exists(filePath))
-                {
-                    string json = File.ReadAllText(filePath);
-                    Dictionary<string, object> settings  = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
-
-                    // Apply the settings to the app
-                    switch (settings["Theme"])
-                    {
-                        case 0:
-                            RequestedTheme = (ApplicationTheme)ElementTheme.Default;
-                            mainPage.comboBox1.SelectedIndex = 0;
-                            break;
-                        case 1:
-                            RequestedTheme = (ApplicationTheme)ElementTheme.Light;
-                            mainPage.comboBox1.SelectedIndex = 1;
-                            break;
-                        case 2:
-                            RequestedTheme = (ApplicationTheme)ElementTheme.Dark;
-                            mainPage.comboBox1.SelectedIndex = 2;
-                            break;
-                    }
-                    if ((bool)settings["FakeUserAgent"] == true)
-                    {
-                        mainPage.webView2.CoreWebView2.Settings.UserAgent = default; // Is this gonna work?
-                    }
-                }
-                // TODO: Read the goddamn file! Do not recreate it everytime!
-                else
+                if (File.Exists(filePath) == false)
                 {
                     // Create the settings.json file which contains settings for the app
-                    var settings = new Dictionary<string, object>
+                    var settingsCreation = new Dictionary<string, object>
                     {
                             { "Theme", (int)ElementTheme.Default }, // 0 = Default, 1 = Light, 2 = Dark
                             { "FakeUserAgent", false }
                     };
 
                     // Format and combine all the settings into a JSON file
-                    string json = JsonConvert.SerializeObject(settings, Formatting.Indented);
+                    string jsonCreation = JsonConvert.SerializeObject(settingsCreation, Formatting.Indented);
 
-                    Debug.Write(filePath);
-
-                    File.WriteAllText(filePath, json);
+                    File.WriteAllText(filePath, jsonCreation);
                 }
 
                 Window.Current.Content = rootFrame;

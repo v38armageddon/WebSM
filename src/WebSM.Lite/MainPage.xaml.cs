@@ -55,6 +55,44 @@ namespace WebSM.Lite
         public MainPage()
         {
             InitializeComponent();
+            // Detect if the app is called via a protocol
+            if (Application.Current is App app)
+            {
+                if (app.URL != null)
+                {
+                    webView2.Source = new Uri(app.URL);
+                }
+                webView2.Source = new Uri("https://www.bing.com");
+            }
+
+            // Load the settings
+            string filePath = Path.Combine(ApplicationData.Current.RoamingFolder.Path, "settings.json");
+            string json = File.ReadAllText(filePath);
+            Dictionary<string, object> settings = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
+
+            // Apply the settings to the app
+            switch (settings["Theme"])
+            {
+                case 0:
+                    RequestedTheme = ElementTheme.Default;
+                    comboBox1.SelectedIndex = 0;
+                    break;
+                case 1:
+                    RequestedTheme = ElementTheme.Light;
+                    comboBox1.SelectedIndex = 1;
+                    break;
+                case 2:
+                    RequestedTheme = ElementTheme.Dark;
+                    comboBox1.SelectedIndex = 2;
+                    break;
+                default:
+                    throw new Exception("Settings loader bitching again!");
+            }
+            if ((bool)settings["FakeUserAgent"] == true)
+            {
+                userAgentSwitch.IsOn = true;
+                ChangeUserAgent();
+            }
         }
 
         private void webView2_NavigationStarting(WebView2 sender, CoreWebView2NavigationStartingEventArgs args)
