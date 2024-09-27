@@ -46,6 +46,7 @@ using System.Net.Http;
 using System.Threading;
 using Windows.UI.Xaml.Media.Animation;
 using Newtonsoft.Json;
+using System.Diagnostics;
 #endregion
 
 namespace WebSM.Lite
@@ -56,49 +57,44 @@ namespace WebSM.Lite
         {
             InitializeComponent();
             // Detect if the app is called via a protocol
-            if (Application.Current is App app)
+            var url = (App.Current as App).URL;
+            if (!string.IsNullOrEmpty(url))
             {
-                if (app.URL != null)
-                {
-                    webView2.Source = new Uri(app.URL);
-                }
+                webView2.Source = new Uri(url);
+            }
+            else
+            {
                 webView2.Source = new Uri("https://www.bing.com");
             }
+            webView2.CoreWebView2.Settings.UserAgent = "WebSM/4.1 Lite Edition (Based on Microsoft WebView2)";
 
-            // Load the settings
             string filePath = Path.Combine(ApplicationData.Current.RoamingFolder.Path, "settings.json");
+
+            // Verify if the file exist
+            if (!File.Exists(filePath))
+            {
+                // Create the settings.json file which contains settings for the app
+                var settingsCreation = new Dictionary<string, object>
+                {
+                        { "Theme", (int)ElementTheme.Default }, // 0 = Default, 1 = Light, 2 = Dark
+                        { "FakeUserAgent", false }
+                };
+
+                // Format and combine all the settings into a JSON file
+                string jsonCreation = JsonConvert.SerializeObject(settingsCreation, Formatting.Indented);
+
+                File.WriteAllText(filePath, jsonCreation);
+            }
+
+            // Reload settings after creation
             string json = File.ReadAllText(filePath);
             Dictionary<string, object> settings = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
-
-            // Apply the settings to the app
-            switch (settings["Theme"])
-            {
-                case 0:
-                    RequestedTheme = ElementTheme.Default;
-                    comboBox1.SelectedIndex = 0;
-                    break;
-                case 1:
-                    RequestedTheme = ElementTheme.Light;
-                    comboBox1.SelectedIndex = 1;
-                    break;
-                case 2:
-                    RequestedTheme = ElementTheme.Dark;
-                    comboBox1.SelectedIndex = 2;
-                    break;
-                default:
-                    throw new Exception("Settings loader bitching again!");
-            }
-            if ((bool)settings["FakeUserAgent"] == true)
-            {
-                userAgentSwitch.IsOn = true;
-                ChangeUserAgent();
-            }
+            ApplySettings(settings);
         }
 
         private void webView2_NavigationStarting(WebView2 sender, CoreWebView2NavigationStartingEventArgs args)
         {
             progressRing.IsActive = true;
-            webView2.CoreWebView2.Settings.UserAgent = "WebSM/4.1 Lite Edition (Based on Microsoft WebView2)";
         }
 
         private void webView2_NavigationCompleted(WebView2 sender, CoreWebView2NavigationCompletedEventArgs args)
@@ -182,41 +178,17 @@ namespace WebSM.Lite
             if (comboBox1.SelectedIndex == 0) // <- Default theme from the system
             {
                 RequestedTheme = ElementTheme.Default;
-                string filePath = Path.Combine(ApplicationData.Current.RoamingFolder.Path, "settings.json");
-                if (File.Exists(filePath)) // This should never fail, but if it fails, it's user's fault
-                {
-                    string json = File.ReadAllText(filePath);
-                    Dictionary<string, object> settings = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
-                    settings["Theme"] = 0;
-                    string newJson = JsonConvert.SerializeObject(settings, Formatting.Indented);
-                    File.WriteAllText(filePath, newJson);
-                }
+                SettingsTheme.SetDefaultTheme();
             }
             else if (comboBox1.SelectedIndex == 1) // <- Light theme
             {
                 RequestedTheme = ElementTheme.Light;
-                string filePath = Path.Combine(ApplicationData.Current.RoamingFolder.Path, "settings.json");
-                if (File.Exists(filePath))
-                {
-                    string json = File.ReadAllText(filePath);
-                    Dictionary<string, object> settings = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
-                    settings["Theme"] = 1;
-                    string newJson = JsonConvert.SerializeObject(settings, Formatting.Indented);
-                    File.WriteAllText(filePath, newJson);
-                }
+                SettingsTheme.SetLightTheme();
             }
             else if (comboBox1.SelectedIndex == 2) // <- Dark theme
             {
                 RequestedTheme = ElementTheme.Dark;
-                string filePath = Path.Combine(ApplicationData.Current.RoamingFolder.Path, "settings.json");
-                if (File.Exists(filePath))
-                {
-                    string json = File.ReadAllText(filePath);
-                    Dictionary<string, object> settings = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
-                    settings["Theme"] = 2;
-                    string newJson = JsonConvert.SerializeObject(settings, Formatting.Indented);
-                    File.WriteAllText(filePath, newJson);
-                }
+                SettingsTheme.SetDarkTheme();
             }
         }
 
@@ -252,6 +224,38 @@ namespace WebSM.Lite
         {
             Dialogs.AboutDialog aboutDialog = new Dialogs.AboutDialog();
             await aboutDialog.ShowAsync();
+        }
+
+        private void ApplySettings(Dictionary<string, object> settings)
+        {
+            if (settings.ContainsKey("Theme"))
+            {
+                int themeValue = Convert.ToInt32(settings["Theme"]);
+                switch (themeValue)
+                {
+                    case 0:
+                        RequestedTheme = ElementTheme.Default;
+                        comboBox1.SelectedIndex = 0;
+                        break;
+                    case 1:
+                        RequestedTheme = ElementTheme.Light;
+                        comboBox1.SelectedIndex = 1;
+                        break;
+                    case 2:
+                        RequestedTheme = ElementTheme.Dark;
+                        comboBox1.SelectedIndex = 2;
+                        break;
+                    default:
+                        Debug.WriteLine("Invalid theme value.");
+                        break;
+                }
+            }
+
+            if (settings.ContainsKey("FakeUserAgent") && (bool)settings["FakeUserAgent"])
+            {
+                userAgentSwitch.IsOn = true;
+                ChangeUserAgent();
+            }
         }
     }
 }

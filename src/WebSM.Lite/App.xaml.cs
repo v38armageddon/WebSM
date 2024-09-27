@@ -39,7 +39,7 @@ namespace WebSM.Lite
 {
     sealed partial class App : Application
     {
-        public string URL { get; set; }
+        public string URL;
 
         public App()
         {
@@ -55,6 +55,15 @@ namespace WebSM.Lite
                 if (protocolArgs != null)
                 {
                     URL = protocolArgs.Uri.AbsoluteUri;
+                    // Send the value to the MainPage.
+                    Frame rootFrame = Window.Current.Content as Frame;
+                    if (rootFrame == null)
+                    {
+                        rootFrame = new Frame();
+                        rootFrame.NavigationFailed += OnNavigationFailed;
+                        Window.Current.Content = rootFrame;
+                        rootFrame.Navigate(typeof(MainPage));
+                    }
                 }
             }
 
@@ -74,24 +83,6 @@ namespace WebSM.Lite
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
                     // TODO: Nothing.
-                }
-
-                string filePath = Path.Combine(ApplicationData.Current.RoamingFolder.Path, "settings.json");
-
-                // Verify if the file exist
-                if (File.Exists(filePath) == false)
-                {
-                    // Create the settings.json file which contains settings for the app
-                    var settingsCreation = new Dictionary<string, object>
-                    {
-                            { "Theme", (int)ElementTheme.Default }, // 0 = Default, 1 = Light, 2 = Dark
-                            { "FakeUserAgent", false }
-                    };
-
-                    // Format and combine all the settings into a JSON file
-                    string jsonCreation = JsonConvert.SerializeObject(settingsCreation, Formatting.Indented);
-
-                    File.WriteAllText(filePath, jsonCreation);
                 }
 
                 Window.Current.Content = rootFrame;
