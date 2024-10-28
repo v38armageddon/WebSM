@@ -141,7 +141,7 @@ namespace WebSM.Lite
             {
                 return;
             }
-            if (searchDialog.searchTextBox.Text.StartsWith("https://") || searchDialog.searchTextBox.Text.StartsWith("http://"))
+            if (searchDialog.searchTextBox.Text.Contains("://"))
             {
                 webView2.Source = new Uri(searchDialog.searchTextBox.Text);
             }
