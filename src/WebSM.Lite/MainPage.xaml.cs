@@ -103,7 +103,7 @@ namespace WebSM.Lite
                 settingsView.IsPaneOpen = true;
                 navView.SelectedItem = null;
             }
-            Windows.UI.Xaml.Controls.NavigationViewItem item = args.SelectedItem as Windows.UI.Xaml.Controls.NavigationViewItem;
+            NavigationViewItem item = args.SelectedItem as Windows.UI.Xaml.Controls.NavigationViewItem;
             if (item != null && item.Tag != null)
             {
                 switch (item.Tag.ToString())
