@@ -31,13 +31,20 @@
 
     <Grid>
         <StackPanel>
-            <TextBlock Text="Version: 4.1"/>
-            <TextBlock Text="License: GPL-3"/>
+            <TextBlock Text="Author: v38armageddon"/>
+            <TextBlock Text="Version: 5"/>
+            <TextBlock Text="License: EUPL-1.2 / GPL-3"/>
             <TextBlock>
                 <Hyperlink NavigateUri="https://github.com/v38armageddon/WebSM">View on GitHub</Hyperlink>
             </TextBlock>
             <TextBlock>
-                <Hyperlink NavigateUri="https://gist.github.com/v38armageddon/d4b6a4a207d19a85c82ce102bd9f2864">Privacy Statement</Hyperlink>
+                <Hyperlink NavigateUri="https://interoperable-europe.ec.europa.eu/collection/eupl/eupl-text-eupl-12">EUPL License</Hyperlink>
+            </TextBlock>
+            <TextBlock>
+                <Hyperlink NavigateUri="https://www.gnu.org/licenses/gpl-3.0.html">GPL-3 License</Hyperlink>
+            </TextBlock>
+            <TextBlock>
+                <Hyperlink NavigateUri="https://gist.github.com/florian-at-v38armageddon/0461036c1f76590bbf32efe9a660968b">Privacy Statement</Hyperlink>
             </TextBlock>
         </StackPanel>
     </Grid>

@@ -1,5 +1,5 @@
 ﻿/*
- * WebSM - A simply minimalist web browser.
+ * WebSM Lite - A simply minimalist web browser.
  * Copyright (C) 2022 - 2024 - v38armageddon
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -14,12 +14,15 @@
  * 
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
- */
+*/
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
@@ -34,14 +37,11 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-
-namespace WebSM
+namespace WebSM.Lite
 {
     sealed partial class App : Application
     {
-        public bool advancedButton { get; set; }
-        public string Theme { get; set; }
-        ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+        public string URL;
 
         public App()
         {
@@ -51,8 +51,9 @@ namespace WebSM
 
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
+
             Frame rootFrame = Window.Current.Content as Frame;
-            
+
             if (rootFrame == null)
             {
                 rootFrame = new Frame();
@@ -61,7 +62,7 @@ namespace WebSM
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
-                    Current.RequestedTheme = (ApplicationTheme)localSettings.Values["Theme"];
+                    // TODO: Nothing.
                 }
 
                 Window.Current.Content = rootFrame;

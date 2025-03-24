@@ -8,20 +8,20 @@
   IgnorableNamespaces="uap mp uap3">
 
   <Identity
-    Name="34823v38armageddon.WebSM"
+    Name="34823v38armageddon.WebSMLite"
     Publisher="CN=EF25BC35-CB3A-4D06-953A-49E6117D3FA3"
     Version="5.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="3dbdd0fa-bc87-491f-9107-ec4211ba90f0" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="94d33758-6fb8-4fb8-b7c7-314b673f5731" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>WebSM</DisplayName>
+    <DisplayName>WebSM Lite</DisplayName>
     <PublisherDisplayName>v38armageddon</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
   <Dependencies>
-    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.19043.0" MaxVersionTested="10.0.22621.0" />
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
   </Dependencies>
 
   <Resources>
@@ -31,14 +31,14 @@
   <Applications>
     <Application Id="App"
       Executable="$targetnametoken$.exe"
-      EntryPoint="WebSM.App">
+      EntryPoint="WebSM.Lite.App">
       <uap:VisualElements
-        DisplayName="WebSM"
+        DisplayName="WebSM Lite"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
         Description="A simply minimalist web browser."
         BackgroundColor="transparent">
-        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" Square71x71Logo="Assets\SmallTile.png" Square310x310Logo="Assets\LargeTile.png" ShortName="WebSM">
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" ShortName="WebSM Lite" Square71x71Logo="Assets\SmallTile.png" Square310x310Logo="Assets\LargeTile.png">
           <uap:ShowNameOnTiles>
             <uap:ShowOn Tile="square150x150Logo"/>
             <uap:ShowOn Tile="wide310x150Logo"/>
@@ -53,19 +53,15 @@
           <uap:Rotation Preference="portraitFlipped"/></uap:InitialRotationPreference>
       </uap:VisualElements>
       <Extensions>
-        <uap:Extension Category="windows.fileSavePicker">
-          <uap:FileSavePicker>
-            <uap:SupportedFileTypes>
-              <uap:SupportsAnyFileType/>
-            </uap:SupportedFileTypes>
-          </uap:FileSavePicker>
+        <uap:Extension Category="windows.protocol">
+			<uap:Protocol Name="http">
+				<uap:DisplayName>HTTP</uap:DisplayName>
+			</uap:Protocol>
         </uap:Extension>
-        <uap:Extension Category="windows.fileOpenPicker">
-          <uap:FileOpenPicker>
-            <uap:SupportedFileTypes>
-              <uap:SupportsAnyFileType/>
-            </uap:SupportedFileTypes>
-          </uap:FileOpenPicker>
+        <uap:Extension Category="windows.protocol">
+			<uap:Protocol Name="https">
+				<uap:DisplayName>HTTPS</uap:DisplayName>
+			</uap:Protocol>
         </uap:Extension>
       </Extensions>
     </Application>
@@ -73,12 +69,11 @@
 
   <Capabilities>
     <Capability Name="internetClient" />
-    <uap3:Capability Name="backgroundMediaPlayback"/>
-    <uap:Capability Name="picturesLibrary"/>
     <uap:Capability Name="musicLibrary"/>
-    <uap:Capability Name="videosLibrary"/>
+    <uap:Capability Name="picturesLibrary"/>
+    <uap3:Capability Name="backgroundMediaPlayback"/>
     <uap:Capability Name="removableStorage"/>
-    <uap3:Capability Name="userNotificationListener"/>
+    <uap:Capability Name="videosLibrary"/>
     <DeviceCapability Name="microphone"/>
     <DeviceCapability Name="webcam"/>
   </Capabilities>
