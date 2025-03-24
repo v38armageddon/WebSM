@@ -42,7 +42,7 @@
             <Hyperlink NavigateUri="https://www.gnu.org/licenses/gpl-3.0.html">GPL-3 License</Hyperlink>
         </TextBlock>
         <TextBlock>
-            <Hyperlink NavigateUri="https://gist.github.com/v38armageddon/0461036c1f76590bbf32efe9a660968b">Privacy Statement</Hyperlink>
+            <Hyperlink NavigateUri="https://gist.github.com/florian-at-v38armageddon/0461036c1f76590bbf32efe9a660968b">Privacy Statement</Hyperlink>
         </TextBlock>
     </StackPanel>
 </ContentDialog>
