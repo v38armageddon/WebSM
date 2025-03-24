@@ -28,7 +28,7 @@
     <AppxPackageDir>D:\Users\v38armageddon\Documents\AppX\</AppxPackageDir>
     <PackageCertificateKeyFile />
     <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
-    <PackageCertificateThumbprint>E2D164D2BE9F88EBE1DA0FC37CDB5E05702E653C</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>2E906171F29ADBC1694CED1F08E3FFFCA09D3ACE</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -138,10 +138,14 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="OfflinePage.xaml.cs">
+      <DependentUpon>OfflinePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Dialogs\SearchDialog.xaml.cs">
       <DependentUpon>SearchDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SettingsHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -220,6 +224,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="OfflinePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
@@ -230,6 +238,9 @@
     </PackageReference>
     <PackageReference Include="Microsoft.UI.Xaml.Core.Direct">
       <Version>2.0.190315001-prerelease</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>13.0.3</Version>
     </PackageReference>
     <PackageReference Include="System.Configuration.ConfigurationManager">
       <Version>8.0.0</Version>

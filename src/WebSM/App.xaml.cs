@@ -24,6 +24,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Networking.Connectivity;
 using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -70,10 +71,23 @@ namespace WebSM
             {
                 if (rootFrame.Content == null)
                 {
-                    rootFrame.Navigate(typeof(MainPage), e.Arguments);
+                    if (IsInternetAvailable())
+                    {
+                        rootFrame.Navigate(typeof(MainPage), e.Arguments);
+                    }
+                    else
+                    {
+                        rootFrame.Navigate(typeof(OfflinePage), e.Arguments);
+                    }
                 }
                 Window.Current.Activate();
             }
+        }
+
+        private bool IsInternetAvailable()
+        {
+            var connectionProfile = NetworkInformation.GetInternetConnectionProfile();
+            return (connectionProfile != null && connectionProfile.GetNetworkConnectivityLevel() == NetworkConnectivityLevel.InternetAccess);
         }
 
         void OnNavigationFailed(object sender, NavigationFailedEventArgs e)

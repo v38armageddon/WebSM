@@ -22,10 +22,12 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Networking.Connectivity;
 using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -47,31 +49,9 @@ namespace WebSM.Lite
             Suspending += OnSuspending;
         }
 
-        protected override void OnActivated(IActivatedEventArgs args)
-        {
-            if (args.Kind == ActivationKind.Protocol)
-            {
-                var protocolArgs = args as ProtocolActivatedEventArgs;
-                if (protocolArgs != null)
-                {
-                    URL = protocolArgs.Uri.AbsoluteUri;
-                    // Send the value to the MainPage.
-                    Frame rootFrame = Window.Current.Content as Frame;
-                    if (rootFrame == null)
-                    {
-                        rootFrame = new Frame();
-                        rootFrame.NavigationFailed += OnNavigationFailed;
-                        Window.Current.Content = rootFrame;
-                        rootFrame.Navigate(typeof(MainPage));
-                    }
-                }
-            }
-
-            base.OnActivated(args);
-        }
-
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
+
             Frame rootFrame = Window.Current.Content as Frame;
 
             if (rootFrame == null)
@@ -92,10 +72,23 @@ namespace WebSM.Lite
             {
                 if (rootFrame.Content == null)
                 {
-                    rootFrame.Navigate(typeof(MainPage), e.Arguments);
+                    if (IsInternetAvailable())
+                    {
+                        rootFrame.Navigate(typeof(MainPage), e.Arguments);
+                    }
+                    else
+                    {
+                        rootFrame.Navigate(typeof(OfflinePage), e.Arguments);
+                    }
                 }
                 Window.Current.Activate();
             }
+        }
+
+        private bool IsInternetAvailable()
+        {
+            var connectionProfile = NetworkInformation.GetInternetConnectionProfile();
+            return (connectionProfile != null && connectionProfile.GetNetworkConnectivityLevel() == NetworkConnectivityLevel.InternetAccess);
         }
 
         void OnNavigationFailed(object sender, NavigationFailedEventArgs e)

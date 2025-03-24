@@ -51,6 +51,8 @@ using Microsoft.Web.WebView2.Core;
 using System.Net.Http;
 using System.Threading;
 using Windows.UI.Xaml.Media.Animation;
+using System.Diagnostics;
+using Newtonsoft.Json;
 #endregion
 
 namespace WebSM
@@ -59,11 +61,31 @@ namespace WebSM
     {
         private Dictionary<int, WebView2> tabViewTabItems = new Dictionary<int, WebView2>();
         WebView2 webView2 = new WebView2();
-        ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 
         public MainPage()
         {
+            var settings = LoadSettingsJSON();
+            if (settings != null && settings.ContainsKey("Theme"))
+            {
+                int themeValue = Convert.ToInt32(settings["Theme"]);
+                switch (themeValue)
+                {
+                    case 0:
+                        RequestedTheme = ElementTheme.Default;
+                        break;
+                    case 1:
+                        RequestedTheme = ElementTheme.Light;
+                        break;
+                    case 2:
+                        RequestedTheme = ElementTheme.Dark;
+                        break;
+                    default:
+                        Debug.WriteLine("Invalid value Theme.");
+                        break;
+                }
+            }
             InitializeComponent();
+            ApplySettings(settings);
         }
 
         private async void TabView_Loaded(object sender, RoutedEventArgs e)
@@ -283,22 +305,54 @@ namespace WebSM
         }
 
         // Settings
+        private void ApplySettings(Dictionary<string, object> settings)
+        {
+            if (settings.ContainsKey("Theme"))
+            {
+                int themeValue = Convert.ToInt32(settings["Theme"]);
+                comboBox1.SelectedIndex = themeValue;
+            }
+
+            if (settings.ContainsKey("UserAgent") && settings["UserAgent"] is bool userAgentValue)
+            {
+                userAgentSwitch.IsOn = userAgentValue;
+            }
+        }
+
+        private Dictionary<string, object> LoadSettingsJSON()
+        {
+            string filePath = Path.Combine(ApplicationData.Current.RoamingFolder.Path, "settings.json");
+            if (!File.Exists(filePath))
+            {
+                var settingsCreation = new Dictionary<string, object>
+                {
+                    { "Theme", (int)ElementTheme.Default }, // 0 = Default, 1 = Light, 2 = Dark
+                    { "UserAgent", false }
+                };
+                string jsonCreation = JsonConvert.SerializeObject(settingsCreation, Formatting.Indented);
+                File.WriteAllText(filePath, jsonCreation);
+            }
+            string json = File.ReadAllText(filePath);
+            Dictionary<string, object> settings = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
+            return settings;
+        }
+
         public void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (comboBox1.SelectedIndex == 0) // <- Default theme from the system
             {
                 RequestedTheme = ElementTheme.Default;
-                localSettings.Values["Theme"] = RequestedTheme.ToString();
+                SettingsTheme.SetDefaultTheme();
             }
             else if (comboBox1.SelectedIndex == 1) // <- Light theme
             {
                 RequestedTheme = ElementTheme.Light;
-                localSettings.Values["Theme"] = RequestedTheme.ToString();
+                SettingsTheme.SetLightTheme();
             }
             else if (comboBox1.SelectedIndex == 2) // <- Dark theme
             {
                 RequestedTheme = ElementTheme.Dark;
-                localSettings.Values["Theme"] = RequestedTheme.ToString();
+                SettingsTheme.SetDarkTheme();
             }
         }
 

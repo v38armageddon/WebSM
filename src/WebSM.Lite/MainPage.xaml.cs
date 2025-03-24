@@ -55,38 +55,27 @@ namespace WebSM.Lite
     {
         public MainPage()
         {
-            InitializeComponent();
-            // Detect if the app is called via a protocol
-            var url = (App.Current as App).URL;
-            if (!string.IsNullOrEmpty(url))
+            var settings = LoadSettingsJSON();
+            if (settings != null && settings.ContainsKey("Theme"))
             {
-                webView2.Source = new Uri(url);
-            }
-            else
-            {
-                webView2.Source = new Uri("https://www.bing.com");
-            }
-
-            string filePath = Path.Combine(ApplicationData.Current.RoamingFolder.Path, "settings.json");
-
-            // Verify if the file exist
-            if (!File.Exists(filePath))
-            {
-                // Create the settings.json file which contains settings for the app
-                var settingsCreation = new Dictionary<string, object>
+                int themeValue = Convert.ToInt32(settings["Theme"]);
+                switch (themeValue)
                 {
-                    { "Theme", (int)ElementTheme.Default } // 0 = Default, 1 = Light, 2 = Dark
-                };
-
-                // Format and combine all the settings into a JSON file
-                string jsonCreation = JsonConvert.SerializeObject(settingsCreation, Formatting.Indented);
-                File.WriteAllText(filePath, jsonCreation);
+                    case 0:
+                        RequestedTheme = ElementTheme.Default;
+                        break;
+                    case 1:
+                        RequestedTheme = ElementTheme.Light;
+                        break;
+                    case 2:
+                        RequestedTheme = ElementTheme.Dark;
+                        break;
+                    default:
+                        Debug.WriteLine("Invalid value Theme.");
+                        break;
+                }
             }
-
-            // Reload settings after creation
-            string json = File.ReadAllText(filePath);
-            Dictionary<string, object> settings = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
-            Debug.WriteLine(settings);
+            InitializeComponent();
             ApplySettings(settings);
         }
 
@@ -107,7 +96,6 @@ namespace WebSM.Lite
             webView2.GoBack();
         }
 
-        // WARNING: Complicated code here! Not present on normal version!
         private void navView_SelectionChanged(Windows.UI.Xaml.Controls.NavigationView sender, Windows.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs args)
         {
             if (args.IsSettingsSelected)
@@ -173,38 +161,28 @@ namespace WebSM.Lite
         // Settings
         private void ApplySettings(Dictionary<string, object> settings)
         {
-            Debug.WriteLine(settings);
             if (settings.ContainsKey("Theme"))
             {
-                // Try to convert the value to an int
-                if (settings["Theme"] is long themeValueLong)  // Deserialization from JSON
-                {
-                    int themeValue = (int)themeValueLong; // int conversion
-
-                    switch (themeValue)
-                    {
-                        case 0:
-                            RequestedTheme = ElementTheme.Default;
-                            comboBox1.SelectedIndex = 0;
-                            break;
-                        case 1:
-                            RequestedTheme = ElementTheme.Light;
-                            comboBox1.SelectedIndex = 1;
-                            break;
-                        case 2:
-                            RequestedTheme = ElementTheme.Dark;
-                            comboBox1.SelectedIndex = 2;
-                            break;
-                        default:
-                            Debug.WriteLine("Invalid theme value.");
-                            break;
-                    }
-                }
-                else
-                {
-                    Debug.WriteLine("Failed to convert Theme value.");
-                }
+                int themeValue = Convert.ToInt32(settings["Theme"]);
+                comboBox1.SelectedIndex = themeValue;
             }
+        }
+
+        private Dictionary<string, object> LoadSettingsJSON()
+        {
+            string filePath = Path.Combine(ApplicationData.Current.RoamingFolder.Path, "settings.json");
+            if (!File.Exists(filePath))
+            {
+                var settingsCreation = new Dictionary<string, object>
+                {
+                    { "Theme", (int)ElementTheme.Default } // 0 = Default, 1 = Light, 2 = Dark
+                };
+                string jsonCreation = JsonConvert.SerializeObject(settingsCreation, Formatting.Indented);
+                File.WriteAllText(filePath, jsonCreation);
+            }
+            string json = File.ReadAllText(filePath);
+            Dictionary<string, object> settings = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
+            return settings;
         }
 
         public void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
