@@ -60,6 +60,8 @@ namespace WebSM
     public sealed partial class MainPage : Page
     {
         private Dictionary<int, WebView2> tabViewTabItems = new Dictionary<int, WebView2>();
+        private Dictionary<int, TabViewItem> tabViewItems = new Dictionary<int, TabViewItem>();
+        private int currentTabId;
         WebView2 webView2 = new WebView2();
 
         public MainPage()
@@ -104,11 +106,29 @@ namespace WebSM
 
         private void TabView_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
         {
-            sender.TabItems.Remove(args.Tab);
+            var tabItem = args.Tab as TabViewItem;
+            int tabId = (int)tabItem.Tag;
+            sender.TabItems.Remove(tabItem);
+            tabViewTabItems.Remove(tabId);
+            tabViewItems.Remove(tabId);
+
             if (sender.TabItems.Count == 0)
             {
                 Application.Current.Exit();
             }
+            else
+            {
+                var newSelectedTab = sender.TabItems[0] as TabViewItem;
+                currentTabId = (int)newSelectedTab.Tag;
+                webView2 = tabViewTabItems[currentTabId];
+            }
+        }
+
+        private void tabView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            TabViewItem tabItem = tabView.SelectedItem as TabViewItem;
+            currentTabId = (int)tabItem.Tag;
+            webView2 = tabViewTabItems[currentTabId];
         }
 
         private async Task CreateNewTabAsync(int index)
@@ -135,8 +155,9 @@ namespace WebSM
                 tabViewTabItems.Add(newIndex, webView2);
             }
 
-            var search_dialog = new SearchDialog();
+            newItem.Tag = newIndex;
             newItem.Content = webView2;
+            tabViewItems.Add(newIndex, newItem);
 
             // Init Name of website and favicon
             string pageTitle = await webView2.CoreWebView2.ExecuteScriptAsync("document.title");
@@ -161,21 +182,20 @@ namespace WebSM
             {
                 tabView.TabItems.Add(newItem);
                 tabView.SelectedIndex = index;
+                currentTabId = newIndex;
             });
             progressRing.IsActive = false;
         }
 
-        // DO NOT MOVE THIS FUNCTION OR IT WILL CRASH THE APP
-        // Yes, this is dumb, but it's the only way to make it work
         private int GenerateUniqueID()
         {
             Random random = new Random();
-            int newIndex = random.Next(1000000, 9999999); // Generate a random number between 1000000 and 9999999
-            while (tabViewTabItems.ContainsKey(newIndex))
+            int id = random.Next(0, int.MaxValue);
+            while (tabViewTabItems.ContainsKey(id))
             {
-                newIndex = random.Next(1000000, 9999999); // Generate a new random number if the generated number already exists
+                id = random.Next(0, int.MaxValue);
             }
-            return newIndex;
+            return id;
         }
 
         private void webView2_NavigationStarting(WebView2 sender, CoreWebView2NavigationStartingEventArgs args)

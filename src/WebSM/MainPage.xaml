@@ -32,7 +32,8 @@
         <!-- WebBrowser -->
         <controls:TabView x:Name="tabView" AddTabButtonClick="TabView_AddButtonClick" 
                           TabCloseRequested="TabView_TabCloseRequested" 
-                          Loaded="TabView_Loaded" Margin="48,0,0,48" VerticalAlignment="Stretch">
+                          Loaded="TabView_Loaded" Margin="48,0,0,48" VerticalAlignment="Stretch"
+                          SelectionChanged="tabView_SelectionChanged">
         </controls:TabView>
         <controls:ProgressRing x:Name="progressRing" IsActive="False" Margin="48,0,0,48"/>
 
