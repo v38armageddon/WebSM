@@ -5,8 +5,9 @@ We assure to keep the project stable and updated.
 ## Supported Versions
 | Version | Supported          |
 | ------- | ------------------ |
-| v4.1   | :white_check_mark: |
-| v4   | :x:                |
+| 5   | :white_check_mark: |
+| 4.1   | :white_check_mark: |
+| 4   | :x:                |
 | < 3.2   | :x:                |
 
 ## Reporting a Vulnerability
