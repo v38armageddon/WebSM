@@ -77,6 +77,21 @@ namespace WebSM.Lite
             }
             InitializeComponent();
             ApplySettings(settings);
+            webView2.CoreWebView2Initialized += WebView2_CoreWebView2InitializationCompleted;
+        }
+
+        private void WebView2_CoreWebView2InitializationCompleted(WebView2 sender, CoreWebView2InitializedEventArgs args)
+        {
+            webView2.CoreWebView2.NewWindowRequested += webView2_NewWindowRequested;
+        }
+
+        private async void webView2_NewWindowRequested(CoreWebView2 sender, CoreWebView2NewWindowRequestedEventArgs args)
+        {
+            args.Handled = true; // Prevent the default behavior of opening a new window
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            {
+                webView2.Source = new Uri(args.Uri);
+            });
         }
 
         private void webView2_NavigationStarting(WebView2 sender, CoreWebView2NavigationStartingEventArgs args)
