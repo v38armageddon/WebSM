@@ -151,6 +151,7 @@ namespace WebSM
                 webView2.Source = new Uri("https://www.bing.com");
                 webView2.NavigationStarting += webView2_NavigationStarting;
                 webView2.NavigationCompleted += webView2_NavigationCompleted;
+                webView2.CoreWebView2.NewWindowRequested += webView2_NewWindowRequested;
 
                 tabViewTabItems.Add(newIndex, webView2);
             }
@@ -196,6 +197,16 @@ namespace WebSM
                 id = random.Next(0, int.MaxValue);
             }
             return id;
+        }
+
+        private async void webView2_NewWindowRequested(CoreWebView2 sender, CoreWebView2NewWindowRequestedEventArgs args)
+        {
+            args.Handled = true; // Prevent the default behavior of opening a new window
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            {
+                await CreateNewTabAsync(tabView.TabItems.Count);
+                webView2.Source = new Uri(args.Uri);
+            });
         }
 
         private void webView2_NavigationStarting(WebView2 sender, CoreWebView2NavigationStartingEventArgs args)
