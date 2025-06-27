@@ -46,7 +46,9 @@ namespace WebSM
 
         private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            return;
+            // HAX: Remove content and close dialog
+            searchTextBox.Text = string.Empty;
+            Hide();
         }
     }
 }

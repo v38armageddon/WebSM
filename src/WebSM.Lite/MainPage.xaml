@@ -33,7 +33,7 @@
         <controls:WebView2 x:Name="webView2" x:FieldModifier="public" Margin="48,0,0,48" 
                            NavigationStarting="webView2_NavigationStarting"
                            NavigationCompleted="webView2_NavigationCompleted"
-                           Source="https://bing.com"/>
+                           Source="https://eu.startpage.com/"/>
         <controls:ProgressRing x:Name="progressRing" IsActive="False" Margin="48,0,0,48"/>
 
         <!-- Navigation bars -->
