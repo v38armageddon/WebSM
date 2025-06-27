@@ -148,7 +148,7 @@ namespace WebSM
 
                 // Init WebView2
                 await webView2.EnsureCoreWebView2Async();
-                webView2.Source = new Uri("https://www.bing.com");
+                webView2.Source = new Uri("https://eu.startpage.com/");
                 webView2.NavigationStarting += webView2_NavigationStarting;
                 webView2.NavigationCompleted += webView2_NavigationCompleted;
                 webView2.CoreWebView2.NewWindowRequested += webView2_NewWindowRequested;
@@ -294,30 +294,12 @@ namespace WebSM
 
         private void homeButton_Click(object sender, RoutedEventArgs e)
         {
-            webView2.Source = new Uri("https://www.bing.com");
+            webView2.Source = new Uri("https://eu.startpage.com/");
         }
 
-        private async void searchButton_Click(object sender, RoutedEventArgs e)
+        private void searchButton_Click(object sender, RoutedEventArgs e)
         {
-            SearchDialog searchDialog = new SearchDialog();
-            await searchDialog.ShowAsync();
-            // Maybe move this part of code to the SearchDialog class?
-            if (String.IsNullOrEmpty(searchDialog.searchTextBox.Text))
-            {
-                return;
-            }
-            if (searchDialog.searchTextBox.Text.StartsWith("https://") || searchDialog.searchTextBox.Text.StartsWith("http://"))
-            {
-                webView2.Source = new Uri(searchDialog.searchTextBox.Text);
-            }
-            else if (searchDialog.searchTextBox.Text.Contains("."))
-            {
-                webView2.Source = new Uri("https://" + searchDialog.searchTextBox.Text);
-            }
-            else
-            {
-                webView2.Source = new Uri("https://www.bing.com/search?q=" + searchDialog.searchTextBox.Text);
-            }
+            SearchFunction(false);
         }
 
         private void backButton_Click(object sender, RoutedEventArgs e)
@@ -426,18 +408,9 @@ namespace WebSM
             embedBrowser.IsPaneOpen = false;
         }
 
-        private async void accessLink_Click(object sender, RoutedEventArgs e)
+        private void accessLink_Click(object sender, RoutedEventArgs e)
         {
-            SearchDialog searchDialog = new SearchDialog();
-            await searchDialog.ShowAsync();
-            if (searchDialog.searchTextBox.Text.StartsWith("https://") || searchDialog.searchTextBox.Text.StartsWith("http://"))
-            {
-                embedWebView2.Source = new Uri(searchDialog.searchTextBox.Text);
-            }
-            else
-            {
-                embedWebView2.Source = new Uri("https://www.bing.com/search?q=" + searchDialog.searchTextBox.Text);
-            }
+            SearchFunction(true);
         }
 
         private void pinEmbedBrowser_Click(object sender, RoutedEventArgs e)
@@ -449,6 +422,32 @@ namespace WebSM
             else
             {
                 embedBrowser.DisplayMode = SplitViewDisplayMode.Overlay;
+            }
+        }
+
+        // Search Function
+        // TODO: Maybe optimize it by putting in a separate file?
+        public async void SearchFunction(bool isEmbedSearch = false)
+        {
+            SearchDialog searchDialog = new SearchDialog();
+            await searchDialog.ShowAsync();
+            string input = searchDialog.searchTextBox.Text;
+            WebView2 typeOfView = isEmbedSearch ? embedWebView2 : webView2;
+            if (string.IsNullOrEmpty(input))
+            {
+                return;
+            }
+            switch (input)
+            {
+                case string s when s.StartsWith("https://") || s.StartsWith("http://"):
+                    typeOfView.Source = new Uri(s);
+                    break;
+                case string s when s.Contains("."):
+                    typeOfView.Source = new Uri("https://" + s);
+                    break;
+                default:
+                    typeOfView.Source = new Uri("https://eu.startpage.com/search?q=" + input);
+                    break;
             }
         }
     }

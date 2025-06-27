@@ -132,7 +132,7 @@ namespace WebSM.Lite
 
         private void homeButton_Click(object sender, RoutedEventArgs e)
         {
-            webView2.Source = new Uri("https://www.bing.com");
+            webView2.Source = new Uri("https://eu.startpage.com/");
         }
 
         private async void searchButton_Click(object sender, RoutedEventArgs e)
@@ -154,7 +154,7 @@ namespace WebSM.Lite
             }
             else
             {
-                webView2.Source = new Uri("https://www.bing.com/search?q=" + searchDialog.searchTextBox.Text);
+                webView2.Source = new Uri("https://eu.startpage.com/search?q=" + searchDialog.searchTextBox.Text);
             }
         }
 
