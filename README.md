@@ -1,5 +1,5 @@
 # ![WebSM logo](Assets/WebSM.png) WebSM
-A simple minimalist web browser on UWP.
+A simple minimalist web browser on Uno Platform.
 
 ## What does it do?
 WebSM allows you to have a simple web browser with a minimalist design.
@@ -9,33 +9,28 @@ WebSM allows you to have a simple web browser with a minimalist design.
 - Easy to use.
 
 ## Installation
-Minimum Windows version required: Windows 10 2004
+### Windows
+Minimum Windows version required: Windows 11 24H2
 
-Recommended Windows version: Windows 11 22H2
+Recommended Windows version: Windows 11 Latest build
 
-![https://apps.microsoft.com/store/detail/websm/9NVMBH7W0HXF](https://github.com/v38armageddon/WebSM/blob/master/Assets/Microsoft-store.png)
+![https://apps.microsoft.com/store/detail/websm/9NVMBH7W0HXF](Assets/Microsoft-store.png)
 
-### Recommended installation
+#### Recommended installation
 The best method to get WebSM is to install from the Microsoft Store: https://apps.microsoft.com/store/detail/websm/9NVMBH7W0HXF
 
-### Alternate installation
+#### Alternate installation
 If you want to install without the Microsoft Store, follow theses steps:
+1. Download the desktop version file from the releases page.
+2. Launch the installer.
 
-1. Download the .msix file and the .cer file.
-2. If needed, authorize all sources in settings.
-3. Install the certificate.
-3. Install the software.
-4. Launch the software via the start menu.
+### Linux
+Depending on your distribution you can install WebSM via different methods.
 
-## Q&A
-Q: I can't connect to my Google account...
-
-A: This issue is know due to Google Security, see https://github.com/MicrosoftEdge/WebView2Feedback/issues/1647
-
-Q: Some website is broken, how can I solve this?
-
-A: Depending on your bug, it can be a server-side problem or a problem in the embedded web browser. You can open a issue.
-
-Q: What web technologie is used?
-
-A: WebSM use the Microsoft WebView2 which is a embedded Microsoft Edge browser.
+#### Vincent OS
+Vincent OS repository includes all version of WebSM, you can install it via the following command:
+```bash
+pacman -S websm
+# Or if you prefer the Lite version
+pacman -S websm-lite
+```
