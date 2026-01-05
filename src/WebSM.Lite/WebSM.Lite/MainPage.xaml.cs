@@ -28,33 +28,15 @@ public sealed partial class MainPage : Page
 
     public MainPage()
     {
-        if (appConfig != null)
-        {
-            int themeValue = Convert.ToInt32(appConfig.Theme);
-            switch (themeValue)
-            {
-                case 0:
-                    RequestedTheme = ElementTheme.Default;
-                    break;
-                case 1:
-                    RequestedTheme = ElementTheme.Light;
-                    break;
-                case 2:
-                    RequestedTheme = ElementTheme.Dark;
-                    break;
-                default:
-                    Debug.WriteLine("Invalid value Theme.");
-                    break;
-            }
-        }
         InitializeComponent();
         ApplySettings();
-#if ANDROID
+#if ANDROID || IOS
         // Hide the navigation view pane on Android devices and add a Settings button to the app bar
         navView.Visibility = Visibility.Collapsed;
         var margin = webView2.Margin;
         margin.Left = 0;
         webView2.Margin = margin;
+        // TODO: Add a Settings button to the app bar
 #endif
     }
 

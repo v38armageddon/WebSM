@@ -22,6 +22,7 @@
     xmlns:local="using:WebSM.Lite.Dialogs"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Uid="AboutDialog"
     mc:Ignorable="d"
     Title="WebSM Lite"
     PrimaryButtonText="Rate this app"
@@ -29,20 +30,20 @@
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick">
 
     <StackPanel>
-        <TextBlock Text="Author: v38armageddon"/>
-        <TextBlock Text="Version: 5.1-lite"/>
-        <TextBlock Text="License: EUPL-1.2 / GPL-3"/>
+        <TextBlock x:Uid="AuthorText" Text="Author: v38armageddon"/>
+        <TextBlock x:Uid="VersionText" Text="Version: 6.0-lite"/>
+        <TextBlock x:Uid="LicenseText" Text="License: EUPL-1.2 | GPL-3"/>
         <TextBlock>
-            <Hyperlink NavigateUri="https://github.com/v38armageddon/WebSM">View on GitHub</Hyperlink>
+            <Hyperlink x:Uid="GithubText" NavigateUri="https://github.com/v38armageddon/WebSM">View on GitHub</Hyperlink>
         </TextBlock>
         <TextBlock>
-            <Hyperlink NavigateUri="https://interoperable-europe.ec.europa.eu/collection/eupl/eupl-text-eupl-12">EUPL License</Hyperlink>
+            <Hyperlink x:Uid="EUPLText" NavigateUri="https://interoperable-europe.ec.europa.eu/collection/eupl/eupl-text-eupl-12">EUPL License</Hyperlink>
         </TextBlock>
         <TextBlock>
-            <Hyperlink NavigateUri="https://www.gnu.org/licenses/gpl-3.0.html">GPL-3 License</Hyperlink>
+            <Hyperlink x:Uid="GPLText" NavigateUri="https://www.gnu.org/licenses/gpl-3.0.html">GPL-3 License</Hyperlink>
         </TextBlock>
         <TextBlock>
-            <Hyperlink NavigateUri="https://gist.github.com/florian-at-v38armageddon/0461036c1f76590bbf32efe9a660968b">Privacy Statement</Hyperlink>
+            <Hyperlink x:Uid="PrivacyText" NavigateUri="https://gist.github.com/florian-at-v38armageddon/0461036c1f76590bbf32efe9a660968b">Privacy Statement</Hyperlink>
         </TextBlock>
     </StackPanel>
 </ContentDialog>

@@ -46,26 +46,26 @@
                     DefaultLabelPosition="Bottom"
                     OverflowButtonVisibility="Collapsed"
                     IsEnabled="True">
-            <AppBarButton x:Name="homeButton" Icon="Home" Label="Home" Click="homeButton_Click"/>
-            <AppBarButton x:Name="searchButton" Icon="Find" Label="Search" Click="searchButton_Click"/>
-            <AppBarButton x:Name="backButton" Icon="Back" Label="Go Back" Click="backButton_Click"/>
-            <AppBarButton x:Name="forwardButton" Icon="Forward" Label="Go Forward" Click="forwardButton_Click"/>
-            <AppBarButton x:Name="refreshButton" Icon="Refresh" Label="Refresh" Click="refreshButton_Click"/>
+            <AppBarButton x:Name="homeButton" Icon="Home" Click="homeButton_Click"/>
+            <AppBarButton x:Name="searchButton" Icon="Find" Click="searchButton_Click"/>
+            <AppBarButton x:Name="backButton" Icon="Back" Click="backButton_Click"/>
+            <AppBarButton x:Name="forwardButton" Icon="Forward" Click="forwardButton_Click"/>
+            <AppBarButton x:Name="refreshButton" Icon="Refresh" Click="refreshButton_Click"/>
         </CommandBar>
 
         <!-- Settings -->
         <SplitView x:Name="settingsView" DisplayMode="Overlay" OpenPaneLength="296" PanePlacement="Right">
             <SplitView.Pane>
                 <StackPanel>
-                    <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Settings" VerticalAlignment="Top" FontWeight="Bold" FontSize="36"/>
-                    <TextBlock Text="Selected theme" FontSize="18" Margin="10,20,0,0"/>
+                    <TextBlock x:Uid="SettingTitle" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Settings" VerticalAlignment="Top" FontWeight="Bold" FontSize="36"/>
+                    <TextBlock x:Uid="SelectedTheme" Text="Selected theme" FontSize="18" Margin="10,20,0,0"/>
                     <ComboBox x:Name="comboBox1" x:FieldModifier="public" Width="269" Margin="10,10,0,0" SelectedIndex="0" SelectionChanged="comboBox_SelectionChanged">
-                        <TextBlock x:Name="defaultTheme" Text="Default theme (System based)"/>
-                        <TextBlock x:Name="lightTheme" Text="Light Theme"/>
-                        <TextBlock x:Name="darkTheme" Text="Dark Theme"/>
+                        <TextBlock x:Name="defaultTheme" x:Uid="defaultTheme" Text="Default theme (System based)"/>
+                        <TextBlock x:Name="lightTheme" x:Uid="lightTheme" Text="Light Theme"/>
+                        <TextBlock x:Name="darkTheme" x:Uid="darkTheme" Text="Dark Theme"/>
                     </ComboBox>
-                    <TextBlock Text="Extras" Margin="10,10,0,0"  FontSize="18"/>
-                    <Button x:Name="AboutButton" Content="About" Click="AboutButton_Click" Margin="10,10,0,0"/>
+                    <TextBlock x:Uid="ExtrasText" Text="Extras" Margin="10,10,0,0"  FontSize="18"/>
+                    <Button x:Name="AboutButton" x:Uid="AboutButton" Click="AboutButton_Click" Margin="10,10,0,0"/>
                 </StackPanel>
             </SplitView.Pane>
         </SplitView>
