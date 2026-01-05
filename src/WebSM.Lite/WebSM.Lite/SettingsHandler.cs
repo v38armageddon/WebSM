@@ -27,22 +27,21 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
 
-namespace WebSM.Lite
-{
-    public class SettingsTheme
-    {
-        public static void SetDefaultTheme()
-        {
-            AppConfig appConfig = new AppConfig { Theme = 0 };
-        }
+namespace WebSM.Lite;
 
-        public static void SetLightTheme()
-        {
-            AppConfig appConfig = new AppConfig { Theme = 1 };
-        }
-        public static void SetDarkTheme()
-        {
-            AppConfig appConfig = new AppConfig { Theme = 2 };
-        }
+public class SettingsTheme
+{
+    public static void SetDefaultTheme()
+    {
+        AppConfig appConfig = new AppConfig { Theme = 0 };
+    }
+
+    public static void SetLightTheme()
+    {
+        AppConfig appConfig = new AppConfig { Theme = 1 };
+    }
+    public static void SetDarkTheme()
+    {
+        AppConfig appConfig = new AppConfig { Theme = 2 };
     }
 }

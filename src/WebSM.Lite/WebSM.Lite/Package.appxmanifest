@@ -12,7 +12,7 @@
     Publisher="CN=EF25BC35-CB3A-4D06-953A-49E6117D3FA3"
     Version="6.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="94d33758-6fb8-4fb8-b7c7-314b673f5731" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="9c77a238-b85e-47f9-813f-d47a543b305f" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>WebSM Lite</DisplayName>

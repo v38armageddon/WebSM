@@ -6,7 +6,7 @@
     <UnoSingleProject>true</UnoSingleProject>
 
     <!-- Display name -->
-    <ApplicationTitle>WebSM.Lite</ApplicationTitle>
+    <ApplicationTitle>WebSM Lite</ApplicationTitle>
     <!-- App Identifier -->
     <ApplicationId>net.v38armageddon.WebSM.Lite</ApplicationId>
     <!-- Versions -->
@@ -45,6 +45,16 @@
       WebView;
     </UnoFeatures>
     <Platforms>AnyCPU;x64</Platforms>
+    <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
+    <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
+    <PackageCertificateThumbprint>ED4810B9FCB4E43BFE61E9E498EF98687ED0A353</PackageCertificateThumbprint>
+    <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
+    <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
+    <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
+    <GenerateTestArtifacts>True</GenerateTestArtifacts>
+    <AppInstallerUri>D:\v38armageddon\Documents\AppX</AppInstallerUri>
+    <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
+    <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
   </PropertyGroup>
   <ItemGroup>
     <Page Update="BrowserPage.xaml">

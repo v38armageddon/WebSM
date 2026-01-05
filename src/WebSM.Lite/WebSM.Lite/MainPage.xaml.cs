@@ -49,6 +49,13 @@ public sealed partial class MainPage : Page
         }
         InitializeComponent();
         ApplySettings();
+#if ANDROID
+        // Hide the navigation view pane on Android devices and add a Settings button to the app bar
+        navView.Visibility = Visibility.Collapsed;
+        var margin = webView2.Margin;
+        margin.Left = 0;
+        webView2.Margin = margin;
+#endif
     }
 
     private async void Page_Loaded(object sender, RoutedEventArgs e)
@@ -58,12 +65,12 @@ public sealed partial class MainPage : Page
 
     private void webView2_NavigationStarting(WebView2 sender, CoreWebView2NavigationStartingEventArgs args)
     {
-        //progressRing.IsActive = true;
+        progressRing.IsActive = true;
     }
 
     private void webView2_NavigationCompleted(WebView2 sender, CoreWebView2NavigationCompletedEventArgs args)
     {
-        //progressRing.IsActive = false;
+        progressRing.IsActive = false;
         GC.Collect();
         GC.WaitForPendingFinalizers();
     }
@@ -80,16 +87,6 @@ public sealed partial class MainPage : Page
             settingsView.IsPaneOpen = true;
             navView.SelectedItem = null;
             return;
-        }
-
-        if (args.SelectedItem is NavigationViewItem item && item.Tag != null)
-        {
-            switch (item.Tag.ToString())
-            {
-                case "Downloads":
-                    //webView2.Downl;
-                    break;
-            }
         }
     }
 

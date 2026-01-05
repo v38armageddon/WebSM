@@ -32,17 +32,14 @@
                         IsPaneOpen="False" x:FieldModifier="public" IsBackEnabled="True"
                         BackRequested="navView_BackRequested"
                         SelectionChanged="navView_SelectionChanged">
-            <NavigationView.MenuItems>
-                <NavigationViewItem x:Name="downloadButton" Icon="Download" Content="Downloads" Tag="Downloads"/>
-            </NavigationView.MenuItems>
         </NavigationView>
         <!-- WebBrowser -->
         <WebView2 x:Name="webView2" x:FieldModifier="public" Margin="48,0,0,48"
                   NavigationStarting="webView2_NavigationStarting"
                   NavigationCompleted="webView2_NavigationCompleted"
-                  Source="https://eu.startpage.com/"
                   HorizontalAlignment="Stretch"
-                  VerticalAlignment="Stretch"/>
+                  VerticalAlignment="Stretch"
+                  Source="https://eu.startpage.com/"/>
         <ProgressRing x:Name="progressRing" IsActive="False" Background="Transparent" Margin="48,0,0,48"/>
         <CommandBar x:Name="commandBar"
                     VerticalAlignment="Bottom"
