@@ -33,15 +33,35 @@ public sealed partial class MainPage : Page
 #if ANDROID || IOS
         // Hide the navigation view pane on Android devices and add a Settings button to the app bar
         navView.Visibility = Visibility.Collapsed;
-        var margin = webView2.Margin;
-        margin.Left = 0;
-        webView2.Margin = margin;
+        var webViewMargin = webView2.Margin;
+        webViewMargin.Left = 0;
+        webView2.Margin = webViewMargin;
+        var progressRingMargin = progressRing.Margin;
+        progressRingMargin.Left = 0;
+        progressRing.Margin = progressRingMargin;
         // TODO: Add a Settings button to the app bar
 #endif
+
     }
 
     private async void Page_Loaded(object sender, RoutedEventArgs e)
     {
+        // This code adjust the command bar margin to avoid overlapping with the system navigation bar
+        // on Android devices.
+        // If user has enabled the "three button navigation" in system settings.
+#if ANDROID
+        var res = Android.App.Application.Context.Resources;
+        int id = res.GetIdentifier("status_bar_height", "dimen", "android");
+        if (id > 0)
+        {
+            var navBarPx = res.GetDimensionPixelSize(id);
+            var density = (float)Android.App.Application.Context.Resources.DisplayMetrics.Density;
+            var navBarDp = navBarPx / density;
+            commandBar.Margin = new Thickness(0, 0, 0, navBarDp);
+        }
+#endif
+
+        // Launch WebView2
         await webView2.EnsureCoreWebView2Async();
     }
 
