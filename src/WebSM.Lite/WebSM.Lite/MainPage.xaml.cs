@@ -15,20 +15,39 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-using Microsoft.Web.WebView2.Core;
-using Windows.UI.Core;
 using System.Diagnostics;
+using Microsoft.Web.WebView2.Core;
+using Newtonsoft.Json;
+using Windows.UI.Core;
 
 namespace WebSM.Lite;
 
 public sealed partial class MainPage : Page
 {
-    public AppConfig appConfig;
-
     public MainPage()
     {
         InitializeComponent();
-        ApplySettings();
+        var settings = LoadSettingsJSON();
+        if (settings != null && settings.ContainsKey("Theme"))
+        {
+            int themeValue = Convert.ToInt32(settings["Theme"]);
+            switch (themeValue)
+            {
+                case 0:
+                    SystemThemeHelper.SetApplicationTheme(this.XamlRoot, ElementTheme.Default);
+                    break;
+                case 1:
+                    SystemThemeHelper.SetApplicationTheme(this.XamlRoot, ElementTheme.Light);
+                    break;
+                case 2:
+                    SystemThemeHelper.SetApplicationTheme(this.XamlRoot, ElementTheme.Dark);
+                    break;
+                default:
+                    Debug.WriteLine("Invalid value Theme.");
+                    break;
+            }
+        }
+        ApplySettings(settings);
 #if ANDROID || IOS
         // Hide the navigation view pane on Android devices and add a Settings button to the app bar
         navView.PaneDisplayMode = NavigationViewPaneDisplayMode.Top;
@@ -39,7 +58,7 @@ public sealed partial class MainPage : Page
 #if DESKTOP
         // Modify dynamically the margin of commandBar for Settings button to work
         var commandBarMargin = commandBar.Margin;
-        commandBarMargin.Left = 50;
+        commandBarMargin.Left = 48;
         commandBar.Margin = commandBarMargin;
 #endif
     }
@@ -155,26 +174,47 @@ public sealed partial class MainPage : Page
     }
 
     // Settings
-    private void ApplySettings()
+    private void ApplySettings(Dictionary<string, object> settings)
     {
-        
+        if (settings.ContainsKey("Theme"))
+        {
+            int themeValue = Convert.ToInt32(settings["Theme"]);
+            comboBox1.SelectedIndex = themeValue;
+        }
+    }
+
+    private Dictionary<string, object> LoadSettingsJSON()
+    {
+        string filePath = Path.Combine(ApplicationData.Current.RoamingFolder.Path, "settings.json");
+        if (!File.Exists(filePath))
+        {
+            var settingsCreation = new Dictionary<string, object>
+                {
+                    { "Theme", (int)ElementTheme.Default } // 0 = Default, 1 = Light, 2 = Dark
+                };
+            string jsonCreation = JsonConvert.SerializeObject(settingsCreation, Formatting.Indented);
+            File.WriteAllText(filePath, jsonCreation);
+        }
+        string json = File.ReadAllText(filePath);
+        Dictionary<string, object> settings = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
+        return settings;
     }
 
     public void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         if (comboBox1.SelectedIndex == 0) // <- Default theme from the system
         {
-            RequestedTheme = ElementTheme.Default;
+            SystemThemeHelper.SetApplicationTheme(this.XamlRoot, ElementTheme.Default);
             SettingsTheme.SetDefaultTheme();
         }
         else if (comboBox1.SelectedIndex == 1) // <- Light theme
         {
-            RequestedTheme = ElementTheme.Light;
+            SystemThemeHelper.SetApplicationTheme(this.XamlRoot, ElementTheme.Light);
             SettingsTheme.SetLightTheme();
         }
         else if (comboBox1.SelectedIndex == 2) // <- Dark theme
         {
-            RequestedTheme = ElementTheme.Dark;
+            SystemThemeHelper.SetApplicationTheme(this.XamlRoot, ElementTheme.Dark);
             SettingsTheme.SetDarkTheme();
         }
     }

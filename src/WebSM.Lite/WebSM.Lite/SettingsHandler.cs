@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-using Microsoft.Web.WebView2.Core;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -24,6 +23,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Web.WebView2.Core;
+using Newtonsoft.Json;
 using Windows.Storage;
 
 namespace WebSM.Lite;
@@ -32,15 +33,39 @@ public class SettingsTheme
 {
     public static void SetDefaultTheme()
     {
-        AppConfig appConfig = new AppConfig { Theme = 0 };
+        string filePath = Path.Combine(ApplicationData.Current.RoamingFolder.Path, "settings.json");
+        if (File.Exists(filePath))
+        {
+            string json = File.ReadAllText(filePath);
+            Dictionary<string, object> settings = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
+            settings["Theme"] = 0;
+            string newJson = JsonConvert.SerializeObject(settings, Formatting.Indented);
+            File.WriteAllText(filePath, newJson);
+        }
     }
 
     public static void SetLightTheme()
     {
-        AppConfig appConfig = new AppConfig { Theme = 1 };
+        string filePath = Path.Combine(ApplicationData.Current.RoamingFolder.Path, "settings.json");
+        if (File.Exists(filePath))
+        {
+            string json = File.ReadAllText(filePath);
+            Dictionary<string, object> settings = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
+            settings["Theme"] = 1;
+            string newJson = JsonConvert.SerializeObject(settings, Formatting.Indented);
+            File.WriteAllText(filePath, newJson);
+        }
     }
     public static void SetDarkTheme()
     {
-        AppConfig appConfig = new AppConfig { Theme = 2 };
+        string filePath = Path.Combine(ApplicationData.Current.RoamingFolder.Path, "settings.json");
+        if (File.Exists(filePath))
+        {
+            string json = File.ReadAllText(filePath);
+            Dictionary<string, object> settings = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
+            settings["Theme"] = 2;
+            string newJson = JsonConvert.SerializeObject(settings, Formatting.Indented);
+            File.WriteAllText(filePath, newJson);
+        }
     }
 }
