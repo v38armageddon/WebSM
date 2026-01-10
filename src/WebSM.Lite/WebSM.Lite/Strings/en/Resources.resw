@@ -180,4 +180,13 @@
   <data name="GPLText.Text" xml:space="preserve">
     <value>GPL-3 License</value>
   </data>
+  <data name="titleOffline.Text" xml:space="preserve">
+    <value>It looks like you are offline.</value>
+  </data>
+  <data name="offlineSol1.Text" xml:space="preserve">
+    <value>- Check if you are connected to a network.</value>
+  </data>
+  <data name="offlineSol2.Text" xml:space="preserve">
+    <value>- Check your network configuration.</value>
+  </data>
 </root>

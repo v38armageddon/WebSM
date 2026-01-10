@@ -9,8 +9,8 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <StackPanel VerticalAlignment="Center">
-        <TextBlock Text="It looks like you are offline." HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="48" />
-        <TextBlock Text="- Check if you are connected to a network." HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
-        <TextBlock Text="- Check your network configuration." HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
+        <TextBlock x:Uid="titleOffline" Text="It looks like you are offline." HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <TextBlock x:Uid="offlineSol1" Text="- Check if you are connected to a network." HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <TextBlock x:Uid="offlineSol2" Text="- Check your network configuration." HorizontalAlignment="Center" VerticalAlignment="Center"/>
     </StackPanel>
 </Page>
