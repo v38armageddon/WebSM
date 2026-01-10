@@ -28,19 +28,21 @@
 
     <Grid>
         <!--Navigation bars-->
-        <NavigationView x:Name="navView" PaneDisplayMode="LeftCompact" PaneTitle="WebSM"
-                        IsPaneOpen="False" x:FieldModifier="public" IsBackEnabled="True"
-                        BackRequested="navView_BackRequested"
+        <NavigationView x:Name="navView" PaneDisplayMode="LeftCompact" PaneTitle="WebSM Lite"
+                        IsPaneOpen="False" x:FieldModifier="public" IsBackButtonVisible="Collapsed"
                         SelectionChanged="navView_SelectionChanged">
+            <NavigationView.Content>
+                <!-- WebBrowser -->
+                <WebView2 x:Name="webView2" x:FieldModifier="public"
+                          NavigationStarting="webView2_NavigationStarting"
+                          NavigationCompleted="webView2_NavigationCompleted"
+                          HorizontalAlignment="Stretch"
+                          VerticalAlignment="Stretch"
+                          Source="https://eu.startpage.com/"/>
+            </NavigationView.Content>
         </NavigationView>
-        <!-- WebBrowser -->
-        <WebView2 x:Name="webView2" x:FieldModifier="public" Margin="48,0,0,48"
-                  NavigationStarting="webView2_NavigationStarting"
-                  NavigationCompleted="webView2_NavigationCompleted"
-                  HorizontalAlignment="Stretch"
-                  VerticalAlignment="Stretch"
-                  Source="https://eu.startpage.com/"/>
-        <ProgressRing x:Name="progressRing" IsActive="False" Background="Transparent" Margin="48,0,0,48"/>
+        <!--For some reason, keep the ProgressRing separate from NavigationView.Content, or else compiler will cry-->
+        <ProgressRing x:Name="progressRing" IsActive="False" Background="Transparent" Margin="50,0,0,50"/>
         <CommandBar x:Name="commandBar"
                     VerticalAlignment="Bottom"
                     DefaultLabelPosition="Bottom"

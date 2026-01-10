@@ -36,7 +36,7 @@
         DisplayName="WebSM Lite"
         Square150x150Logo="Assets\Icons\Square150x150Logo.png"
         Square44x44Logo="Assets\Icons\Square44x44Logo.png"
-        Description="A simply minimalist web browser."
+        Description="A Lightweight Edition for Low-End Devices from WebSM."
         BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Icons\Wide310x150Logo.png" ShortName="WebSM Lite" Square71x71Logo="Assets\Icons\SmallTile.png" Square310x310Logo="Assets\Icons\LargeTile.png">
           <uap:ShowNameOnTiles>
@@ -64,6 +64,10 @@
 			</uap:Protocol>
         </uap:Extension>
       </Extensions>
+      <uap:ApplicationContentUriRules>
+        <uap:Rule Type="include" Match="http://*" WindowsRuntimeAccess="all"/>
+        <uap:Rule Type="include" Match="https://*" WindowsRuntimeAccess="all"/>
+      </uap:ApplicationContentUriRules>
     </Application>
   </Applications>
 

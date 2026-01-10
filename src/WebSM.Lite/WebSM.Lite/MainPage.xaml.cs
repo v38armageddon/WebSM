@@ -17,7 +17,6 @@
  */
 using Microsoft.Web.WebView2.Core;
 using Windows.UI.Core;
-using Newtonsoft.Json;
 using System.Diagnostics;
 
 namespace WebSM.Lite;
@@ -32,42 +31,69 @@ public sealed partial class MainPage : Page
         ApplySettings();
 #if ANDROID || IOS
         // Hide the navigation view pane on Android devices and add a Settings button to the app bar
-        navView.Visibility = Visibility.Collapsed;
-        var webViewMargin = webView2.Margin;
-        webViewMargin.Left = 0;
-        webView2.Margin = webViewMargin;
+        navView.PaneDisplayMode = NavigationViewPaneDisplayMode.Top;
         var progressRingMargin = progressRing.Margin;
         progressRingMargin.Left = 0;
         progressRing.Margin = progressRingMargin;
-        // TODO: Add a Settings button to the app bar
 #endif
-
+#if DESKTOP
+        // Modify dynamically the margin of commandBar for Settings button to work
+        var commandBarMargin = commandBar.Margin;
+        commandBarMargin.Left = 50;
+        commandBar.Margin = commandBarMargin;
+#endif
     }
 
     private async void Page_Loaded(object sender, RoutedEventArgs e)
     {
-        // This code adjust the command bar margin to avoid overlapping with the system navigation bar
-        // on Android devices.
+        // This code adjust the commandBar and navView margin to avoid overlapping
+        // with the system navigation bar on Android devices.
         // If user has enabled the "three button navigation" in system settings.
 #if ANDROID
-        var res = Android.App.Application.Context.Resources;
-        int id = res.GetIdentifier("status_bar_height", "dimen", "android");
-        if (id > 0)
+        var topInsetDp = GetStatusBarHeightDp();
+        if (topInsetDp > 0)
         {
-            var navBarPx = res.GetDimensionPixelSize(id);
-            var density = (float)Android.App.Application.Context.Resources.DisplayMetrics.Density;
-            var navBarDp = navBarPx / density;
-            commandBar.Margin = new Thickness(0, 0, 0, navBarDp);
+            commandBar.Margin = new Thickness(0, 0, 0, topInsetDp);
+            navView.Margin = new Thickness(0, topInsetDp, 0, 0);
         }
 #endif
 
         // Launch WebView2
         await webView2.EnsureCoreWebView2Async();
     }
+#if ANDROID
+    private double GetStatusBarHeightDp()
+    {
+        try
+        {
+            var res = Android.App.Application.Context.Resources;
+            int id = res.GetIdentifier("status_bar_height", "dimen", "android");
+            if (id > 0)
+            {
+                var px = res.GetDimensionPixelSize(id);
+                var density = res.DisplayMetrics.Density;
+                return px / density;
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"GetStatusBarHeightDp failed: {ex}");
+        }
+
+        return 0;
+    }
+#endif
 
     private void webView2_NavigationStarting(WebView2 sender, CoreWebView2NavigationStartingEventArgs args)
     {
         progressRing.IsActive = true;
+        // Detect if the WebView2 is opening a new tab or window, open the link directly in the system default browser
+        sender.CoreWebView2.NewWindowRequested += (s, e) =>
+        {
+            e.Handled = true;
+            var uri = new Uri(e.Uri);
+            _ = webView2.Source = uri;
+        };
     }
 
     private void webView2_NavigationCompleted(WebView2 sender, CoreWebView2NavigationCompletedEventArgs args)
@@ -75,11 +101,6 @@ public sealed partial class MainPage : Page
         progressRing.IsActive = false;
         GC.Collect();
         GC.WaitForPendingFinalizers();
-    }
-
-    private void navView_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
-    {
-        webView2.GoBack();
     }
 
     private void navView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
@@ -103,10 +124,7 @@ public sealed partial class MainPage : Page
         searchDialog.XamlRoot = this.XamlRoot;
         await searchDialog.ShowAsync();
         // Maybe move this part of code to the SearchDialog class?
-        if (String.IsNullOrEmpty(searchDialog.searchTextBox.Text))
-        {
-            return;
-        }
+        if (String.IsNullOrEmpty(searchDialog.searchTextBox.Text)) return;
         if (searchDialog.searchTextBox.Text.Contains("://"))
         {
             webView2.Source = new Uri(searchDialog.searchTextBox.Text);
