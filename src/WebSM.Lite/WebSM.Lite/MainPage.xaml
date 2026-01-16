@@ -24,7 +24,8 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     Height="Auto"
     Width="Auto"
-    Loaded="Page_Loaded">
+    Loaded="Page_Loaded"
+    SizeChanged="MainPage_SizeChanged">
 
     <Grid>
         <!--Navigation bars-->
@@ -32,17 +33,9 @@
                         IsPaneOpen="False" x:FieldModifier="public" IsBackButtonVisible="Collapsed"
                         SelectionChanged="navView_SelectionChanged">
             <NavigationView.Content>
-                <!-- WebBrowser -->
-                <WebView2 x:Name="webView2" x:FieldModifier="public"
-                          NavigationStarting="webView2_NavigationStarting"
-                          NavigationCompleted="webView2_NavigationCompleted"
-                          HorizontalAlignment="Stretch"
-                          VerticalAlignment="Stretch"
-                          Source="https://eu.startpage.com/"/>
+                <Frame x:Name="mainFrame" x:FieldModifier="public"/>
             </NavigationView.Content>
         </NavigationView>
-        <!--For some reason, keep the ProgressRing separate from NavigationView.Content, or else compiler will cry-->
-        <ProgressRing x:Name="progressRing" IsActive="False" Background="Transparent" Margin="50,0,0,50"/>
         <CommandBar x:Name="commandBar"
                     VerticalAlignment="Bottom"
                     DefaultLabelPosition="Bottom"

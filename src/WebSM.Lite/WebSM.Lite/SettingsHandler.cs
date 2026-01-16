@@ -29,7 +29,7 @@ using Windows.Storage;
 
 namespace WebSM.Lite;
 
-public class SettingsTheme
+public class SettingsHandler
 {
     public static void SetDefaultTheme()
     {
@@ -67,5 +67,11 @@ public class SettingsTheme
             string newJson = JsonConvert.SerializeObject(settings, Formatting.Indented);
             File.WriteAllText(filePath, newJson);
         }
+    }
+
+    public bool IsInternetAvailable()
+    {
+        var connectionProfile = NetworkInformation.GetInternetConnectionProfile();
+        return (connectionProfile != null && connectionProfile.GetNetworkConnectivityLevel() == NetworkConnectivityLevel.InternetAccess);
     }
 }

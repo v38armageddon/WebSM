@@ -20,6 +20,9 @@ namespace WebSM.Lite.Dialogs
 {
     public sealed partial class SearchDialog : ContentDialog
     {
+        public string SearchQuery { get; set; }
+        public BrowserPage browserPage;
+
         public SearchDialog()
         {
             InitializeComponent();
