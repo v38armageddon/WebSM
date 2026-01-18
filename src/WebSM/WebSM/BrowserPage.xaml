@@ -28,10 +28,10 @@
 
     <Grid>
         <!-- WebBrowser -->
-        <TabView x:Name="tabView" AddTabButtonClick="TabView_AddButtonClick" 
-                  TabCloseRequested="TabView_TabCloseRequested" 
-                  Loaded="TabView_Loaded" VerticalAlignment="Stretch"
-                  SelectionChanged="tabView_SelectionChanged" IsEnabled="True">
+        <TabView x:Name="tabView" AddTabButtonClick="TabView_AddButtonClick"
+                 TabCloseRequested="TabView_TabCloseRequested" Loaded="TabView_Loaded"
+                 VerticalAlignment="Stretch" SelectionChanged="tabView_SelectionChanged"
+                 IsEnabled="True" x:FieldModifier="public">
         </TabView>
         <ProgressRing x:Name="progressRing" IsActive="False"/>
     </Grid>

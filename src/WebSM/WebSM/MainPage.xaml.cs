@@ -26,6 +26,7 @@ public sealed partial class MainPage : Page
 {
     public BrowserPage browserPage;
     private Dictionary<string, object>? _settings;
+    private bool embedWebView2Ready = false;
 
     public MainPage()
     {
@@ -73,6 +74,7 @@ public sealed partial class MainPage : Page
             commandBar.Margin = commandBarMargin;
             commandBar.OverflowButtonVisibility = CommandBarOverflowButtonVisibility.Collapsed;
             navView.Margin = new Thickness(0);
+            browserPage.tabView.TabWidthMode = TabViewWidthMode.Compact;
         }
         else
         {
@@ -81,6 +83,7 @@ public sealed partial class MainPage : Page
             commandBarMargin.Left = 0;
             commandBar.Margin = commandBarMargin;
             commandBar.OverflowButtonVisibility = CommandBarOverflowButtonVisibility.Visible;
+            browserPage.tabView.TabWidthMode = TabViewWidthMode.Equal;
 #if ANDROID
             var topInsetDp = GetStatusBarHeightDp();
             if (topInsetDp > 0)
@@ -102,6 +105,7 @@ public sealed partial class MainPage : Page
         var commandBarMarginDesktop = commandBar.Margin;
         commandBarMarginDesktop.Left = 48;
         commandBar.Margin = commandBarMarginDesktop;
+        browserPage.tabView.TabWidthMode = TabViewWidthMode.Equal;
 #endif
     }
 
@@ -152,32 +156,21 @@ public sealed partial class MainPage : Page
         }
     }
 
-    private void openEmbedBrowserButton_Click(object sender, RoutedEventArgs e)
+    private async void openEmbedBrowserButton_Click(object sender, RoutedEventArgs e)
     {
+        if (!embedWebView2Ready)
+        {
+            await embedWebView2.EnsureCoreWebView2Async();
+            embedWebView2Ready = true;
+        }
         embedBrowser.IsPaneOpen = true;
     }
 
-    private async void openWindowButton_Click(object sender, RoutedEventArgs e)
+    private void openWindowButton_Click(object sender, RoutedEventArgs e)
     {
-        var currentAV = ApplicationView.GetForCurrentView();
-        var newAV = CoreApplication.CreateNewView();
-
-        await newAV.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
-        {
-            var newWindow = Window.Current;
-            var newAppView = ApplicationView.GetForCurrentView();
-            var frame = new Frame();
-
-            frame.Navigate(typeof(MainPage), null);
-            newWindow.Content = frame;
-            newWindow.Activate();
-
-            await ApplicationViewSwitcher.TryShowAsStandaloneAsync(
-                newAppView.Id,
-                ViewSizePreference.UseMinimum,
-                currentAV.Id,
-                ViewSizePreference.UseMinimum);
-        });
+        var window = new Window();
+        window.Content = new MainPage();
+        window.Activate();
     }
 
     private void homeButton_Click(object sender, RoutedEventArgs e)
@@ -300,6 +293,7 @@ public sealed partial class MainPage : Page
     public async void SearchFunction(bool isEmbedSearch = false)
     {
         SearchDialog searchDialog = new SearchDialog();
+        searchDialog.XamlRoot = this.XamlRoot;
         await searchDialog.ShowAsync();
         string input = searchDialog.searchTextBox.Text;
         WebView2 typeOfView = isEmbedSearch ? embedWebView2 : browserPage.webView2;
