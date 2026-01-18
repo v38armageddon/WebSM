@@ -27,6 +27,7 @@ public sealed partial class BrowserPage : Page
     private int currentTabId;
     public WebView2 webView2 = new WebView2();
     private bool _ready;
+    private bool _initialTabCreated = false; // Ajout du champ indicateur
 
     public BrowserPage()
     {
@@ -38,6 +39,13 @@ public sealed partial class BrowserPage : Page
     {
         await webView2.EnsureCoreWebView2Async();
         _ready = true;
+        tabView.Loaded += TabView_Loaded;
+        if (!_initialTabCreated && tabView != null && tabView.TabItems.Count == 0)
+        {
+            _initialTabCreated = true;
+            await CreateNewTabAsync(0);
+            tabView.SelectedIndex = 0;
+        }
     }
 
     private void webView2_NavigationStarting(WebView2 sender, CoreWebView2NavigationStartingEventArgs args)
@@ -76,6 +84,8 @@ public sealed partial class BrowserPage : Page
 
     private async void TabView_Loaded(object sender, RoutedEventArgs e)
     {
+        if (_initialTabCreated) return;
+        _initialTabCreated = true;
         for (int i = 0; i < 1; i++)
         {
             await CreateNewTabAsync(i);
