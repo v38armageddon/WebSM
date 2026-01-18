@@ -109,22 +109,9 @@ public partial class App : Application
 
         if (rootFrame.Content == null)
         {
-            if (IsInternetAvailable())
-            {
-                rootFrame.Navigate(typeof(MainPage));
-            }
-            else
-            {
-                rootFrame.Navigate(typeof(OfflinePage));
-            }
+            rootFrame.Navigate(typeof(MainPage));
         }
         // Ensure the current window is active
         MainWindow.Activate();
-    }
-
-    private bool IsInternetAvailable()
-    {
-        var connectionProfile = NetworkInformation.GetInternetConnectionProfile();
-        return (connectionProfile != null && connectionProfile.GetNetworkConnectivityLevel() == NetworkConnectivityLevel.InternetAccess);
     }
 }

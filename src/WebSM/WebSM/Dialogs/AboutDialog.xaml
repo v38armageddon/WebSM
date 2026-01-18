@@ -32,7 +32,7 @@
     <Grid>
         <StackPanel>
             <TextBlock Text="Author: v38armageddon"/>
-            <TextBlock Text="Version: 5.1"/>
+            <TextBlock Text="Version: 6.0"/>
             <TextBlock Text="License: EUPL-1.2 / GPL-3"/>
             <TextBlock>
                 <Hyperlink NavigateUri="https://github.com/v38armageddon/WebSM">View on GitHub</Hyperlink>

@@ -22,25 +22,24 @@
     xmlns:local="using:WebSM"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     Height="Auto"
-    Width="Auto">
+    Width="Auto"
+    Loaded="Page_Loaded"
+    SizeChanged="Page_SizeChanged">
 
     <Grid>
-        <!-- WebBrowser -->
-        <controls:TabView x:Name="tabView" AddTabButtonClick="TabView_AddButtonClick" 
-                          TabCloseRequested="TabView_TabCloseRequested" 
-                          Loaded="TabView_Loaded" Margin="48,0,0,48" VerticalAlignment="Stretch"
-                          SelectionChanged="tabView_SelectionChanged" IsEnabled="True">
-        </controls:TabView>
-        <controls:ProgressRing x:Name="progressRing" IsActive="False" Margin="48,0,0,48"/>
-
         <!-- Navigation bars -->
-        <CommandBar x:Name="commandBar"
-                    VerticalAlignment="Bottom"
-                    DefaultLabelPosition="Bottom"
+        <NavigationView PaneDisplayMode="LeftCompact" x:Name="navView" PaneTitle="WebSM"
+                        IsPaneOpen="False" x:FieldModifier="public" IsBackEnabled="True"
+                        IsBackButtonVisible="Collapsed"
+                        SelectionChanged="navView_SelectionChanged">
+            <NavigationView.Content>
+                <Frame x:Name="mainFrame" x:FieldModifier="public"/>
+            </NavigationView.Content>
+        </NavigationView>
+        <CommandBar x:Name="commandBar" VerticalAlignment="Bottom" DefaultLabelPosition="Bottom"
                     OverflowButtonVisibility="Collapsed"
                     IsEnabled="True">
             <AppBarButton x:Name="openEmbedBrowserButton" x:Uid="openEmbedBrowserButton" Icon="OpenPane" Click="openEmbedBrowserButton_Click"/>
@@ -51,21 +50,9 @@
             <AppBarButton x:Name="forwardButton" x:Uid="forwardButton" Icon="Forward" Click="forwardButton_Click"/>
             <AppBarButton x:Name="refreshButton" x:Uid="refreshButton" Icon="Refresh" Click="refreshButton_Click"/>
         </CommandBar>
-        <NavigationView PaneDisplayMode="LeftCompact" x:Name="navView" PaneTitle="WebSM"
-                        IsPaneOpen="False" x:FieldModifier="public" IsBackEnabled="True"
-                        BackRequested="navView_BackRequested" 
-                        SelectionChanged="navView_SelectionChanged">
-            <NavigationView.MenuItems>
-                <NavigationViewItem x:Name="downloadButton" x:Uid="downloadButton" Icon="Download" Tag="Downloads"/>
-            </NavigationView.MenuItems>
-        </NavigationView>
-        
+
         <!-- Settings -->
-        <SplitView
-            x:Name="settingsView"
-            DisplayMode="Overlay"
-            OpenPaneLength="296"
-            PanePlacement="Right">
+        <SplitView x:Name="settingsView" DisplayMode="Overlay" OpenPaneLength="296" PanePlacement="Right">
             <SplitView.Pane>
                 <StackPanel>
                     <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Settings" VerticalAlignment="Top" FontWeight="Bold" FontSize="36"/>
@@ -75,18 +62,13 @@
                         <TextBlock x:Name="lightTheme" Text="Light Theme"/>
                         <TextBlock x:Name="darkTheme" Text="Dark Theme"/>
                     </ComboBox>
-                    <ToggleSwitch x:Name="userAgentSwitch" Header="Toggle fake User Agent" Toggled="userAgentSwitch_Toggled" Margin="10,10,0,0"/>
-                    <TextBlock Text="Extras" Margin="10,10,0,0"  FontSize="18"/>
                     <Button x:Name="AboutButton" Content="About" Click="AboutButton_Click" Margin="10,10,0,0"/>
                 </StackPanel>
             </SplitView.Pane>
         </SplitView>
 
         <!--Embed browser-->
-        <SplitView x:Name="embedBrowser" Margin="48,0,0,48"
-                   OpenPaneLength="420"
-                   DisplayMode="Overlay"
-                   PanePlacement="Left">
+        <SplitView x:Name="embedBrowser" Margin="48,0,0,48" OpenPaneLength="420" DisplayMode="Overlay" PanePlacement="Left">
             <SplitView.Pane>
                 <Grid>
                     <CommandBar x:Name="commandBarEmbedBrowser" DefaultLabelPosition="Right">
@@ -94,7 +76,7 @@
                         <AppBarButton x:Name="accessLink" Icon="Find" Label="Go To" Click="accessLink_Click"/>
                         <AppBarToggleButton x:Name="pinEmbedBrowser" Icon="Pin" Label="Pin" Click="pinEmbedBrowser_Click"/>
                     </CommandBar>
-                    <controls:WebView2 x:Name="embedWebView2" Margin="0,53,0,0"/>
+                    <WebView2 x:Name="embedWebView2" Margin="0,53,0,0"/>
                 </Grid>
             </SplitView.Pane>
         </SplitView>

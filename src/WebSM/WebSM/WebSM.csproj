@@ -10,12 +10,12 @@
     <!-- App Identifier -->
     <ApplicationId>net.v38armageddon.WebSM</ApplicationId>
     <!-- Versions -->
-    <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
-    <ApplicationVersion>1</ApplicationVersion>
+    <ApplicationDisplayVersion>6.0</ApplicationDisplayVersion>
+    <ApplicationVersion>6</ApplicationVersion>
     <!-- Package Publisher -->
     <ApplicationPublisher>v38armageddon</ApplicationPublisher>
     <!-- Package Description -->
-    <Description>WebSM powered by Uno Platform.</Description>
+    <Description>A simply minimalist web browser.</Description>
     <!--
       If you encounter this error message:
 
@@ -44,6 +44,12 @@
       SkiaRenderer;
       WebView;
     </UnoFeatures>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
+  <ItemGroup>
+    <Page Update="BrowserPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
 
 </Project>

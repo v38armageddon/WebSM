@@ -1,5 +1,5 @@
-﻿/*
- * WebSM Lite - A simply minimalist web browser.
+/*
+ * WebSM - A simply minimalist web browser.
  * Copyright (C) 2022 - 2025 - v38armageddon
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -16,70 +16,46 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.Storage;
 
-namespace WebSM
+namespace WebSM;
+
+public class SettingsHandler
 {
-    public class SettingsTheme
+    public static void SetDefaultTheme()
     {
-        // Themes
-        public static void SetDefaultTheme()
+        string filePath = Path.Combine(ApplicationData.Current.RoamingFolder.Path, "settings.json");
+        if (File.Exists(filePath))
         {
-            string filePath = Path.Combine(ApplicationData.Current.RoamingFolder.Path, "settings.json");
-            if (File.Exists(filePath))
-            {
-                string json = File.ReadAllText(filePath);
-                Dictionary<string, object> settings = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
-                settings["Theme"] = 0;
-                string newJson = JsonConvert.SerializeObject(settings, Formatting.Indented);
-                File.WriteAllText(filePath, newJson);
-            }
+            string json = File.ReadAllText(filePath);
+            Dictionary<string, object> settings = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
+            settings["Theme"] = 0;
+            string newJson = JsonConvert.SerializeObject(settings, Formatting.Indented);
+            File.WriteAllText(filePath, newJson);
         }
+    }
 
-        public static void SetLightTheme()
+    public static void SetLightTheme()
+    {
+        string filePath = Path.Combine(ApplicationData.Current.RoamingFolder.Path, "settings.json");
+        if (File.Exists(filePath))
         {
-            string filePath = Path.Combine(ApplicationData.Current.RoamingFolder.Path, "settings.json");
-            if (File.Exists(filePath))
-            {
-                string json = File.ReadAllText(filePath);
-                Dictionary<string, object> settings = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
-                settings["Theme"] = 1;
-                string newJson = JsonConvert.SerializeObject(settings, Formatting.Indented);
-                File.WriteAllText(filePath, newJson);
-            }
+            string json = File.ReadAllText(filePath);
+            Dictionary<string, object> settings = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
+            settings["Theme"] = 1;
+            string newJson = JsonConvert.SerializeObject(settings, Formatting.Indented);
+            File.WriteAllText(filePath, newJson);
         }
-
-        public static void SetDarkTheme()
+    }
+    public static void SetDarkTheme()
+    {
+        string filePath = Path.Combine(ApplicationData.Current.RoamingFolder.Path, "settings.json");
+        if (File.Exists(filePath))
         {
-            string filePath = Path.Combine(ApplicationData.Current.RoamingFolder.Path, "settings.json");
-            if (File.Exists(filePath))
-            {
-                string json = File.ReadAllText(filePath);
-                Dictionary<string, object> settings = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
-                settings["Theme"] = 2;
-                string newJson = JsonConvert.SerializeObject(settings, Formatting.Indented);
-                File.WriteAllText(filePath, newJson);
-            }
-        }
-
-        // UserAgent
-        public static void SetUserAgent()
-        {
-            string filePath = Path.Combine(ApplicationData.Current.RoamingFolder.Path, "settings.json");
-            if (File.Exists(filePath))
-            {
-                string json = File.ReadAllText(filePath);
-                Dictionary<string, object> settings = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
-                settings["UserAgent"] = false;
-                string newJson = JsonConvert.SerializeObject(settings, Formatting.Indented);
-                File.WriteAllText(filePath, newJson);
-            }
+            string json = File.ReadAllText(filePath);
+            Dictionary<string, object> settings = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
+            settings["Theme"] = 2;
+            string newJson = JsonConvert.SerializeObject(settings, Formatting.Indented);
+            File.WriteAllText(filePath, newJson);
         }
     }
 }
