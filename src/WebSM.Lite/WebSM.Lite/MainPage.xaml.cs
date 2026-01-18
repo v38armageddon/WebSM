@@ -25,34 +25,17 @@ namespace WebSM.Lite;
 public sealed partial class MainPage : Page
 {
     public BrowserPage browserPage;
+    private Dictionary<string, object>? _settings;
+
     public MainPage()
     {
         InitializeComponent();
-        var settings = LoadSettingsJSON();
-        if (settings != null && settings.ContainsKey("Theme"))
-        {
-            int themeValue = Convert.ToInt32(settings["Theme"]);
-            switch (themeValue)
-            {
-                case 0:
-                    SystemThemeHelper.SetApplicationTheme(this.XamlRoot, ElementTheme.Default);
-                    break;
-                case 1:
-                    SystemThemeHelper.SetApplicationTheme(this.XamlRoot, ElementTheme.Light);
-                    break;
-                case 2:
-                    SystemThemeHelper.SetApplicationTheme(this.XamlRoot, ElementTheme.Dark);
-                    break;
-                default:
-                    Console.Error.WriteLine("Invalid value Theme.");
-                    break;
-            }
-        }
-        ApplySettings(settings);
-        // Setup dynamic orientation/size handling (mobile & desktop)
+        _settings = LoadSettingsJSON();
+        ApplySettings(_settings);
         SetupOrientationHandling();
     }
 
+    #region SetupStart
     private void SetupOrientationHandling()
     {
         this.SizeChanged += MainPage_SizeChanged;
@@ -110,18 +93,12 @@ public sealed partial class MainPage : Page
 
     private void Page_Loaded(object sender, RoutedEventArgs e)
     {
-        var settingsHandler = new SettingsHandler();
-        if (!settingsHandler.IsInternetAvailable())
-        {
-            mainFrame.Navigate(typeof(OfflinePage));
-            // ensure browserPage is null if offline page shown
-            browserPage = null;
-            return;
-        }
-
         // Subscribe to frame navigation so we capture the BrowserPage instance when it's created.
         mainFrame.Navigated += MainFrame_Navigated;
         mainFrame.Navigate(typeof(BrowserPage));
+
+        // Ensure UI-related settings (theme, control states) are applied when XamlRoot is available.
+        ApplySettings(_settings);
     }
 
     // When the frame navigates, keep a reference to the BrowserPage so button actions work.
@@ -159,7 +136,8 @@ public sealed partial class MainPage : Page
         return 0;
     }
 #endif
-
+    #endregion
+    #region UINavigation
     private void navView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
     {
         if (args.IsSettingsSelected)
@@ -209,14 +187,29 @@ public sealed partial class MainPage : Page
     {
         browserPage?.Reload();
     }
-
-    // Settings
+    #endregion
+    #region Settings
     private void ApplySettings(Dictionary<string, object> settings)
     {
         if (settings.ContainsKey("Theme"))
         {
             int themeValue = Convert.ToInt32(settings["Theme"]);
             comboBox1.SelectedIndex = themeValue;
+            switch (themeValue)
+            {
+                case 0:
+                    SystemThemeHelper.SetApplicationTheme(this.XamlRoot, ElementTheme.Default);
+                    break;
+                case 1:
+                    SystemThemeHelper.SetApplicationTheme(this.XamlRoot, ElementTheme.Light);
+                    break;
+                case 2:
+                    SystemThemeHelper.SetApplicationTheme(this.XamlRoot, ElementTheme.Dark);
+                    break;
+                default:
+                    Console.Error.WriteLine("Invalid Theme value");
+                    break;
+            }
         }
     }
 
@@ -262,4 +255,5 @@ public sealed partial class MainPage : Page
         aboutDialog.XamlRoot = this.XamlRoot;
         await aboutDialog.ShowAsync();
     }
+    #endregion
 }

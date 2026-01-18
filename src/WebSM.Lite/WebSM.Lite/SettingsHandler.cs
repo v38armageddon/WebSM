@@ -68,10 +68,4 @@ public class SettingsHandler
             File.WriteAllText(filePath, newJson);
         }
     }
-
-    public bool IsInternetAvailable()
-    {
-        var connectionProfile = NetworkInformation.GetInternetConnectionProfile();
-        return (connectionProfile != null && connectionProfile.GetNetworkConnectivityLevel() == NetworkConnectivityLevel.InternetAccess);
-    }
 }

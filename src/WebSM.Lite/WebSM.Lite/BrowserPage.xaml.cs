@@ -3,11 +3,13 @@ namespace WebSM.Lite;
 public sealed partial class BrowserPage : Page
 {
     private bool _ready;
+
     public BrowserPage()
     {
         this.InitializeComponent();
         Loaded += Page_Loaded;
     }
+
     private async void Page_Loaded(object sender, RoutedEventArgs e)
     {
         await webView2.EnsureCoreWebView2Async();
@@ -17,15 +19,6 @@ public sealed partial class BrowserPage : Page
     private void webView2_NavigationStarting(WebView2 sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationStartingEventArgs args)
     {
         progressRing.IsActive = true;
-        // If there's no internet available, cancel navigation and show the offline page in the parent frame
-        var settingsHandler = new SettingsHandler();
-        if (!settingsHandler.IsInternetAvailable())
-        {
-            args.Cancel = true;
-            // Navigate the hosting frame (mainFrame in MainPage) to the OfflinePage
-            this.Frame?.Navigate(typeof(OfflinePage));
-            return;
-        }
         // Detect if the WebView2 is opening a new tab or window, open the link directly in the system default browser
         sender.CoreWebView2.NewWindowRequested += (s, e) =>
         {

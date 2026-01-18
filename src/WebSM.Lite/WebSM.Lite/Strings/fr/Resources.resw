@@ -162,10 +162,10 @@
   <data name="LicenseText.Text" xml:space="preserve">
     <value>Licences : EUPL-1.2 | GPL-3</value>
   </data>
-  <data name="Github.Text" xml:space="preserve">
+  <data name="GitHubText.Content" xml:space="preserve">
     <value>Voir sur GitHub</value>
   </data>
-  <data name="PrivacyText.Text" xml:space="preserve">
+  <data name="PrivacyText.Content" xml:space="preserve">
     <value>Politique de confidentialité</value>
   </data>
   <data name="SelectedTheme.Text" xml:space="preserve">
@@ -174,19 +174,10 @@
   <data name="ExtrasText.Text" xml:space="preserve">
     <value>Extras</value>
   </data>
-  <data name="EUPLText.Text" xml:space="preserve">
+  <data name="EUPLText.Content" xml:space="preserve">
     <value>Licence EUPL</value>
   </data>
-  <data name="GPLText.Text" xml:space="preserve">
+  <data name="GPLText.Content" xml:space="preserve">
     <value>Licence GPL-3</value>
-  </data>
-  <data name="titleOffline.Text" xml:space="preserve">
-    <value>Il semble que vous êtes hors ligne.</value>
-  </data>
-  <data name="offlineSol1.Text" xml:space="preserve">
-    <value>- Vérifiez si vous êtes connecté à un réseau.</value>
-  </data>
-  <data name="offlineSol2.Text" xml:space="preserve">
-    <value>- Vérifiez votre configuration réseau.</value>
   </data>
 </root>
