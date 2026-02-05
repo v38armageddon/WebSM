@@ -1,0 +1,85 @@
+﻿<!--
+    WebSM - A simply minimalist web browser.
+    Copyright (C) 2022 - 2024 - v38armageddon
+    
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+    
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+-->
+<Page
+    x:Class="WebSM.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WebSM"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    Height="Auto"
+    Width="Auto"
+    Loaded="Page_Loaded"
+    SizeChanged="Page_SizeChanged">
+
+    <Grid>
+        <!-- Navigation bars -->
+        <NavigationView PaneDisplayMode="LeftCompact" x:Name="navView" PaneTitle="WebSM"
+                        IsPaneOpen="False" x:FieldModifier="public" IsBackEnabled="True"
+                        IsBackButtonVisible="Collapsed"
+                        SelectionChanged="navView_SelectionChanged">
+            <NavigationView.Content>
+                <Frame x:Name="mainFrame" x:FieldModifier="public"/>
+            </NavigationView.Content>
+        </NavigationView>
+        <CommandBar x:Name="commandBar" VerticalAlignment="Bottom" DefaultLabelPosition="Bottom"
+                    OverflowButtonVisibility="Collapsed"
+                    IsEnabled="True">
+            <AppBarButton x:Name="openEmbedBrowserButton" x:Uid="openEmbedBrowserButton" Icon="OpenPane" Click="openEmbedBrowserButton_Click"/>
+            <AppBarButton x:Name="openWindowButton" x:Uid="openWindowButton" Icon="NewWindow" Click="openWindowButton_Click"/>
+            <AppBarButton x:Name="homeButton" x:Uid="homeButton" Icon="Home" Click="homeButton_Click"/>
+            <AppBarButton x:Name="searchButton" x:Uid="searchButton" Icon="Find" Click="searchButton_Click"/>
+            <AppBarButton x:Name="backButton" x:Uid="backButton" Icon="Back" Click="backButton_Click"/>
+            <AppBarButton x:Name="forwardButton" x:Uid="forwardButton" Icon="Forward" Click="forwardButton_Click"/>
+            <AppBarButton x:Name="refreshButton" x:Uid="refreshButton" Icon="Refresh" Click="refreshButton_Click"/>
+        </CommandBar>
+
+        <!-- Settings -->
+        <SplitView x:Name="settingsView" DisplayMode="Overlay" OpenPaneLength="296" PanePlacement="Right">
+            <SplitView.Pane>
+                <StackPanel>
+                    <TextBlock x:Uid="SettingTitle" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Settings" VerticalAlignment="Top" FontWeight="Bold" FontSize="36"/>
+                    <TextBlock x:Uid="SelectedTheme" Text="Selected theme" FontSize="18" Margin="10,20,0,0"/>
+                    <ComboBox x:Name="comboBox1" x:FieldModifier="public" Width="269" Margin="10,10,0,0" SelectedIndex="0" SelectionChanged="comboBox_SelectionChanged">
+                        <TextBlock x:Name="defaultTheme" x:Uid="defaultTheme" Text="Default theme (System based)"/>
+                        <TextBlock x:Name="lightTheme" x:Uid="lightTheme" Text="Light Theme"/>
+                        <TextBlock x:Name="darkTheme" x:Uid="darkTheme" Text="Dark Theme"/>
+                    </ComboBox>
+                    <TextBlock x:Uid="ExtrasText" Text="Extras" Margin="10,10,0,0"  FontSize="18"/>
+                    <Button x:Name="AboutButton" x:Uid="AboutButton" Content="About" Click="AboutButton_Click" Margin="10,10,0,0"/>
+                </StackPanel>
+            </SplitView.Pane>
+        </SplitView>
+
+        <!--Embed browser-->
+        <SplitView x:Name="embedBrowser" Margin="48,0,0,48" OpenPaneLength="420" DisplayMode="Overlay" PanePlacement="Left">
+            <SplitView.Pane>
+                <Grid>
+                    <CommandBar x:Name="commandBarEmbedBrowser" DefaultLabelPosition="Right">
+                        <AppBarButton x:Name="closeEmbedBrowser" x:Uid="closeEmbedBrowser" Icon="ClosePane" Label="Close" Click="closeEmbedBrowser_Click"/>
+                        <AppBarButton x:Name="accessLink" x:Uid="searchButton" Icon="Find" Label="Search" Click="accessLink_Click"/>
+                        <AppBarToggleButton x:Name="pinEmbedBrowser" x:Uid="pinEmbedBrowser" Icon="Pin" Label="Pin" Click="pinEmbedBrowser_Click"/>
+                    </CommandBar>
+                    <WebView2 x:Name="embedWebView2" Margin="0,53,0,0"/>
+                </Grid>
+            </SplitView.Pane>
+        </SplitView>
+    </Grid>
+</Page>

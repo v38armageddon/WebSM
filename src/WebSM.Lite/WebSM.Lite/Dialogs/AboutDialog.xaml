@@ -1,0 +1,41 @@
+﻿<!--
+    WebSM Lite - A simply minimalist web browser.
+    Copyright (C) 2022 - 2024 - v38armageddon
+    
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+    
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+-->
+<ContentDialog
+    x:Class="WebSM.Lite.Dialogs.AboutDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WebSM.Lite.Dialogs"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Uid="AboutDialog"
+    mc:Ignorable="d"
+    Title="WebSM Lite"
+    PrimaryButtonText="Rate this app"
+    SecondaryButtonText="Close"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick">
+
+    <StackPanel>
+        <TextBlock x:Uid="AuthorText" Text="Author: v38armageddon"/>
+        <TextBlock x:Uid="VersionText" Text="Version: 6.0-lite"/>
+        <TextBlock x:Uid="LicenseText" Text="License: EUPL-1.2 | GPL-3"/>
+        <HyperlinkButton x:Uid="GitHubText" NavigateUri="https://github.com/v38armageddon/WebSM" Content="View on GitHub"/>
+        <HyperlinkButton x:Uid="EUPLText" NavigateUri="https://interoperable-europe.ec.europa.eu/collection/eupl/eupl-text-eupl-12" Content="EUPL License"/>
+        <HyperlinkButton x:Uid="GPLText" NavigateUri="https://www.gnu.org/licenses/gpl-3.0.html" Content="GPL-3 License"/>
+        <HyperlinkButton x:Uid="PrivacyText" NavigateUri="https://gist.github.com/florian-at-v38armageddon/0461036c1f76590bbf32efe9a660968b" Content="Privacy Statement"/>
+    </StackPanel>
+</ContentDialog>

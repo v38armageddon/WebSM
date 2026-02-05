@@ -1,0 +1,18 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+  </Configurations>
+  <Folder Name="/Solution Items/">
+    <File Path=".gitignore" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Build.targets" />
+    <File Path="Directory.Packages.props" />
+    <File Path="global.json" />
+  </Folder>
+  <Project Path="WebSM/WebSM.csproj">
+    <Platform Solution="*|x64" Project="x64" />
+    <Deploy Solution="*|Any CPU" />
+    <Deploy Solution="Debug|x64" />
+  </Project>
+</Solution>
