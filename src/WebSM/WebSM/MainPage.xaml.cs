@@ -42,7 +42,6 @@ public sealed partial class MainPage : Page
     private void SetupOrientationHandling()
     {
         this.SizeChanged += Page_SizeChanged;
-        UpdateLayoutForOrientation(this.ActualWidth, this.ActualHeight);
     }
 
     private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -50,6 +49,10 @@ public sealed partial class MainPage : Page
         // Subscribe to frame navigation so we capture the BrowserPage instance when it's created.
         mainFrame.Navigated += MainFrame_Navigated;
         mainFrame.Navigate(typeof(BrowserPage));
+        _ = Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+        {
+            UpdateLayoutForOrientation(this.ActualWidth, this.ActualHeight);
+        });
 
         // Ensure UI-related settings (theme, control states) are applied when XamlRoot is available.
         ApplySettings(_settings);
@@ -63,6 +66,9 @@ public sealed partial class MainPage : Page
     private void UpdateLayoutForOrientation(double width, double height)
     {
         bool isLandscape = width > height;
+
+        // Early guard: don't touch browserPage if it's not ready
+        if (browserPage?.tabView == null) return;
 
 #if ANDROID || IOS
         if (isLandscape)
@@ -158,12 +164,12 @@ public sealed partial class MainPage : Page
 
     private async void openEmbedBrowserButton_Click(object sender, RoutedEventArgs e)
     {
+        embedBrowser.IsPaneOpen = true;
         if (!embedWebView2Ready)
         {
             await embedWebView2.EnsureCoreWebView2Async();
             embedWebView2Ready = true;
         }
-        embedBrowser.IsPaneOpen = true;
     }
 
     private void openWindowButton_Click(object sender, RoutedEventArgs e)
@@ -296,14 +302,23 @@ public sealed partial class MainPage : Page
         searchDialog.XamlRoot = this.XamlRoot;
         await searchDialog.ShowAsync();
         string input = searchDialog.searchTextBox.Text;
-        WebView2 typeOfView = isEmbedSearch ? embedWebView2 : browserPage.webView2;
-        if (string.IsNullOrEmpty(input))
+        WebView2 typeOfView = null;
+        if (isEmbedSearch)
         {
-            return;
+            typeOfView = embedWebView2;
         }
+        else if (browserPage != null && browserPage.TryGetCurrentWebView(out var currentWebView))
+        {
+            typeOfView = currentWebView;
+        }
+        else
+        {
+            System.Diagnostics.Debug.WriteLine("TF? No WebView2 available for search.");
+        }
+        if (typeOfView == null || string.IsNullOrEmpty(input)) return;
         switch (input)
         {
-            case string s when s.StartsWith("https://") || s.StartsWith("http://"):
+            case string s when s.Contains("://"):
                 typeOfView.Source = new Uri(s);
                 break;
             case string s when s.Contains("."):

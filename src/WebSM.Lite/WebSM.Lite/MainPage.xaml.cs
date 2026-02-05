@@ -158,18 +158,19 @@ public sealed partial class MainPage : Page
         Dialogs.SearchDialog searchDialog = new Dialogs.SearchDialog();
         searchDialog.XamlRoot = this.XamlRoot;
         await searchDialog.ShowAsync();
-        if (String.IsNullOrEmpty(searchDialog.searchTextBox.Text)) return;
-        if (searchDialog.searchTextBox.Text.Contains("://"))
+        string input = searchDialog.searchTextBox.Text;
+        if (String.IsNullOrEmpty(input)) return;
+        switch (input)
         {
-            browserPage?.Navigate(searchDialog.searchTextBox.Text);
-        }
-        else if (searchDialog.searchTextBox.Text.Contains("."))
-        {
-            browserPage?.Navigate("https://" + searchDialog.searchTextBox.Text);
-        }
-        else
-        {
-            browserPage?.Navigate("https://eu.startpage.com/search?q=" + searchDialog.searchTextBox.Text);
+            case string s when s.Contains("://"):
+                browserPage?.Navigate(s);
+                break;
+            case string s when s.Contains("."):
+                browserPage?.Navigate("https://" + s);
+                break;
+            default:
+                browserPage?.Navigate("https://eu.startpage.com/search?q=" + s);
+                break;
         }
     }
 

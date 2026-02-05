@@ -24,10 +24,10 @@ public sealed partial class BrowserPage : Page
 {
     private Dictionary<int, WebView2> tabViewTabItems = new Dictionary<int, WebView2>();
     private Dictionary<int, TabViewItem> tabViewItems = new Dictionary<int, TabViewItem>();
-    private int currentTabId;
-    public WebView2 webView2 = new WebView2();
-    private bool _ready;
-    private bool _initialTabCreated = false; // Ajout du champ indicateur
+    private readonly Dictionary<WebView2, TabViewItem> webviewToTab = new();
+    private static readonly Random _random = new Random();
+    public int currentTabId;
+    private bool _initialTabCreated = false;
 
     public BrowserPage()
     {
@@ -37,15 +37,7 @@ public sealed partial class BrowserPage : Page
 
     private async void Page_Loaded(object sender, RoutedEventArgs e)
     {
-        await webView2.EnsureCoreWebView2Async();
-        _ready = true;
         tabView.Loaded += TabView_Loaded;
-        if (!_initialTabCreated && tabView != null && tabView.TabItems.Count == 0)
-        {
-            _initialTabCreated = true;
-            await CreateNewTabAsync(0);
-            tabView.SelectedIndex = 0;
-        }
     }
 
     private void webView2_NavigationStarting(WebView2 sender, CoreWebView2NavigationStartingEventArgs args)
@@ -57,9 +49,10 @@ public sealed partial class BrowserPage : Page
     {
         progressRing.IsActive = false;
         TabViewItem? tabItem = tabView.SelectedItem as TabViewItem;
+        if (!TryGetTabItemFromWebView(sender, out tabItem)) return;
 
         // Set the title to the tab
-        string pageTitle = await webView2.CoreWebView2.ExecuteScriptAsync("document.title");
+        string pageTitle = await sender.ExecuteScriptAsync("document.title");
         if (!string.IsNullOrEmpty(pageTitle))
         {
             pageTitle = pageTitle.Trim('"'); // Remove the quotes from the title
@@ -67,7 +60,7 @@ public sealed partial class BrowserPage : Page
         }
 
         // Set the favicon to the tab
-        string faviconUrl = await webView2.CoreWebView2.ExecuteScriptAsync("document.querySelector('link[rel~=\"icon\"]')?.href || document.querySelector('link[rel~=\"shortcut icon\"]')?.href");
+        string faviconUrl = await sender.ExecuteScriptAsync("document.querySelector('link[rel~=\"icon\"]')?.href || document.querySelector('link[rel~=\"shortcut icon\"]')?.href");
         faviconUrl = faviconUrl.Trim('"');
         Uri iconUri;
         if (!string.IsNullOrEmpty(faviconUrl) && Uri.TryCreate(faviconUrl, UriKind.Absolute, out iconUri))
@@ -86,11 +79,8 @@ public sealed partial class BrowserPage : Page
     {
         if (_initialTabCreated) return;
         _initialTabCreated = true;
-        for (int i = 0; i < 1; i++)
-        {
-            await CreateNewTabAsync(i);
-            tabView.SelectedIndex = i;
-        }
+        await CreateNewTabAsync(0);
+        tabView.SelectedIndex = 0;
     }
 
     private async void TabView_AddButtonClick(TabView sender, object args)
@@ -100,139 +90,128 @@ public sealed partial class BrowserPage : Page
 
     private void TabView_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
     {
-        var tabItem = args.Tab as TabViewItem;
-        int tabId = (int)tabItem.Tag;
-        sender.TabItems.Remove(tabItem);
+        if (args.Tab is not TabViewItem tabItem) return;
+        if (tabItem.Tag is not int tabId) return;
+
+        if (tabViewTabItems.TryGetValue(tabId, out var webView))
+        {
+            webView.CoreWebView2?.Stop();
+            webView.Dispose();
+        }
+
         tabViewTabItems.Remove(tabId);
         tabViewItems.Remove(tabId);
+        sender.TabItems.Remove(tabItem);
 
         if (sender.TabItems.Count == 0)
         {
             Application.Current.Exit();
         }
-        else
-        {
-            var newSelectedTab = sender.TabItems[0] as TabViewItem;
-            currentTabId = (int)newSelectedTab.Tag;
-            webView2 = tabViewTabItems[currentTabId];
-        }
     }
 
     private void tabView_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        TabViewItem? tabItem = tabView.SelectedItem as TabViewItem;
-        currentTabId = (int)tabItem.Tag;
-        webView2 = tabViewTabItems[currentTabId];
+        if (tabView.SelectedItem is TabViewItem tabItem && tabItem.Tag is int id)
+        {
+            currentTabId = id;
+        }
     }
 
     private async Task CreateNewTabAsync(int index)
     {
         progressRing.IsActive = true;
-        TabViewItem newItem = new TabViewItem();
 
-        int newIndex = GenerateUniqueID(); // Generate a unique ID for the new tab
-
-        if (tabViewTabItems.ContainsKey(newIndex))
+        int tabId = GenerateUniqueID();
+        var webView = new WebView2();
+        var tabItem = new TabViewItem
         {
-            webView2 = tabViewTabItems[newIndex];
-        }
-        else
-        {
-            webView2 = new WebView2();
+            Tag = tabId,
+            Content = webView,
+            Header = "Nouvel onglet",
+            IconSource = new SymbolIconSource { Symbol = Symbol.Globe }
+        };
 
-            // Init WebView2
-            await webView2.EnsureCoreWebView2Async();
-            webView2.Source = new Uri("https://eu.startpage.com/");
-            webView2.NavigationStarting += webView2_NavigationStarting;
-            webView2.NavigationCompleted += webView2_NavigationCompleted;
-            webView2.CoreWebView2.NewWindowRequested += webView2_NewWindowRequested;
-
-            tabViewTabItems.Add(newIndex, webView2);
-        }
-
-        newItem.Tag = newIndex;
-        newItem.Content = webView2;
-        tabViewItems.Add(newIndex, newItem);
-
-        // Init Name of website and favicon
-        string pageTitle = await webView2.CoreWebView2.ExecuteScriptAsync("document.title");
-        pageTitle = pageTitle.Trim('"');
-        if (pageTitle != null)
-        {
-            newItem.Header = pageTitle;
-        }
-
-        string faviconUrl = await webView2.CoreWebView2.ExecuteScriptAsync("document.querySelector('link[rel~=\"icon\"]')?.href || document.querySelector('link[rel~=\"shortcut icon\"]')?.href");
-        Uri iconUri;
-        if (!string.IsNullOrEmpty(faviconUrl) && Uri.TryCreate(faviconUrl, UriKind.Absolute, out iconUri))
-        {
-            newItem.IconSource = new BitmapIconSource() { UriSource = iconUri };
-        }
-        else
-        {
-            newItem.IconSource = new SymbolIconSource() { Symbol = Symbol.Globe };
-        }
+        tabViewTabItems.Add(tabId, webView);
+        tabViewItems.Add(tabId, tabItem);
 
         await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
         {
-            tabView.TabItems.Add(newItem);
+            tabView.TabItems.Add(tabItem);
             tabView.SelectedIndex = index;
-            currentTabId = newIndex;
+            currentTabId = tabId;
         });
+
+        await webView.EnsureCoreWebView2Async();
+        webView.Source = new Uri("https://eu.startpage.com/");
+        webView.NavigationStarting += webView2_NavigationStarting;
+        webView.NavigationCompleted += webView2_NavigationCompleted;
+        webView.CoreWebView2.NewWindowRequested += webView2_NewWindowRequested;
+
         progressRing.IsActive = false;
     }
 
     private int GenerateUniqueID()
     {
-        Random random = new Random();
-        int id = random.Next(0, int.MaxValue);
+        int id = _random.Next(0, int.MaxValue);
         while (tabViewTabItems.ContainsKey(id))
         {
-            id = random.Next(0, int.MaxValue);
+            id = _random.Next(0, int.MaxValue);
         }
         return id;
+    }
+
+    public bool TryGetTabItemFromWebView(WebView2 webView, out TabViewItem? tabItem)
+    {
+        return webviewToTab.TryGetValue(webView, out tabItem);
     }
 
     private async void webView2_NewWindowRequested(CoreWebView2 sender, CoreWebView2NewWindowRequestedEventArgs args)
     {
         args.Handled = true; // Prevent the default behavior of opening a new window
+        if (!TryGetCurrentWebView(out var webView)) return;
         await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
         {
             await CreateNewTabAsync(tabView.TabItems.Count);
-            webView2.Source = new Uri(args.Uri);
+            webView.Source = new Uri(args.Uri);
         });
     }
 
     #region Wrapper
+    public bool TryGetCurrentWebView(out WebView2 webView)
+    {
+        return tabViewTabItems.TryGetValue(currentTabId, out webView);
+    }
+
     public void Navigate(string url)
     {
-        if (webView2 != null)
+        if (TryGetCurrentWebView(out var webView) &&
+            Uri.TryCreate(url, UriKind.Absolute, out var uri))
         {
-            webView2.Source = new Uri(url);
+            webView.Source = uri;
         }
     }
 
     public void GoBack()
     {
-        if (webView2 != null && webView2.CanGoBack)
+        if (TryGetCurrentWebView(out var webView) && webView.CanGoBack)
         {
-            webView2.GoBack();
+            webView.GoBack();
         }
     }
 
     public void GoForward()
     {
-        if (webView2 != null && webView2.CanGoForward)
+        if (TryGetCurrentWebView(out var webView) && webView.CanGoForward)
         {
-            webView2.GoForward();
+            webView.GoForward();
         }
     }
 
     public void Reload()
     {
-        if (webView2 != null)
+        if (TryGetCurrentWebView(out var webView))
         {
-            webView2.Reload();
+            webView.Reload();
         }
     }
     #endregion
