@@ -118,39 +118,93 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ApplicationName" xml:space="preserve">
-    <value>WebSM-pt-BR</value>
+    <value>WebSM</value>
   </data>
   <data name="backButton.Label" xml:space="preserve">
-    <value />
-  </data>
-  <data name="checkOne.Text" xml:space="preserve">
-    <value>- Verifique se você está conectado a uma rede.</value>
-  </data>
-  <data name="checkTwo.Text" xml:space="preserve">
-    <value>- Verifique a configuração da sua rede.</value>
-  </data>
-  <data name="downloadButton.Content" xml:space="preserve">
-    <value>Baixars</value>
+    <value>Recuar</value>
   </data>
   <data name="forwardButton.Label" xml:space="preserve">
-    <value />
+    <value>Avançar</value>
   </data>
   <data name="homeButton.Label" xml:space="preserve">
-    <value />
-  </data>
-  <data name="offlineText.Text" xml:space="preserve">
-    <value>Parece que você está offline.</value>
+    <value>Página inicial</value>
   </data>
   <data name="openEmbedBrowserButton.Label" xml:space="preserve">
-    <value />
+    <value>Abrir barra lateral</value>
   </data>
   <data name="openWindowButton.Label" xml:space="preserve">
-    <value />
-  </data>
-  <data name="refreshButton.Label" xml:space="preserve">
-    <value />
+    <value>Nova janela</value>
   </data>
   <data name="searchButton.Label" xml:space="preserve">
-    <value />
+    <value>Pesquisar</value>
+  </data>
+  <data name="refreshButton.Label" xml:space="preserve">
+    <value>Atualizar</value>
+  </data>
+  <data name="EUPLText.Content" xml:space="preserve">
+    <value>Licença EUPL</value>
+  </data>
+  <data name="GitHubText.Content" xml:space="preserve">
+    <value>Ver no GitHub</value>
+  </data>
+  <data name="GPLText.Content" xml:space="preserve">
+    <value>Licença GPL-3</value>
+  </data>
+  <data name="ExtrasText.Text" xml:space="preserve">
+    <value>Extras</value>
+  </data>
+  <data name="defaultTheme.Text" xml:space="preserve">
+    <value>Tema padrão (baseado no sistema)</value>
+  </data>
+  <data name="darkTheme.Text" xml:space="preserve">
+    <value>Tema escuro</value>
+  </data>
+  <data name="AuthorText.Text" xml:space="preserve">
+    <value>Autor: v38armageddon</value>
+  </data>
+  <data name="AboutDialog.SecondaryButtonText" xml:space="preserve">
+    <value>Fechar</value>
+  </data>
+  <data name="AboutDialog.PrimaryButtonText" xml:space="preserve">
+    <value>Avalie este software</value>
+  </data>
+  <data name="AboutButton.Content" xml:space="preserve">
+    <value>Sobre</value>
+  </data>
+  <data name="PrivacyText.Content" xml:space="preserve">
+    <value>Declaração de Privacidade</value>
+  </data>
+  <data name="lightTheme.Text" xml:space="preserve">
+    <value>Tema claro</value>
+  </data>
+  <data name="LicenseText.Text" xml:space="preserve">
+    <value>Licença: EUPL-1.2 | GPL-3</value>
+  </data>
+  <data name="SearchDialog.PrimaryButtonText" xml:space="preserve">
+    <value>Pesquisar</value>
+  </data>
+  <data name="SearchDialog.SecondaryButtonText" xml:space="preserve">
+    <value>Voltar</value>
+  </data>
+  <data name="SearchDialog.Title" xml:space="preserve">
+    <value>Pesquisar</value>
+  </data>
+  <data name="searchText.Text" xml:space="preserve">
+    <value>Pesquise ou insira um URL</value>
+  </data>
+  <data name="SelectedTheme.Text" xml:space="preserve">
+    <value>Tema selecionado</value>
+  </data>
+  <data name="SettingTitle.Text" xml:space="preserve">
+    <value>Configurações</value>
+  </data>
+  <data name="VersionText.Text" xml:space="preserve">
+    <value>Versão: 6.0</value>
+  </data>
+  <data name="pinEmbedBrowser.Label" xml:space="preserve">
+    <value>Fixar</value>
+  </data>
+  <data name="closeEmbedBrowser.Label" xml:space="preserve">
+    <value>Fechar</value>
   </data>
 </root>

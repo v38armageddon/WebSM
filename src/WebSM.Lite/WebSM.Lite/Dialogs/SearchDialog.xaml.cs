@@ -16,25 +16,24 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace WebSM.Lite.Dialogs
+namespace WebSM.Lite.Dialogs;
+
+public sealed partial class SearchDialog : ContentDialog
 {
-    public sealed partial class SearchDialog : ContentDialog
+    public string SearchQuery { get; set; }
+    public BrowserPage browserPage;
+
+    public SearchDialog()
     {
-        public string SearchQuery { get; set; }
-        public BrowserPage browserPage;
+        InitializeComponent();
+    }
 
-        public SearchDialog()
-        {
-            InitializeComponent();
-        }
+    private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+    {
+    }
 
-        private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
-        {
-        }
-
-        private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
-        {
-            return;
-        }
+    private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+    {
+        return;
     }
 }

@@ -118,28 +118,16 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ApplicationName" xml:space="preserve">
-    <value>WebSM-en</value>
+    <value>WebSM</value>
   </data>
   <data name="backButton.Label" xml:space="preserve">
     <value>Go Back</value>
-  </data>
-  <data name="checkOne.Text" xml:space="preserve">
-    <value>- Check if you are connected to a network.</value>
-  </data>
-  <data name="checkTwo.Text" xml:space="preserve">
-    <value>- Check your network configuration.</value>
-  </data>
-  <data name="downloadButton.Content" xml:space="preserve">
-    <value>Downloads</value>
   </data>
   <data name="forwardButton.Label" xml:space="preserve">
     <value>Go Forward</value>
   </data>
   <data name="homeButton.Label" xml:space="preserve">
     <value>Home</value>
-  </data>
-  <data name="offlineText.Text" xml:space="preserve">
-    <value>It looks like you are offline.</value>
   </data>
   <data name="openEmbedBrowserButton.Label" xml:space="preserve">
     <value>Open sidebar</value>
@@ -152,5 +140,71 @@
   </data>
   <data name="refreshButton.Label" xml:space="preserve">
     <value>Refresh</value>
+  </data>
+  <data name="EUPLText.Content" xml:space="preserve">
+    <value>EUPL License</value>
+  </data>
+  <data name="GitHubText.Content" xml:space="preserve">
+    <value>View on GitHub</value>
+  </data>
+  <data name="GPLText.Content" xml:space="preserve">
+    <value>GPL-3 License</value>
+  </data>
+  <data name="ExtrasText.Text" xml:space="preserve">
+    <value>Extras</value>
+  </data>
+  <data name="defaultTheme.Text" xml:space="preserve">
+    <value>Default theme (System based)</value>
+  </data>
+  <data name="darkTheme.Text" xml:space="preserve">
+    <value>Dark Theme</value>
+  </data>
+  <data name="AuthorText.Text" xml:space="preserve">
+    <value>Author: v38armageddon</value>
+  </data>
+  <data name="AboutDialog.SecondaryButtonText" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="AboutDialog.PrimaryButtonText" xml:space="preserve">
+    <value>Rate this software</value>
+  </data>
+  <data name="AboutButton.Content" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="PrivacyText.Content" xml:space="preserve">
+    <value>Privacy Statement</value>
+  </data>
+  <data name="lightTheme.Text" xml:space="preserve">
+    <value>Light Theme</value>
+  </data>
+  <data name="LicenseText.Text" xml:space="preserve">
+    <value>License: EUPL-1.2 | GPL-3</value>
+  </data>
+  <data name="SearchDialog.PrimaryButtonText" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="SearchDialog.SecondaryButtonText" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="SearchDialog.Title" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="searchText.Text" xml:space="preserve">
+    <value>Search or enter a URL</value>
+  </data>
+  <data name="SelectedTheme.Text" xml:space="preserve">
+    <value>Selected theme</value>
+  </data>
+  <data name="SettingTitle.Text" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="VersionText.Text" xml:space="preserve">
+    <value>Version: 6.0</value>
+  </data>
+  <data name="pinEmbedBrowser.Label" xml:space="preserve">
+    <value>Pin</value>
+  </data>
+  <data name="closeEmbedBrowser.Label" xml:space="preserve">
+    <value>Close</value>
   </data>
 </root>

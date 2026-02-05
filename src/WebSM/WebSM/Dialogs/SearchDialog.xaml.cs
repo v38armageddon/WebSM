@@ -16,25 +16,24 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace WebSM
+namespace WebSM;
+
+public sealed partial class SearchDialog : ContentDialog
 {
-    public sealed partial class SearchDialog : ContentDialog
+    public SearchDialog()
     {
-        public SearchDialog()
-        {
-            this.InitializeComponent();
-        }
+        this.InitializeComponent();
+    }
 
-        private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
-        {
+    private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+    {
 
-        }
+    }
 
-        private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
-        {
-            // HAX: Remove content and close dialog
-            searchTextBox.Text = string.Empty;
-            Hide();
-        }
+    private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+    {
+        // HAX: Remove content and close dialog
+        searchTextBox.Text = string.Empty;
+        Hide();
     }
 }

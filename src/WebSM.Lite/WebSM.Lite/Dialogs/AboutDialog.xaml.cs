@@ -17,19 +17,18 @@
  */
 using Windows.System;
 
-namespace WebSM.Lite.Dialogs
-{
-    public sealed partial class AboutDialog : ContentDialog
-    {
-        public AboutDialog()
-        {
-            InitializeComponent();
-        }
+namespace WebSM.Lite.Dialogs;
 
-        private async void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
-        {
-            bool result = await Launcher.LaunchUriAsync(new Uri("ms-windows-store://review/?ProductId=9P5RZDH9SL6F"));
-            result = true;
-        }
+public sealed partial class AboutDialog : ContentDialog
+{
+    public AboutDialog()
+    {
+        InitializeComponent();
+    }
+
+    private async void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+    {
+        bool result = await Launcher.LaunchUriAsync(new Uri("ms-windows-store://review/?ProductId=9P5RZDH9SL6F"));
+        result = true;
     }
 }

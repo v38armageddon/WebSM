@@ -55,14 +55,15 @@
         <SplitView x:Name="settingsView" DisplayMode="Overlay" OpenPaneLength="296" PanePlacement="Right">
             <SplitView.Pane>
                 <StackPanel>
-                    <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Settings" VerticalAlignment="Top" FontWeight="Bold" FontSize="36"/>
-                    <TextBlock Text="Selected theme" FontSize="18" Margin="10,20,0,0"/>
+                    <TextBlock x:Uid="SettingTitle" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Settings" VerticalAlignment="Top" FontWeight="Bold" FontSize="36"/>
+                    <TextBlock x:Uid="SelectedTheme" Text="Selected theme" FontSize="18" Margin="10,20,0,0"/>
                     <ComboBox x:Name="comboBox1" x:FieldModifier="public" Width="269" Margin="10,10,0,0" SelectedIndex="0" SelectionChanged="comboBox_SelectionChanged">
-                        <TextBlock x:Name="defaultTheme" Text="Default theme (System based)"/>
-                        <TextBlock x:Name="lightTheme" Text="Light Theme"/>
-                        <TextBlock x:Name="darkTheme" Text="Dark Theme"/>
+                        <TextBlock x:Name="defaultTheme" x:Uid="defaultTheme" Text="Default theme (System based)"/>
+                        <TextBlock x:Name="lightTheme" x:Uid="lightTheme" Text="Light Theme"/>
+                        <TextBlock x:Name="darkTheme" x:Uid="darkTheme" Text="Dark Theme"/>
                     </ComboBox>
-                    <Button x:Name="AboutButton" Content="About" Click="AboutButton_Click" Margin="10,10,0,0"/>
+                    <TextBlock x:Uid="ExtrasText" Text="Extras" Margin="10,10,0,0"  FontSize="18"/>
+                    <Button x:Name="AboutButton" x:Uid="AboutButton" Content="About" Click="AboutButton_Click" Margin="10,10,0,0"/>
                 </StackPanel>
             </SplitView.Pane>
         </SplitView>
@@ -72,9 +73,9 @@
             <SplitView.Pane>
                 <Grid>
                     <CommandBar x:Name="commandBarEmbedBrowser" DefaultLabelPosition="Right">
-                        <AppBarButton x:Name="closeEmbedBrowser" Icon="ClosePane" Label="Close" Click="closeEmbedBrowser_Click"/>
-                        <AppBarButton x:Name="accessLink" Icon="Find" Label="Go To" Click="accessLink_Click"/>
-                        <AppBarToggleButton x:Name="pinEmbedBrowser" Icon="Pin" Label="Pin" Click="pinEmbedBrowser_Click"/>
+                        <AppBarButton x:Name="closeEmbedBrowser" x:Uid="closeEmbedBrowser" Icon="ClosePane" Label="Close" Click="closeEmbedBrowser_Click"/>
+                        <AppBarButton x:Name="accessLink" x:Uid="searchButton" Icon="Find" Label="Search" Click="accessLink_Click"/>
+                        <AppBarToggleButton x:Name="pinEmbedBrowser" x:Uid="pinEmbedBrowser" Icon="Pin" Label="Pin" Click="pinEmbedBrowser_Click"/>
                     </CommandBar>
                     <WebView2 x:Name="embedWebView2" Margin="0,53,0,0"/>
                 </Grid>

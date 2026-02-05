@@ -22,6 +22,7 @@
     xmlns:local="using:WebSM"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Uid="AboutDialog"
     mc:Ignorable="d"
     Title="WebSM"
     PrimaryButtonText="Rate this app"
@@ -31,21 +32,13 @@
 
     <Grid>
         <StackPanel>
-            <TextBlock Text="Author: v38armageddon"/>
-            <TextBlock Text="Version: 6.0"/>
-            <TextBlock Text="License: EUPL-1.2 / GPL-3"/>
-            <TextBlock>
-                <Hyperlink NavigateUri="https://github.com/v38armageddon/WebSM">View on GitHub</Hyperlink>
-            </TextBlock>
-            <TextBlock>
-                <Hyperlink NavigateUri="https://interoperable-europe.ec.europa.eu/collection/eupl/eupl-text-eupl-12">EUPL License</Hyperlink>
-            </TextBlock>
-            <TextBlock>
-                <Hyperlink NavigateUri="https://www.gnu.org/licenses/gpl-3.0.html">GPL-3 License</Hyperlink>
-            </TextBlock>
-            <TextBlock>
-                <Hyperlink NavigateUri="https://gist.github.com/florian-at-v38armageddon/0461036c1f76590bbf32efe9a660968b">Privacy Statement</Hyperlink>
-            </TextBlock>
+            <TextBlock x:Uid="AuthorText" Text="Author: v38armageddon"/>
+            <TextBlock x:Uid="VersionText" Text="Version: 6.0"/>
+            <TextBlock x:Uid="LicenseText" Text="License: EUPL-1.2 | GPL-3"/>
+            <HyperlinkButton x:Uid="GitHubText" NavigateUri="https://github.com/v38armageddon/WebSM" Content="View on GitHub"/>
+            <HyperlinkButton x:Uid="EUPLText" NavigateUri="https://interoperable-europe.ec.europa.eu/collection/eupl/eupl-text-eupl-12" Content="EUPL License"/>
+            <HyperlinkButton x:Uid="GPLText" NavigateUri="https://www.gnu.org/licenses/gpl-3.0.html" Content="GPL-3 License"/>
+            <HyperlinkButton x:Uid="PrivacyText" NavigateUri="https://gist.github.com/florian-at-v38armageddon/0461036c1f76590bbf32efe9a660968b" Content="Privacy Statement"/>
         </StackPanel>
     </Grid>
 </ContentDialog>
