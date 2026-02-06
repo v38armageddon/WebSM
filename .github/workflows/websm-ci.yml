@@ -33,4 +33,4 @@ jobs:
 
       - name: Build WebSM (Debug)
         shell: pwsh
-        run: msbuild ./src/WebSM/WebSM.csproj /r
+        run: msbuild ./src/WebSM/WebSM/WebSM.csproj /r
