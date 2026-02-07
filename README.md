@@ -38,6 +38,9 @@ pacman -S websm-lite
 #### Flatpak
 For other distributions, you can install the flatpak version:
 ```bash
+# Add our Flatpak repostiory
+flatpak remote-add --if-not-exists v38armageddon https://repo.v38armageddon.net/flatpak/v38armageddon.flatpakrepo
+
 flatpak install net.v38armageddon.WebSM
 # For the Lite version
 flatpak install net.v38armageddon.WebSM.Lite
