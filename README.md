@@ -34,3 +34,36 @@ pacman -S websm
 # Or if you prefer the Lite version
 pacman -S websm-lite
 ```
+
+#### Flatpak
+For other distributions, you can install the flatpak version:
+```bash
+# Add our Flatpak repostiory
+flatpak remote-add --if-not-exists v38armageddon https://repo.v38armageddon.net/flatpak/v38armageddon.flatpakrepo
+
+flatpak install net.v38armageddon.WebSM
+# For the Lite version
+flatpak install net.v38armageddon.WebSM.Lite
+```
+
+### Android (Experimental)
+You can download the signed ``.apk`` file on the [Release](https://github.com/v38armageddon/WebSM/releases) page for all versions.
+
+Keep in mind that this is still experimental, unexpected bugs and crashes can occur.
+
+---------
+## Build from Source
+### Visual Studio 2026
+You need to have the [Uno Platform extension](https://marketplace.visualstudio.com/items?itemName=unoplatform.uno-platform-addin-2022) installed on your IDE.
+
+1. Open ``WebSM.slnx`` | ``WebSM.Lite.slnx``
+2. Press F5
+3. That's it!
+
+### dotnet CLI
+1. Run ``dotnet build ./WebSM.slnx`` | ``dotnet build ./WebSM.Lite.slnx``
+2. That's it!
+
+---------
+## Contributions
+WebSM is open to all contributions! You can read more at the CONTRIBUTE.md file.

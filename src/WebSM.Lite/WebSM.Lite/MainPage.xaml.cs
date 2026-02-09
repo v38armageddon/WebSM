@@ -16,8 +16,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 using System.Diagnostics;
+using System.Xml.Linq;
 using Microsoft.Web.WebView2.Core;
-using Newtonsoft.Json;
 using Windows.UI.Core;
 
 namespace WebSM.Lite;
@@ -30,7 +30,7 @@ public sealed partial class MainPage : Page
     public MainPage()
     {
         InitializeComponent();
-        _settings = LoadSettingsJSON();
+        _settings = LoadSettingsXML();
         ApplySettings(_settings);
         SetupOrientationHandling();
     }
@@ -169,7 +169,7 @@ public sealed partial class MainPage : Page
                 browserPage?.Navigate("https://" + s);
                 break;
             default:
-                browserPage?.Navigate("https://eu.startpage.com/search?q=" + s);
+                browserPage?.Navigate("https://eu.startpage.com/search?q=" + input);
                 break;
         }
     }
@@ -214,20 +214,34 @@ public sealed partial class MainPage : Page
         }
     }
 
-    private Dictionary<string, object> LoadSettingsJSON()
+    private Dictionary<string, object> LoadSettingsXML()
     {
-        string filePath = Path.Combine(ApplicationData.Current.RoamingFolder.Path, "settings.json");
+        string filePath = Path.Combine(ApplicationData.Current.RoamingFolder.Path, "settings.xml");
         if (!File.Exists(filePath))
         {
-            var settingsCreation = new Dictionary<string, object>
-                {
-                    { "Theme", (int)ElementTheme.Default } // 0 = Default, 1 = Light, 2 = Dark
-                };
-            string jsonCreation = JsonConvert.SerializeObject(settingsCreation, Formatting.Indented);
-            File.WriteAllText(filePath, jsonCreation);
+            var doc = new XDocument(
+                new XElement("Settings",
+                    new XElement("Theme", (int)ElementTheme.Default) // 0 = Default, 1 = Light, 2 = Dark
+                )
+            );
+            doc.Save(filePath);
         }
-        string json = File.ReadAllText(filePath);
-        Dictionary<string, object> settings = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
+        Dictionary<string, object> settings = new Dictionary<string, object>();
+        try
+        {
+            XDocument doc = XDocument.Load(filePath);
+            if (doc.Root != null)
+            {
+                foreach (XElement element in doc.Root.Elements())
+                {
+                    settings[element.Name.LocalName] = element.Value;
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine($"Error loading settings: {ex}");
+        }
         return settings;
     }
 

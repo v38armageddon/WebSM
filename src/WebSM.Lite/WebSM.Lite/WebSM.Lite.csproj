@@ -57,9 +57,6 @@
     <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" />
-  </ItemGroup>
-  <ItemGroup>
     <Page Update="BrowserPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

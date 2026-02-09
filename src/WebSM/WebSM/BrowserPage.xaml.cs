@@ -96,7 +96,9 @@ public sealed partial class BrowserPage : Page
         if (tabViewTabItems.TryGetValue(tabId, out var webView))
         {
             webView.CoreWebView2?.Stop();
+#if !WINAPPSDK_PACKAGED
             webView.Dispose();
+#endif
         }
 
         tabViewTabItems.Remove(tabId);

@@ -23,8 +23,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using Microsoft.Web.WebView2.Core;
-using Newtonsoft.Json;
 using Windows.Storage;
 
 namespace WebSM.Lite;
@@ -33,39 +33,72 @@ public class SettingsHandler
 {
     public static void SetDefaultTheme()
     {
-        string filePath = Path.Combine(ApplicationData.Current.RoamingFolder.Path, "settings.json");
+        string filePath = Path.Combine(ApplicationData.Current.RoamingFolder.Path, "settings.xml");
         if (File.Exists(filePath))
         {
-            string json = File.ReadAllText(filePath);
-            Dictionary<string, object> settings = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
-            settings["Theme"] = 0;
-            string newJson = JsonConvert.SerializeObject(settings, Formatting.Indented);
-            File.WriteAllText(filePath, newJson);
+            try
+            {
+                XDocument doc = XDocument.Load(filePath);
+                if (doc.Root != null)
+                {
+                    XElement theme = doc.Root.Element("Theme");
+                    if (theme == null)
+                    {
+                        theme = new XElement("Theme");
+                        doc.Root.Add(theme);
+                    }
+                    theme.Value = "0";
+                    doc.Save(filePath);
+                }
+            }
+            catch {  }
         }
     }
 
     public static void SetLightTheme()
     {
-        string filePath = Path.Combine(ApplicationData.Current.RoamingFolder.Path, "settings.json");
+        string filePath = Path.Combine(ApplicationData.Current.RoamingFolder.Path, "settings.xml");
         if (File.Exists(filePath))
         {
-            string json = File.ReadAllText(filePath);
-            Dictionary<string, object> settings = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
-            settings["Theme"] = 1;
-            string newJson = JsonConvert.SerializeObject(settings, Formatting.Indented);
-            File.WriteAllText(filePath, newJson);
+            try
+            {
+                XDocument doc = XDocument.Load(filePath);
+                if (doc.Root != null)
+                {
+                    XElement theme = doc.Root.Element("Theme");
+                    if (theme == null)
+                    {
+                        theme = new XElement("Theme");
+                        doc.Root.Add(theme);
+                    }
+                    theme.Value = "1";
+                    doc.Save(filePath);
+                }
+            }
+            catch { }
         }
     }
     public static void SetDarkTheme()
     {
-        string filePath = Path.Combine(ApplicationData.Current.RoamingFolder.Path, "settings.json");
+        string filePath = Path.Combine(ApplicationData.Current.RoamingFolder.Path, "settings.xml");
         if (File.Exists(filePath))
         {
-            string json = File.ReadAllText(filePath);
-            Dictionary<string, object> settings = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
-            settings["Theme"] = 2;
-            string newJson = JsonConvert.SerializeObject(settings, Formatting.Indented);
-            File.WriteAllText(filePath, newJson);
+            try
+            {
+                XDocument doc = XDocument.Load(filePath);
+                if (doc.Root != null)
+                {
+                    XElement theme = doc.Root.Element("Theme");
+                    if (theme == null)
+                    {
+                        theme = new XElement("Theme");
+                        doc.Root.Add(theme);
+                    }
+                    theme.Value = "2";
+                    doc.Save(filePath);
+                }
+            }
+            catch { }
         }
     }
 }
