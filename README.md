@@ -1,5 +1,5 @@
 # ![WebSM logo](Assets/WebSM.png) WebSM
-A simple minimalist web browser on Uno Platform.
+A simple minimalist web browser on [Uno Platform](https://platform.uno).
 
 ## What does it do?
 WebSM allows you to have a simple web browser with a minimalist design.
