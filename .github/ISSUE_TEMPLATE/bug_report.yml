@@ -32,22 +32,18 @@ body:
       placeholder: Add screenshots here
     validations:
       required: false
-  - type: checkboxes
+  - type: dropdown
     id: environment
     attributes:
       label: Environment
       description: Please select the environment where you observed the bug.
+      multiple: true
       options:
-        - label: Windows (Microsoft Store)
-          value: windows-mstore
-        - label: Windows (Desktop)
-          value: windows-desktop
-        - label: Vincent OS
-          value: vincent-os
-        - label: Linux (Flatpak)
-          value: linux-flatpak
-        - label: Android
-          value: android
+        - "Windows (Microsoft Store)"
+        - "Windows (Desktop)"
+        - "Vincent OS"
+        - "Linux (Flatpak)"
+        - "Android"
       validations:
         required: true
   - type: textarea
