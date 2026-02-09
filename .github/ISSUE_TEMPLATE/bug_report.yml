@@ -42,8 +42,8 @@ body:
         - "Vincent OS"
         - "Linux (Flatpak)"
         - "Android"
-      validations:
-        required: true
+    validations:
+      required: true
   - type: textarea
     id: additional-context
     attributes:
